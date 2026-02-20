@@ -6,6 +6,7 @@ This directory contains comprehensive documentation for the Notion CLI.
 
 Essential guides for using the CLI effectively:
 
+- **[Authentication Setup](user-guides/authentication-setup.md)** - Get your token and configure the CLI
 - **[AI Agent Guide](user-guides/ai-agent-guide.md)** - Quick reference for AI assistants using this CLI
 - **[AI Agent Cookbook](user-guides/ai-agent-cookbook.md)** - Common patterns and recipes for AI agents
 - **[Output Formats](user-guides/output-formats.md)** - JSON, CSV, YAML, and table output options
