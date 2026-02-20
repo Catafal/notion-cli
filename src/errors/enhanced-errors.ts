@@ -212,11 +212,11 @@ export class NotionCLIErrorFactory {
         },
         {
           description: 'Or export it manually (Mac/Linux)',
-          command: 'export NOTION_TOKEN="secret_your_token_here"'
+          command: 'export NOTION_TOKEN="ntn_your_token_here"'
         },
         {
           description: 'Or set it manually (Windows PowerShell)',
-          command: '$env:NOTION_TOKEN="secret_your_token_here"'
+          command: '$env:NOTION_TOKEN="ntn_your_token_here"'
         },
         {
           description: 'Get your integration token from Notion',

@@ -20,17 +20,17 @@ export default class ConfigSetToken extends Command {
     },
     {
       description: 'Set Notion token directly',
-      command: 'notion-cli config set-token secret_abc123...',
+      command: 'notion-cli config set-token ntn_abc123...',
     },
     {
       description: 'Set token with JSON output',
-      command: 'notion-cli config set-token secret_abc123... --json',
+      command: 'notion-cli config set-token ntn_abc123... --json',
     },
   ]
 
   static args = {
     token: Args.string({
-      description: 'Notion integration token (starts with secret_)',
+      description: 'Notion integration token (starts with secret_ or ntn_)',
       required: false,
     }),
   }
@@ -54,7 +54,7 @@ export default class ConfigSetToken extends Command {
             [
               {
                 description: 'Provide the token as an argument',
-                command: 'notion-cli config set-token secret_your_token_here --json'
+                command: 'notion-cli config set-token ntn_your_token_here --json'
               }
             ]
           )
@@ -85,7 +85,7 @@ export default class ConfigSetToken extends Command {
               link: 'https://developers.notion.com/docs/create-a-notion-integration'
             },
             {
-              description: 'Tokens should look like: secret_abc123...',
+              description: 'Tokens should look like: ntn_abc123... or secret_abc123...',
             }
           ],
           {
