@@ -17,6 +17,7 @@ import {
 import { PageObjectResponse, BlockObjectResponse, GetDataSourceResponse } from '@notionhq/client/build/src/api-endpoints'
 import { isFullPage, isFullBlock } from '@notionhq/client'
 import * as readline from 'readline'
+import { resolveNotionId } from '../../utils/notion-resolver'
 
 type RetrieveResult = {
   id: string
@@ -51,6 +52,10 @@ export default class BatchRetrieve extends Command {
     {
       description: 'Retrieve with raw output',
       command: '$ notion-cli batch retrieve --ids ID1,ID2,ID3 -r',
+    },
+    {
+      description: 'Retrieve using Notion URLs (auto-resolved)',
+      command: '$ notion-cli batch retrieve --ids "https://notion.so/Page-abc123,https://notion.so/Other-def456"',
     },
   ]
 
@@ -119,11 +124,13 @@ export default class BatchRetrieve extends Command {
    */
   private async retrieveResource(id: string, type: string): Promise<RetrieveResult> {
     try {
+      // Resolve URL/name/ID to clean Notion ID before API call
+      const resolvedId = await resolveNotionId(id, type === 'database' ? 'database' : 'page')
       let data: PageObjectResponse | BlockObjectResponse | GetDataSourceResponse
 
       switch (type) {
         case 'page': {
-          const pageResponse = await notion.retrievePage({ page_id: id })
+          const pageResponse = await notion.retrievePage({ page_id: resolvedId })
           if (!isFullPage(pageResponse)) {
             throw new NotionCLIError(
               NotionCLIErrorCode.API_ERROR,
@@ -136,7 +143,7 @@ export default class BatchRetrieve extends Command {
           break
         }
         case 'block': {
-          const blockResponse = await notion.retrieveBlock(id)
+          const blockResponse = await notion.retrieveBlock(resolvedId)
           if (!isFullBlock(blockResponse)) {
             throw new NotionCLIError(
               NotionCLIErrorCode.API_ERROR,
@@ -149,7 +156,7 @@ export default class BatchRetrieve extends Command {
           break
         }
         case 'database':
-          data = await notion.retrieveDataSource(id)
+          data = await notion.retrieveDataSource(resolvedId)
           break
         default:
           throw new NotionCLIError(

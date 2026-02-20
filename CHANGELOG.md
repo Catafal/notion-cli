@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **`batch delete` command** — delete multiple blocks in parallel (`notion-cli batch delete --ids ID1,ID2,ID3`). Alias: `batch:d`. Accepts URLs, names, and raw IDs.
 - **`browse` command** — interactively navigate Notion page trees with arrow keys (`notion-cli browse PAGE_ID`). Alias: `nav`.
 - **Auto-persist token during `init`** — `notion-cli init ntn_your_token` saves the token to your shell config file (~/.zshrc, ~/.bashrc, etc.) automatically. No manual `export` or editing rc files.
 - **Token argument for `init`** — pass token as a CLI argument to skip interactive prompts. Ideal for scripts and CI.
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Authentication setup guide** (`docs/user-guides/authentication-setup.md`) — end-to-end guide for getting a token and configuring the CLI.
 
 ### Fixed
+- **`batch retrieve` now accepts URLs and names** — was raw IDs only; now resolves Notion URLs and database names like every other command.
 - **URL parsing for title-slug URLs** — Notion URLs like `notion.so/My-Page-Title-abc123` now parse correctly. The regex extracts the trailing 32-hex-char ID from any slug format.
 - **Consistent ID resolution across all commands** — `block retrieve`, `block delete`, `block retrieve:children`, and `page retrieve:property_item` now route through `resolveNotionId()`, accepting URLs, names, and raw IDs (previously only raw IDs worked).
 - **Better "not found" error message** — when Notion returns 404, the "integration may not have access" suggestion now appears first (most common cause) with a direct link to the sharing docs.

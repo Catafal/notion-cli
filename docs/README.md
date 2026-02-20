@@ -15,6 +15,7 @@ Essential guides for using the CLI effectively:
 - **[Verbose Logging](user-guides/verbose-logging.md)** - Debug mode and troubleshooting
 - **[Envelope System](user-guides/envelope-index.md)** - Standardized response format
 - **[Error Handling](user-guides/error-handling-examples.md)** - Understanding and handling errors
+- **[Batch Operations](user-guides/batch-operations.md)** - Retrieve or delete multiple resources at once
 - **[Interactive Browsing](user-guides/interactive-browsing.md)** - Navigate Notion page trees with arrow keys
 
 ## Architecture
