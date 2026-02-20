@@ -19,12 +19,4 @@ export default class ConfigSetToken extends Command {
         minimal: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
     };
     run(): Promise<void>;
-    /**
-     * Detect the current shell
-     */
-    private detectShell;
-    /**
-     * Get the rc file path for the detected shell
-     */
-    private getRcFilePath;
 }

@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@oclif/core");
-const fs = require("fs/promises");
-const path = require("path");
-const os = require("os");
 const readline = require("readline");
 const base_flags_1 = require("../../base-flags");
 const errors_1 = require("../../errors");
+const shell_config_1 = require("../../utils/shell-config");
+const token_validator_1 = require("../../utils/token-validator");
 class ConfigSetToken extends core_1.Command {
     async run() {
         const { args, flags } = await this.parse(ConfigSetToken);
@@ -18,7 +17,7 @@ class ConfigSetToken extends core_1.Command {
                     throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_MISSING, 'Token required in JSON mode', [
                         {
                             description: 'Provide the token as an argument',
-                            command: 'notion-cli config set-token secret_your_token_here --json'
+                            command: 'notion-cli config set-token ntn_your_token_here --json'
                         }
                     ]);
                 }
@@ -34,49 +33,23 @@ class ConfigSetToken extends core_1.Command {
                     });
                 });
             }
-            // Validate token format
-            if (!token || !token.startsWith('secret_')) {
-                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Invalid token format - Notion tokens must start with "secret_"', [
+            // Validate token format — Notion tokens start with "secret_" (legacy) or "ntn_" (current)
+            if (!token || (!token.startsWith('secret_') && !token.startsWith('ntn_'))) {
+                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Invalid token format - Notion tokens must start with "secret_" or "ntn_"', [
                     {
                         description: 'Get your integration token from Notion',
                         link: 'https://developers.notion.com/docs/create-a-notion-integration'
                     },
                     {
-                        description: 'Tokens should look like: secret_abc123...',
+                        description: 'Tokens should look like: ntn_abc123... or secret_abc123...',
                     }
                 ], {
-                    userInput: token,
+                    userInput: (0, token_validator_1.maskToken)(token),
                     metadata: { tokenFormat: 'invalid' }
                 });
             }
-            // Detect shell and rc file
-            const shell = this.detectShell();
-            const rcFile = this.getRcFilePath(shell);
-            // Read existing rc file
-            let rcContent = '';
-            try {
-                rcContent = await fs.readFile(rcFile, 'utf-8');
-            }
-            catch (error) {
-                if (error && typeof error === 'object' && 'code' in error && error.code !== 'ENOENT') {
-                    throw error;
-                }
-                // File doesn't exist, will create it
-            }
-            // Check if NOTION_TOKEN already exists
-            const tokenLineRegex = /^export\s+NOTION_TOKEN=.*/gm;
-            const newTokenLine = `export NOTION_TOKEN="${token}"`;
-            let updatedContent;
-            if (tokenLineRegex.test(rcContent)) {
-                // Replace existing token
-                updatedContent = rcContent.replace(tokenLineRegex, newTokenLine);
-            }
-            else {
-                // Add new token
-                updatedContent = rcContent.trim() + '\n\n# Notion CLI Token\n' + newTokenLine + '\n';
-            }
-            // Write updated rc file
-            await fs.writeFile(rcFile, updatedContent, 'utf-8');
+            // Persist token to shell rc file (~/.zshrc, ~/.bashrc, etc.)
+            const { rcFile, shell } = await (0, shell_config_1.persistToken)(token);
             if (flags.json) {
                 this.log(JSON.stringify({
                     success: true,
@@ -135,38 +108,6 @@ class ConfigSetToken extends core_1.Command {
             process.exit(1);
         }
     }
-    /**
-     * Detect the current shell
-     */
-    detectShell() {
-        const shell = process.env.SHELL || '';
-        if (shell.includes('zsh'))
-            return 'zsh';
-        if (shell.includes('bash'))
-            return 'bash';
-        if (shell.includes('fish'))
-            return 'fish';
-        // Default to bash on Unix, powershell on Windows
-        return process.platform === 'win32' ? 'powershell' : 'bash';
-    }
-    /**
-     * Get the rc file path for the detected shell
-     */
-    getRcFilePath(shell) {
-        const home = os.homedir();
-        switch (shell) {
-            case 'zsh':
-                return path.join(home, '.zshrc');
-            case 'bash':
-                return path.join(home, '.bashrc');
-            case 'fish':
-                return path.join(home, '.config', 'fish', 'config.fish');
-            case 'powershell':
-                return path.join(home, 'Documents', 'PowerShell', 'Microsoft.PowerShell_profile.ps1');
-            default:
-                return path.join(home, '.bashrc');
-        }
-    }
 }
 ConfigSetToken.description = 'Set NOTION_TOKEN in your shell configuration file';
 ConfigSetToken.aliases = ['config:token'];
@@ -177,16 +118,16 @@ ConfigSetToken.examples = [
     },
     {
         description: 'Set Notion token directly',
-        command: 'notion-cli config set-token secret_abc123...',
+        command: 'notion-cli config set-token ntn_abc123...',
     },
     {
         description: 'Set token with JSON output',
-        command: 'notion-cli config set-token secret_abc123... --json',
+        command: 'notion-cli config set-token ntn_abc123... --json',
     },
 ];
 ConfigSetToken.args = {
     token: core_1.Args.string({
-        description: 'Notion integration token (starts with secret_)',
+        description: 'Notion integration token (starts with secret_ or ntn_)',
         required: false,
     }),
 };

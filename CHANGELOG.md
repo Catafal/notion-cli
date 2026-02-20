@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Authentication setup guide** (`docs/user-guides/authentication-setup.md`) — end-to-end guide for getting a token and configuring the CLI.
 
 ### Fixed
+- **URL parsing for title-slug URLs** — Notion URLs like `notion.so/My-Page-Title-abc123` now parse correctly. The regex extracts the trailing 32-hex-char ID from any slug format.
+- **Consistent ID resolution across all commands** — `block retrieve`, `block delete`, `block retrieve:children`, and `page retrieve:property_item` now route through `resolveNotionId()`, accepting URLs, names, and raw IDs (previously only raw IDs worked).
+- **Better "not found" error message** — when Notion returns 404, the "integration may not have access" suggestion now appears first (most common cause) with a direct link to the sharing docs.
 - **npm packaging MODULE_NOT_FOUND** — replaced `shx` (devDependency) with native `Node.js fs` in build/postpack lifecycle scripts so they work during `npm install -g`.
 - **Runtime missing dependencies** — moved `undici` and `cli-table3` from devDependencies to dependencies (they are imported at runtime).
 - **Token leak in error context** — raw token in `set-token` error output is now masked via `maskToken()`.

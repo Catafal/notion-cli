@@ -11,6 +11,9 @@ import { Command } from '@oclif/core';
  */
 export default class Init extends Command {
     static description: string;
+    static args: {
+        token: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
+    };
     static examples: {
         description: string;
         command: string;
@@ -40,8 +43,13 @@ export default class Init extends Command {
     private showWelcome;
     /**
      * Step 1: Setup token
+     * Accepts an optional token argument — if provided, skips interactive prompt.
      */
     private setupToken;
+    /**
+     * Prompt user for token via interactive readline
+     */
+    private promptForToken;
     /**
      * Step 2: Test connection
      */

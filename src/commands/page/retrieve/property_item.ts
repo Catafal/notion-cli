@@ -6,6 +6,7 @@ import {
   NotionCLIError,
   wrapNotionError
 } from '../../../errors'
+import { resolveNotionId } from '../../../utils/notion-resolver'
 
 export default class PageRetrievePropertyItem extends Command {
   static description = 'Retrieve a page property item'
@@ -44,7 +45,9 @@ export default class PageRetrievePropertyItem extends Command {
     const { args, flags } = await this.parse(PageRetrievePropertyItem)
 
     try {
-      const res = await notion.retrievePageProperty(args.page_id, args.property_id)
+      // Resolve URL/name/ID to clean Notion ID (property_id stays raw — it's a schema key, not a Notion resource)
+      const pageId = await resolveNotionId(args.page_id, 'page')
+      const res = await notion.retrievePageProperty(pageId, args.property_id)
 
       // Handle JSON output for automation
       if (flags.json) {

@@ -4,7 +4,9 @@ const core_1 = require("@oclif/core");
 const readline = require("readline");
 const base_flags_1 = require("../base-flags");
 const errors_1 = require("../errors");
+const client_1 = require("@notionhq/client");
 const token_validator_1 = require("../utils/token-validator");
+const shell_config_1 = require("../utils/shell-config");
 const notion_1 = require("../notion");
 const workspace_cache_1 = require("../utils/workspace-cache");
 const terminal_banner_1 = require("../utils/terminal-banner");
@@ -24,7 +26,7 @@ class Init extends core_1.Command {
         this.isJsonMode = false;
     }
     async run() {
-        const { flags } = await this.parse(Init);
+        const { args, flags } = await this.parse(Init);
         this.isJsonMode = flags.json;
         try {
             // Check if already configured
@@ -40,8 +42,8 @@ class Init extends core_1.Command {
             if (!this.isJsonMode) {
                 this.showWelcome();
             }
-            // Step 1: Configure token
-            const tokenResult = await this.setupToken();
+            // Step 1: Configure token (use arg if provided, otherwise prompt interactively)
+            const tokenResult = await this.setupToken(args.token);
             // Step 2: Test connection
             const connectionResult = await this.testConnection();
             // Step 3: Sync workspace
@@ -118,8 +120,9 @@ class Init extends core_1.Command {
     }
     /**
      * Step 1: Setup token
+     * Accepts an optional token argument — if provided, skips interactive prompt.
      */
-    async setupToken() {
+    async setupToken(tokenArg) {
         const stepNum = 1;
         const stepTotal = 3;
         if (!this.isJsonMode) {
@@ -127,12 +130,27 @@ class Init extends core_1.Command {
             this.log(`Step ${stepNum}/${stepTotal}: Set your Notion token`);
             this.log('='.repeat(60));
             this.log('');
-            this.log('You need a Notion integration token to use this CLI.');
-            this.log('Get one at: https://www.notion.so/my-integrations');
-            this.log('');
         }
-        // Check if token already exists in environment
-        if (process.env.NOTION_TOKEN && !this.isJsonMode) {
+        // Determine token source: argument > environment > interactive prompt
+        let token;
+        if (tokenArg) {
+            // Token provided as CLI argument — no prompting needed
+            token = tokenArg;
+        }
+        else if (this.isJsonMode) {
+            // JSON mode: token must be in environment or argument
+            if (!process.env.NOTION_TOKEN) {
+                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_MISSING, 'Token required - pass as argument or set NOTION_TOKEN', [
+                    {
+                        description: 'Pass token as argument',
+                        command: 'notion-cli init ntn_your_token_here --json'
+                    }
+                ]);
+            }
+            token = process.env.NOTION_TOKEN;
+        }
+        else if (process.env.NOTION_TOKEN) {
+            // Token exists in env — ask if user wants to keep it
             this.log('Found existing NOTION_TOKEN in environment.');
             const rl = readline.createInterface({
                 input: process.stdin,
@@ -145,84 +163,64 @@ class Init extends core_1.Command {
                 });
             });
             if (useExisting === 'y' || useExisting === 'yes') {
-                if (!this.isJsonMode) {
-                    this.log('Using existing token from environment.');
-                    this.log('');
-                }
+                this.log('Using existing token from environment.');
+                this.log('');
                 return {
                     source: 'environment',
                     updated: false
                 };
             }
-        }
-        // Get token from user
-        let token;
-        if (this.isJsonMode) {
-            // In JSON mode, token must be in environment
-            if (!process.env.NOTION_TOKEN) {
-                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_MISSING, 'NOTION_TOKEN required in JSON mode', [
-                    {
-                        description: 'Set token in environment before running init',
-                        command: 'export NOTION_TOKEN="secret_your_token_here"'
-                    }
-                ]);
-            }
-            token = process.env.NOTION_TOKEN;
+            // User wants a new token — prompt for it
+            token = await this.promptForToken();
         }
         else {
-            // Interactive token input
-            const rl = readline.createInterface({
-                input: process.stdin,
-                output: process.stdout,
-            });
-            token = await new Promise((resolve) => {
-                rl.question('Enter your Notion integration token (paste with or without "secret_" prefix): ', (answer) => {
-                    rl.close();
-                    resolve(answer.trim());
-                });
-            });
-            // Validate token is not empty
-            if (!token) {
-                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Token cannot be empty', [
-                    {
-                        description: 'Get your integration token from Notion',
-                        link: 'https://developers.notion.com/docs/create-a-notion-integration'
-                    }
-                ]);
-            }
-            // Auto-prepend "secret_" if user didn't include it
-            if (!token.startsWith('secret_')) {
-                token = `secret_${token}`;
-                this.log('');
+            // No token anywhere — show instructions and prompt
+            this.log('You need a Notion integration token to use this CLI.');
+            this.log('Get one at: https://www.notion.so/my-integrations');
+            this.log('');
+            token = await this.promptForToken();
+        }
+        // Validate token is not empty
+        if (!token) {
+            throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Token cannot be empty', [
+                {
+                    description: 'Get your integration token from Notion',
+                    link: 'https://developers.notion.com/docs/create-a-notion-integration'
+                }
+            ]);
+        }
+        // Auto-prepend "secret_" only if token doesn't already have a known prefix
+        // Notion tokens can start with "secret_" (legacy) or "ntn_" (current)
+        if (!token.startsWith('secret_') && !token.startsWith('ntn_')) {
+            token = `secret_${token}`;
+            if (!this.isJsonMode) {
                 this.log(`${terminal_banner_1.colors.dim}Note: Automatically added "secret_" prefix to token${terminal_banner_1.colors.reset}`);
             }
-            // Validate token length (Notion tokens are typically 50+ chars)
-            if (token.length < 20) {
-                throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Token appears to be too short', [
-                    {
-                        description: 'Notion integration tokens are typically 50+ characters',
-                    },
-                    {
-                        description: 'Please verify you copied the complete token from Notion',
-                        link: 'https://www.notion.so/my-integrations'
-                    },
-                    {
-                        description: 'Token should look like: secret_abc123...(40+ more characters)',
-                    }
-                ]);
-            }
-            // Set token in current process for subsequent steps
-            process.env.NOTION_TOKEN = token;
-            this.log('');
-            this.log('Token set for this session.');
-            this.log('');
-            this.log('Note: To persist this token, add it to your shell configuration:');
-            this.log(`  export NOTION_TOKEN="${(0, token_validator_1.maskToken)(token)}"`);
-            this.log('');
-            this.log('Or use: notion-cli config set-token');
-            this.log('');
         }
+        // Validate token length (Notion tokens are typically 50+ chars)
+        if (token.length < 20) {
+            throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.TOKEN_INVALID, 'Token appears to be too short', [
+                {
+                    description: 'Notion integration tokens are typically 50+ characters',
+                },
+                {
+                    description: 'Please verify you copied the complete token from Notion',
+                    link: 'https://www.notion.so/my-integrations'
+                },
+                {
+                    description: 'Token should look like: ntn_abc123... or secret_abc123... (40+ more characters)',
+                }
+            ]);
+        }
+        // Set token in current process for subsequent steps
+        process.env.NOTION_TOKEN = token;
+        // Persist token to shell rc file so it's available in future sessions
+        const { rcFile } = await (0, shell_config_1.persistToken)(token);
         if (!this.isJsonMode) {
+            this.log('');
+            this.log(`Token saved to ${rcFile}`);
+            this.log(`Reload other terminal tabs with: source ${rcFile}`);
+            this.log('');
             this.log('Step 1 complete!');
             this.log('');
         }
@@ -231,6 +229,22 @@ class Init extends core_1.Command {
             updated: true,
             tokenLength: token.length
         };
+    }
+    /**
+     * Prompt user for token via interactive readline
+     */
+    async promptForToken() {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
+        const token = await new Promise((resolve) => {
+            rl.question('Enter your Notion integration token: ', (answer) => {
+                rl.close();
+                resolve(answer.trim());
+            });
+        });
+        return token;
     }
     /**
      * Step 2: Test connection
@@ -249,7 +263,11 @@ class Init extends core_1.Command {
         try {
             // Validate token and fetch bot info
             (0, token_validator_1.validateNotionToken)();
-            const user = await (0, notion_1.botUser)();
+            // Use a fresh client — the module-level client may have been created
+            // before process.env.NOTION_TOKEN was set (e.g., during init flow)
+            const freshClient = new client_1.Client({ auth: process.env.NOTION_TOKEN });
+            const userResponse = await freshClient.users.me({});
+            const user = userResponse;
             const latency = Date.now() - startTime;
             // Extract bot info
             const botInfo = {
@@ -317,11 +335,13 @@ class Init extends core_1.Command {
         }
         const startTime = Date.now();
         try {
+            // Use fresh client (same reason as testConnection — token may have been set mid-process)
+            const freshClient = new client_1.Client({ auth: process.env.NOTION_TOKEN });
             // Fetch all databases
             const databases = [];
             let cursor = undefined;
             while (true) {
-                const response = await notion_1.client.search({
+                const response = await freshClient.search({
                     filter: {
                         value: 'data_source',
                         property: 'object',
@@ -433,7 +453,17 @@ class Init extends core_1.Command {
     }
 }
 Init.description = 'Interactive first-time setup wizard for Notion CLI';
+Init.args = {
+    token: core_1.Args.string({
+        description: 'Notion integration token (starts with secret_ or ntn_)',
+        required: false,
+    }),
+};
 Init.examples = [
+    {
+        description: 'Set up with token directly',
+        command: '$ notion-cli init ntn_your_token_here',
+    },
     {
         description: 'Run interactive setup wizard',
         command: '$ notion-cli init',

@@ -227,12 +227,79 @@ When the conversion message appears, take note of both IDs:
 - **Understand** when you're using `database_id` vs `data_source_id`
 - **Update scripts** to use the correct ID type
 
+## URL Parsing
+
+The resolver accepts full Notion URLs in all common formats. The URL parser (`src/utils/notion-url-parser.ts`) extracts the 32-character hex ID from the end of the path, regardless of title slugs or workspace prefixes.
+
+### Supported URL Formats
+
+```bash
+# All of these resolve to the same ID: 1fb79d4c71bb8032b722c82305b63a00
+
+# Bare ID
+notion-cli page retrieve "https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00"
+
+# Title slug (most common format users copy from the browser)
+notion-cli page retrieve "https://www.notion.so/My-Page-Title-1fb79d4c71bb8032b722c82305b63a00"
+
+# Workspace prefix
+notion-cli page retrieve "https://www.notion.so/workspace/My-Page-1fb79d4c71bb8032b722c82305b63a00"
+
+# With query params (view IDs, etc.)
+notion-cli page retrieve "https://notion.so/1fb79d4c71bb8032b722c82305b63a00?v=abc123"
+
+# Dashed UUID format
+notion-cli page retrieve "1fb79d4c-71bb-8032-b722-c82305b63a00"
+```
+
+### How URL Parsing Works
+
+1. Strip query parameters (`?v=...`) and hash fragments (`#section`)
+2. Match the last 32 hex characters at the end of the path
+3. Fallback: match a dashed UUID (`8-4-4-4-12` format) anywhere in the path
+4. Normalize to lowercase 32-char hex string
+
+## Command Coverage
+
+All resource commands route through `resolveNotionId()`:
+
+| Command | Resolver | Notes |
+|---------|----------|-------|
+| `db retrieve` | Yes | + smart database_id → data_source_id |
+| `db query` | Yes | + smart database_id → data_source_id |
+| `db update` | Yes | + smart database_id → data_source_id |
+| `db schema` | Yes | + smart database_id → data_source_id |
+| `page retrieve` | Yes | |
+| `page create` | Yes | database ID arg |
+| `page update` | Yes | |
+| `page retrieve:property_item` | Yes | page_id only (property_id is a schema key) |
+| `block retrieve` | Yes | |
+| `block delete` | Yes | |
+| `block retrieve:children` | Yes | |
+| `block update` | Yes | |
+| `block append` | Yes | |
+| `search` | n/a | Uses query string, not ID |
+| `user retrieve` | No | User IDs are not Notion page/database IDs |
+
+## Error Messages
+
+When a resource is not found (HTTP 404), the CLI provides actionable suggestions. The most common cause is that the integration hasn't been shared with the page, so that hint appears first:
+
+```
+Error: page not found
+
+Suggestions:
+  1. The integration may not have access — open the page in Notion → "..." menu → "Add connections" → select your integration
+  2. The ID may be incorrect - verify it in Notion
+  3. The resource may have been deleted or archived
+```
+
 ## Related Features
 
-- **Name-based lookup**: Still works! Use database names instead of IDs
-- **URL parsing**: Accepts full Notion URLs for any ID type
+- **Name-based lookup**: Use database names instead of IDs
+- **URL parsing**: Accepts full Notion URLs in all formats (title slugs, workspace prefixes, query params)
 - **Cache system**: Frequently-used IDs are cached for speed
-- **Error messages**: Helpful suggestions when IDs can't be resolved
+- **Error messages**: Actionable suggestions with "not shared" as the primary hint
 
 ## Technical Notes
 
@@ -268,19 +335,14 @@ If smart ID resolution doesn't work for your use case:
 3. **Verify IDs**: Use `--raw` flag to see actual ID values
 4. **Report Issues**: Include debug output in issue reports
 
-## Future Enhancements
-
-Potential improvements to smart resolution:
-
-- [ ] Cache successful resolutions across sessions
-- [ ] Resolve IDs for empty databases via direct API lookup
-- [ ] Support bulk ID resolution for better performance
-- [ ] Add `--no-smart-resolve` flag to disable feature
-- [ ] Extend to other resource types (blocks, pages)
-
 ## Changelog
 
-### v5.4.0 (Current)
+### Unreleased
+- URL parser handles title-slug URLs (`notion.so/My-Page-abc123`)
+- All block and page property commands now route through `resolveNotionId()`
+- 404 error message reordered — "not shared" hint appears first
+
+### v5.4.0
 - Initial implementation of smart ID resolution
 - Automatic database_id → data_source_id conversion
 - Helpful user messaging

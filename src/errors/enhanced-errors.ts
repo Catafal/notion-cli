@@ -306,17 +306,14 @@ export class NotionCLIErrorFactory {
       `${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)} not found: ${identifier}`,
       isId ? [
         {
+          description: `The integration may not have access — open the ${resourceType} in Notion → "..." menu → "Add connections" → select your integration`,
+          link: 'https://developers.notion.com/docs/create-a-notion-integration#give-your-integration-page-permissions'
+        },
+        {
           description: 'The ID may be incorrect - verify it in Notion',
         },
         {
-          description: 'The integration may not have access - share the resource with your integration',
-        },
-        {
           description: 'The resource may have been deleted or archived',
-        },
-        {
-          description: 'Try using the full Notion URL instead of just the ID',
-          command: `notion-cli ${resourceType === 'database' ? 'db' : resourceType} retrieve https://notion.so/your-url-here`
         }
       ] : [
         {

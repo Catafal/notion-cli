@@ -6,12 +6,15 @@ const helper_1 = require("../../../helper");
 const base_flags_1 = require("../../../base-flags");
 const errors_1 = require("../../../errors");
 const table_formatter_1 = require("../../../utils/table-formatter");
+const notion_resolver_1 = require("../../../utils/notion-resolver");
 class BlockRetrieveChildren extends core_1.Command {
     async run() {
         const { args, flags } = await this.parse(BlockRetrieveChildren);
         try {
+            // Resolve URL/name/ID to clean Notion ID
+            const blockId = await (0, notion_resolver_1.resolveNotionId)(args.block_id, 'page');
             // TODO: Add support start_cursor, page_size
-            let res = await notion.retrieveBlockChildren(args.block_id);
+            let res = await notion.retrieveBlockChildren(blockId);
             // Handle --show-databases flag: filter and enrich child_database blocks
             if (flags['show-databases']) {
                 const databases = await (0, helper_1.getChildDatabasesWithIds)(res.results);
