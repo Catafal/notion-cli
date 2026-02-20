@@ -1,258 +1,120 @@
+---
+agent:
+  name: SmartIDResolver
+  type: utility
+  status: production
+  version: "2.0"
+
+component:
+  source_files:
+    - src/utils/notion-resolver.ts
+    - src/utils/notion-url-parser.ts
+    - src/errors/enhanced-errors.ts
+  test_files:
+    - test/utils/notion-url-parser.test.ts
+  entry_point: resolveNotionId()
+
+resolution:
+  input_formats:
+    - raw_hex_id          # 1fb79d4c71bb8032b722c82305b63a00
+    - dashed_uuid         # 1fb79d4c-71bb-8032-b722-c82305b63a00
+    - notion_url_bare     # https://notion.so/1fb79d4c71bb8032b722c82305b63a00
+    - notion_url_slug     # https://notion.so/My-Page-1fb79d4c71bb8032b722c82305b63a00
+    - notion_url_workspace # https://notion.so/workspace/Page-1fb79d4c71bb8032b722c82305b63a00
+    - database_name       # "Tasks Database"
+  output_format: 32_char_lowercase_hex
+  pipeline:
+    - url_extraction
+    - id_validation
+    - cache_lookup
+    - api_search
+    - smart_database_resolution
+
+commands_covered:
+  with_resolver:
+    - db retrieve
+    - db query
+    - db update
+    - db schema
+    - page retrieve
+    - page create
+    - page update
+    - page retrieve:property_item
+    - block retrieve
+    - block delete
+    - block retrieve:children
+    - block update
+    - block append
+  without_resolver:
+    - user retrieve   # user IDs are not Notion resource IDs
+    - search          # uses query string, not ID
+---
+
 # Smart ID Resolution
 
 ## Overview
 
-The Notion CLI now includes smart ID resolution that automatically handles the common confusion between `database_id` and `data_source_id` values.
+The resolver (`src/utils/notion-resolver.ts`) converts any user input — raw IDs, Notion URLs, or database names — into a clean 32-character hex ID. Every resource command pipes its ID argument through `resolveNotionId()` before calling the Notion API.
 
 ## The Problem
 
-When working with Notion's API v5, users often encounter two different ID types for databases:
+Notion's API v5 exposes two database ID types that look identical but are not interchangeable:
 
-1. **`data_source_id`** - The correct ID for database operations
-   - Used with: `db retrieve`, `db query`, `db update`
-   - Found in: Database objects returned by the API
-   - Example: `2gc80e5d82cc9043c833d93416c74b11`
+| Field | Used For | Found In |
+|-------|----------|----------|
+| `data_source_id` | Database operations (query, retrieve, update) | Database objects from API |
+| `database_id` | Reference only — cannot query databases | `page.parent.database_id` |
 
-2. **`database_id`** - A reference ID found in page parents
-   - Found in: `page.parent.database_id` field
-   - Cannot be used directly for database operations
-   - Example: `1fb79d4c71bb8032b722c82305b63a00`
+Users copy `database_id` from page responses and pass it to `db query`. Notion returns `object_not_found`. The resolver fixes this automatically.
 
-### Why This Causes Confusion
+## Resolution Pipeline
 
-When users retrieve a page and see `parent.database_id`, they naturally assume they can use that ID with database commands:
-
-```bash
-# Get a page
-notion-cli page retrieve abc123 --raw
-
-# Output shows:
-{
-  "parent": {
-    "type": "database_id",
-    "database_id": "1fb79d4c71bb8032b722c82305b63a00"
-  }
-}
-
-# User tries to use that ID (would fail before smart resolution)
-notion-cli db retrieve 1fb79d4c71bb8032b722c82305b63a00
-# Error: object_not_found
+```
+User Input
+  │
+  ├─ URL? ──────────► extractIdFromUrl() ──► strip query params ──► match last 32 hex chars
+  │
+  ├─ Raw ID? ───────► cleanRawId() ────────► remove dashes ──► validate 32 hex chars
+  │
+  └─ Name? ─────────► searchCache() ───────► exact ──► alias ──► substring match
+                        │
+                        └─ miss ──► Notion API search
+                              │
+                              └─ database type? ──► trySmartDatabaseResolution()
+                                                     │
+                                                     ├─ try data_source_id ──► success
+                                                     └─ 404 ──► search pages for database_id ──► extract data_source_id
 ```
 
-## The Solution: Smart ID Resolution
-
-The CLI now automatically detects when you provide a `database_id` and converts it to the correct `data_source_id`:
-
-```bash
-# Now this works automatically!
-notion-cli db retrieve 1fb79d4c71bb8032b722c82305b63a00
-
-# Output:
-Info: Resolved database_id to data_source_id
-  database_id:    1fb79d4c71bb8032b722c82305b63a00
-  data_source_id: 2gc80e5d82cc9043c833d93416c74b11
-
-Note: Use data_source_id for database operations.
-      The database_id from parent.database_id won't work directly.
-
-[Database information displayed...]
-```
-
-## How It Works
-
-The smart resolution system follows this process:
-
-1. **Try Direct Lookup**: First, try to use the provided ID as a `data_source_id`
-2. **Detect Failure**: If the lookup fails with `object_not_found` error
-3. **Search for Pages**: Search for pages that have this ID as their `parent.database_id`
-4. **Extract data_source_id**: Get the `data_source_id` from the matching page's parent
-5. **Use Correct ID**: Retry the operation with the correct `data_source_id`
-6. **Inform User**: Show a helpful message explaining the conversion
-
-## Benefits
-
-### For Users
-- **No More Confusion**: Use either ID type - it just works
-- **Better Error Messages**: Clear explanation when conversion happens
-- **Educational**: Learn the difference between ID types
-- **Time Saving**: No need to manually find the correct ID
-
-### For Developers
-- **Reduced Support**: Fewer "ID not found" issues
-- **Better UX**: Intuitive behavior matches user expectations
-- **Backward Compatible**: Existing scripts continue to work
-- **Transparent**: Clear logging shows what's happening
-
-## Examples
-
-### Basic Usage
-
-```bash
-# Any of these work now:
-notion-cli db retrieve 1fb79d4c71bb8032b722c82305b63a00  # database_id (auto-converts)
-notion-cli db retrieve 2gc80e5d82cc9043c833d93416c74b11  # data_source_id (direct)
-notion-cli db retrieve "Tasks Database"                   # name (cache/search)
-```
-
-### Database Query
-
-```bash
-# Works with database_id
-notion-cli db query 1fb79d4c71bb8032b722c82305b63a00 --filter status equals Done
-```
-
-### Database Update
-
-```bash
-# Works with database_id
-notion-cli db update 1fb79d4c71bb8032b722c82305b63a00 --title "Updated Title"
-```
-
-### Workflow Example
-
-```bash
-# 1. Get a page ID from somewhere
-PAGE_ID="abc123..."
-
-# 2. Retrieve the page to see its parent database
-notion-cli page retrieve $PAGE_ID --raw | jq -r '.parent.database_id'
-# Output: 1fb79d4c71bb8032b722c82305b63a00
-
-# 3. Use that database_id directly (auto-converts!)
-notion-cli db query 1fb79d4c71bb8032b722c82305b63a00 --json > results.json
-
-# 4. The system shows the conversion happened
-# Info: Resolved database_id to data_source_id
-#   database_id:    1fb79d4c71bb8032b722c82305b63a00
-#   data_source_id: 2gc80e5d82cc9043c833d93416c74b11
-```
-
-## Implementation Details
-
-### Resolution Algorithm
-
-The smart resolution is implemented in `src/utils/notion-resolver.ts`:
+### Key Implementation: `src/utils/notion-resolver.ts`
 
 ```typescript
-async function trySmartDatabaseResolution(databaseId: string): Promise<string> {
-  try {
-    // Try direct lookup with data_source_id
-    await retrieveDataSource(databaseId)
-    return databaseId  // Success - it's a valid data_source_id
-  } catch (error) {
-    if (isNotFoundError(error)) {
-      // Try to resolve database_id → data_source_id
-      const dataSourceId = await resolveDatabaseIdToDataSourceId(databaseId)
-      if (dataSourceId) {
-        console.log("Info: Resolved database_id to data_source_id")
-        return dataSourceId
-      }
-    }
-    throw error
-  }
+// [src/utils/notion-resolver.ts] — 4-stage resolution
+async function resolveNotionId(input: string, type: 'page' | 'database'): Promise<string> {
+  // Stage 1: URL extraction
+  // Stage 2: ID validation (32 hex chars)
+  // Stage 3: Cache lookup (exact → alias → substring)
+  // Stage 4: API search + smart database resolution
 }
 ```
-
-### Performance Considerations
-
-- **Fast Path**: Valid `data_source_id` values work immediately (no extra API calls)
-- **Fallback Path**: Invalid IDs trigger one additional API search (max 100 pages)
-- **Caching**: Resolution results are cached to avoid repeated lookups
-- **Timeout**: Search has reasonable timeout to avoid hanging
-
-### Limitations
-
-1. **Requires Pages**: The database must have at least one page to resolve
-   - Empty databases cannot be resolved this way
-   - Workaround: Add a test page to the database
-
-2. **Search Scope**: Searches first 100 pages
-   - Usually sufficient since we only need one match
-   - If no match in first 100, resolution fails
-
-3. **API Permissions**: Requires search permission
-   - Integration must have access to search workspace
-   - Standard integration permissions include this
-
-## Troubleshooting
-
-### "Database not found" after resolution attempt
-
-**Cause**: The database has no pages, or they're not accessible to your integration.
-
-**Solutions**:
-1. Verify the integration has access to the database
-2. Add at least one page to the database
-3. Use the correct `data_source_id` directly (from database list)
-
-### Resolution is slow
-
-**Cause**: Searching through many pages to find a match.
-
-**Solutions**:
-1. Use `data_source_id` directly for better performance
-2. Ensure your integration has proper permissions
-3. Check network connectivity
-
-### Wrong database returned
-
-**Cause**: Multiple databases share the same `database_id` (unlikely).
-
-**Solutions**:
-1. Use `data_source_id` for precise targeting
-2. Verify the database ID is correct
-3. Check that you're using the right workspace
-
-## Best Practices
-
-### For Scripts and Automation
-
-```bash
-# For reliability, prefer data_source_id when possible
-DATA_SOURCE_ID=$(notion-cli db list --json | jq -r '.[] | select(.title == "Tasks") | .id')
-notion-cli db query "$DATA_SOURCE_ID"
-```
-
-### For Interactive Use
-
-```bash
-# Use whichever ID you have - smart resolution handles it
-notion-cli db retrieve <ANY_ID>
-```
-
-### For Learning
-
-When the conversion message appears, take note of both IDs:
-- **Save the `data_source_id`** for faster future operations
-- **Understand** when you're using `database_id` vs `data_source_id`
-- **Update scripts** to use the correct ID type
 
 ## URL Parsing
 
-The resolver accepts full Notion URLs in all common formats. The URL parser (`src/utils/notion-url-parser.ts`) extracts the 32-character hex ID from the end of the path, regardless of title slugs or workspace prefixes.
+The URL parser (`src/utils/notion-url-parser.ts`) extracts the 32-character hex ID from any Notion URL format.
 
-### Supported URL Formats
+### Supported Formats
 
 ```bash
-# All of these resolve to the same ID: 1fb79d4c71bb8032b722c82305b63a00
+# All resolve to: 1fb79d4c71bb8032b722c82305b63a00
 
-# Bare ID
 notion-cli page retrieve "https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00"
-
-# Title slug (most common format users copy from the browser)
 notion-cli page retrieve "https://www.notion.so/My-Page-Title-1fb79d4c71bb8032b722c82305b63a00"
-
-# Workspace prefix
 notion-cli page retrieve "https://www.notion.so/workspace/My-Page-1fb79d4c71bb8032b722c82305b63a00"
-
-# With query params (view IDs, etc.)
 notion-cli page retrieve "https://notion.so/1fb79d4c71bb8032b722c82305b63a00?v=abc123"
-
-# Dashed UUID format
 notion-cli page retrieve "1fb79d4c-71bb-8032-b722-c82305b63a00"
 ```
 
-### How URL Parsing Works
+### Parsing Logic
 
 1. Strip query parameters (`?v=...`) and hash fragments (`#section`)
 2. Match the last 32 hex characters at the end of the path
@@ -261,79 +123,115 @@ notion-cli page retrieve "1fb79d4c-71bb-8032-b722-c82305b63a00"
 
 ## Command Coverage
 
-All resource commands route through `resolveNotionId()`:
+| Command | Resolver | Smart DB Resolution | Notes |
+|---------|----------|---------------------|-------|
+| `db retrieve` | Yes | Yes | database_id auto-converts to data_source_id |
+| `db query` | Yes | Yes | |
+| `db update` | Yes | Yes | |
+| `db schema` | Yes | Yes | |
+| `page retrieve` | Yes | No | |
+| `page create` | Yes | No | database ID arg |
+| `page update` | Yes | No | |
+| `page retrieve:property_item` | Yes | No | page_id only; property_id is a schema key |
+| `block retrieve` | Yes | No | |
+| `block delete` | Yes | No | |
+| `block retrieve:children` | Yes | No | |
+| `block update` | Yes | No | |
+| `block append` | Yes | No | |
+| `search` | n/a | n/a | Uses query string, not ID |
+| `user retrieve` | No | No | User IDs are not page/database IDs |
 
-| Command | Resolver | Notes |
-|---------|----------|-------|
-| `db retrieve` | Yes | + smart database_id → data_source_id |
-| `db query` | Yes | + smart database_id → data_source_id |
-| `db update` | Yes | + smart database_id → data_source_id |
-| `db schema` | Yes | + smart database_id → data_source_id |
-| `page retrieve` | Yes | |
-| `page create` | Yes | database ID arg |
-| `page update` | Yes | |
-| `page retrieve:property_item` | Yes | page_id only (property_id is a schema key) |
-| `block retrieve` | Yes | |
-| `block delete` | Yes | |
-| `block retrieve:children` | Yes | |
-| `block update` | Yes | |
-| `block append` | Yes | |
-| `search` | n/a | Uses query string, not ID |
-| `user retrieve` | No | User IDs are not Notion page/database IDs |
+## Error Codes and Recovery
 
-## Error Messages
+| HTTP Status | Error | Primary Cause | Recovery Strategy | Retryable |
+|-------------|-------|---------------|-------------------|-----------|
+| 404 | `object_not_found` | Integration not shared with resource | Open page in Notion, "..." menu, "Add connections" | No |
+| 404 | `object_not_found` | Wrong ID type (database_id vs data_source_id) | Resolver auto-converts; or use `notion-cli list` to find correct ID | No |
+| 404 | `object_not_found` | Resource deleted or archived | Verify in Notion | No |
+| 401 | `unauthorized` | Invalid or missing token | Run `notion-cli init <token>` | No |
+| 429 | `rate_limited` | Too many API calls | Automatic retry with backoff | Yes |
+| 400 | `validation_error` | Invalid ID format (not 32 hex chars) | Check URL or ID format | No |
 
-When a resource is not found (HTTP 404), the CLI provides actionable suggestions. The most common cause is that the integration hasn't been shared with the page, so that hint appears first:
+### 404 Error Output
 
-```
-Error: page not found
+The CLI surfaces the most common cause first:
 
-Suggestions:
-  1. The integration may not have access — open the page in Notion → "..." menu → "Add connections" → select your integration
-  2. The ID may be incorrect - verify it in Notion
-  3. The resource may have been deleted or archived
-```
-
-## Related Features
-
-- **Name-based lookup**: Use database names instead of IDs
-- **URL parsing**: Accepts full Notion URLs in all formats (title slugs, workspace prefixes, query params)
-- **Cache system**: Frequently-used IDs are cached for speed
-- **Error messages**: Actionable suggestions with "not shared" as the primary hint
-
-## Technical Notes
-
-### API v5 Changes
-
-In Notion API v5, databases became "data sources":
-- Old API: Used `database_id` everywhere
-- New API: Databases → Data Sources with `data_source_id`
-- Legacy field: `parent.database_id` still exists for compatibility
-
-### Type Definitions
-
-```typescript
-// Page parent can reference a database
-interface PageParent {
-  type: 'database_id'
-  database_id: string      // Cannot use for database operations
-  data_source_id?: string  // Use this for database operations
-}
-
-// Database operations require data_source_id
-interface DataSourceQuery {
-  data_source_id: string  // This is what you need!
+```json
+{
+  "code": "RESOURCE_NOT_FOUND",
+  "resourceType": "page",
+  "attemptedId": "1fb79d4c71bb8032b722c82305b63a00",
+  "suggestions": [
+    "The integration may not have access — open the page in Notion → \"...\" menu → \"Add connections\"",
+    "The ID may be incorrect - verify it in Notion",
+    "The resource may have been deleted or archived"
+  ]
 }
 ```
 
-## Feedback and Support
+## Performance
 
-If smart ID resolution doesn't work for your use case:
+- **Fast path**: Valid IDs resolve in 0ms (no API call)
+- **Cache hit**: Name lookups resolve from local cache (~1ms)
+- **Fallback path**: API search adds one request (~200-500ms)
+- **Smart DB resolution**: Adds one additional search if database_id detected (~200-500ms)
+- **Caching**: Resolved IDs are cached to avoid repeated lookups
 
-1. **Enable Debug Mode**: `export DEBUG=notion-cli:*`
-2. **Check the Logs**: Look for "Debug: Failed to resolve database_id"
-3. **Verify IDs**: Use `--raw` flag to see actual ID values
-4. **Report Issues**: Include debug output in issue reports
+## Limitations
+
+1. **Empty databases**: Smart resolution requires at least one page in the database
+2. **Search scope**: Searches first 100 pages (sufficient for single match)
+3. **API permissions**: Integration needs workspace search access
+
+## Executable Commands
+
+### Test URL Parsing
+
+```bash
+# Build and run URL parser tests
+npm run build
+npm test -- --grep "notion-url-parser"
+```
+
+### Validate Resolution Works
+
+```bash
+# Test with a known page URL (replace with your page)
+notion-cli page retrieve "https://www.notion.so/Your-Page-Title-<id>"
+
+# Test with raw ID
+notion-cli page retrieve <page_id>
+
+# Test block commands accept URLs
+notion-cli block retrieve "https://www.notion.so/Your-Page-<id>"
+notion-cli block retrieve:children "https://www.notion.so/Your-Page-<id>"
+
+# Test database smart resolution (use database_id from a page parent)
+notion-cli db retrieve <database_id>
+# Should show: "Info: Resolved database_id to data_source_id"
+```
+
+### Verify Command Help Loads
+
+```bash
+# All commands with resolver should load without errors
+notion-cli page retrieve --help
+notion-cli page retrieve:property_item --help
+notion-cli block retrieve --help
+notion-cli block delete --help
+notion-cli block retrieve:children --help
+notion-cli db retrieve --help
+notion-cli db query --help
+```
+
+### Debug Resolution
+
+```bash
+# Enable debug logging to trace the resolution pipeline
+export DEBUG=notion-cli:*
+notion-cli page retrieve "https://www.notion.so/My-Page-<id>"
+# Look for: resolution stage logs, cache hit/miss, API call details
+```
 
 ## Changelog
 
@@ -344,13 +242,21 @@ If smart ID resolution doesn't work for your use case:
 
 ### v5.4.0
 - Initial implementation of smart ID resolution
-- Automatic database_id → data_source_id conversion
+- Automatic database_id to data_source_id conversion
 - Helpful user messaging
 - Full test coverage
+
+---
+
+**Last Updated**: 2026-02-20
+**Component Status**: Production
+**Machine-Readable**: YAML frontmatter + JSON error schemas
+**Source**: [`src/utils/notion-resolver.ts`](../../src/utils/notion-resolver.ts), [`src/utils/notion-url-parser.ts`](../../src/utils/notion-url-parser.ts)
 
 ---
 
 **Related Documentation:**
 - [Database Commands](./db.md)
 - [Page Commands](./page.md)
-- [ID Resolution System](./notion-resolver.md)
+- [Authentication Setup](../user-guides/authentication-setup.md)
+- [CHANGELOG](../../CHANGELOG.md)
