@@ -109,10 +109,13 @@ class NotionCLIError extends Error {
                 }
             });
         }
-        // Add debug context in debug mode
+        // Add debug context in debug mode (redact tokens to prevent leakage)
         if (process.env.DEBUG && this.context.originalError) {
             parts.push('\n🐛 Debug Information:');
-            parts.push(`   ${JSON.stringify(this.context.originalError, null, 2)}`);
+            const sanitized = JSON.stringify(this.context.originalError, null, 2)
+                .replace(/secret_[a-zA-Z0-9_-]+/g, 'secret_[REDACTED]')
+                .replace(/ntn_[a-zA-Z0-9_-]+/g, 'ntn_[REDACTED]');
+            parts.push(`   ${sanitized}`);
         }
         parts.push(''); // Empty line at end
         return parts.join('\n');
@@ -155,11 +158,11 @@ class NotionCLIErrorFactory {
             },
             {
                 description: 'Or export it manually (Mac/Linux)',
-                command: 'export NOTION_TOKEN="secret_your_token_here"'
+                command: 'export NOTION_TOKEN="ntn_your_token_here"'
             },
             {
                 description: 'Or set it manually (Windows PowerShell)',
-                command: '$env:NOTION_TOKEN="secret_your_token_here"'
+                command: '$env:NOTION_TOKEN="ntn_your_token_here"'
             },
             {
                 description: 'Get your integration token from Notion',
@@ -224,17 +227,14 @@ class NotionCLIErrorFactory {
         const isId = /^[a-f0-9]{32}$/i.test(identifier.replace(/-/g, ''));
         return new NotionCLIError(NotionCLIErrorCode.OBJECT_NOT_FOUND, `${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)} not found: ${identifier}`, isId ? [
             {
+                description: `The integration may not have access — open the ${resourceType} in Notion → "..." menu → "Add connections" → select your integration`,
+                link: 'https://developers.notion.com/docs/create-a-notion-integration#give-your-integration-page-permissions'
+            },
+            {
                 description: 'The ID may be incorrect - verify it in Notion',
             },
             {
-                description: 'The integration may not have access - share the resource with your integration',
-            },
-            {
                 description: 'The resource may have been deleted or archived',
-            },
-            {
-                description: 'Try using the full Notion URL instead of just the ID',
-                command: `notion-cli ${resourceType === 'database' ? 'db' : resourceType} retrieve https://notion.so/your-url-here`
             }
         ] : [
             {

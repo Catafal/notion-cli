@@ -8,6 +8,7 @@ import {
   NotionCLIError,
   wrapNotionError
 } from '../../errors'
+import { resolveNotionId } from '../../utils/notion-resolver'
 
 export default class BlockDelete extends Command {
   static description = 'Delete a block'
@@ -46,7 +47,9 @@ export default class BlockDelete extends Command {
     const { args, flags } = await this.parse(BlockDelete)
 
     try {
-      const res = await notion.deleteBlock(args.block_id)
+      // Resolve URL/name/ID to clean Notion ID
+      const blockId = await resolveNotionId(args.block_id, 'page')
+      const res = await notion.deleteBlock(blockId)
 
       // Handle JSON output for automation
       if (flags.json) {

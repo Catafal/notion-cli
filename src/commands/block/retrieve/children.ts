@@ -8,6 +8,7 @@ import {
   wrapNotionError
 } from '../../../errors'
 import { tableFlags, formatTable } from '../../../utils/table-formatter'
+import { resolveNotionId } from '../../../utils/notion-resolver'
 
 export default class BlockRetrieveChildren extends Command {
   static description = 'Retrieve block children (supports database discovery via --show-databases)'
@@ -62,8 +63,10 @@ export default class BlockRetrieveChildren extends Command {
     const { args, flags } = await this.parse(BlockRetrieveChildren)
 
     try {
+      // Resolve URL/name/ID to clean Notion ID
+      const blockId = await resolveNotionId(args.block_id, 'page')
       // TODO: Add support start_cursor, page_size
-      let res = await notion.retrieveBlockChildren(args.block_id)
+      let res = await notion.retrieveBlockChildren(blockId)
 
       // Handle --show-databases flag: filter and enrich child_database blocks
       if (flags['show-databases']) {

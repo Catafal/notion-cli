@@ -45,7 +45,12 @@ class DbQuery extends core_1.Command {
                 else if (flags['file-filter'] || flags.fileFilter) {
                     // Load from file (new flag or deprecated fileFilter)
                     const filterFile = flags['file-filter'] || flags.fileFilter;
-                    const fp = path.join('./', filterFile);
+                    // Resolve path and prevent directory traversal outside cwd
+                    const basePath = path.resolve('./');
+                    const fp = path.resolve(basePath, filterFile);
+                    if (!fp.startsWith(basePath)) {
+                        throw new Error(`Invalid file path: must be within current directory`);
+                    }
                     let fj;
                     try {
                         fj = fs.readFileSync(fp, { encoding: 'utf-8' });

@@ -126,3 +126,5 @@ Thumbs.db
 lib/
 *.tgz
 *.js.map
+
+.claude/

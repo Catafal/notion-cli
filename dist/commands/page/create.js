@@ -62,7 +62,12 @@ class PageCreate extends core_1.Command {
                 }
             }
             if (flags.file_path) {
-                const p = path.join('./', flags.file_path);
+                // Resolve path and prevent directory traversal outside cwd
+                const basePath = path.resolve('./');
+                const p = path.resolve(basePath, flags.file_path);
+                if (!p.startsWith(basePath)) {
+                    throw new Error(`Invalid file path: must be within current directory`);
+                }
                 const fileName = path.basename(flags.file_path);
                 const md = fs.readFileSync(p, { encoding: 'utf-8' });
                 const blocks = (0, markdown_to_blocks_1.markdownToBlocks)(md);

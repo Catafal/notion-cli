@@ -39,7 +39,7 @@ async function getCachePath() {
 async function ensureCacheDir() {
     const cacheDir = getCacheDir();
     try {
-        await fs.mkdir(cacheDir, { recursive: true });
+        await fs.mkdir(cacheDir, { recursive: true, mode: 0o700 });
     }
     catch (error) {
         if (error.code !== 'EEXIST') {
@@ -82,7 +82,7 @@ async function saveCache(data) {
     const tmpPath = `${cachePath}.tmp`;
     try {
         // Write to temporary file
-        await fs.writeFile(tmpPath, JSON.stringify(data, null, 2), 'utf-8');
+        await fs.writeFile(tmpPath, JSON.stringify(data, null, 2), { encoding: 'utf-8', mode: 0o600 });
         // Atomic rename (replaces old file)
         await fs.rename(tmpPath, cachePath);
     }

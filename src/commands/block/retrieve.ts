@@ -8,6 +8,7 @@ import {
   NotionCLIError,
   wrapNotionError
 } from '../../errors'
+import { resolveNotionId } from '../../utils/notion-resolver'
 
 export default class BlockRetrieve extends Command {
   static description = 'Retrieve a block'
@@ -46,7 +47,9 @@ export default class BlockRetrieve extends Command {
     const { args, flags } = await this.parse(BlockRetrieve)
 
     try {
-      let res = await notion.retrieveBlock(args.block_id)
+      // Resolve URL/name/ID to clean Notion ID
+      const blockId = await resolveNotionId(args.block_id, 'page')
+      let res = await notion.retrieveBlock(blockId)
 
       // Apply minimal flag to strip metadata
       if (flags.minimal) {

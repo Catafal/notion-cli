@@ -90,7 +90,7 @@ class DiskCacheManager {
         const tmpPath = `${filePath}.tmp`;
         try {
             // Write to temporary file
-            await fs.writeFile(tmpPath, JSON.stringify(entry), 'utf-8');
+            await fs.writeFile(tmpPath, JSON.stringify(entry), { encoding: 'utf-8', mode: 0o600 });
             // Atomic rename
             await fs.rename(tmpPath, filePath);
             this.dirtyKeys.delete(key);
@@ -267,7 +267,7 @@ class DiskCacheManager {
      */
     async ensureCacheDir() {
         try {
-            await fs.mkdir(this.cacheDir, { recursive: true });
+            await fs.mkdir(this.cacheDir, { recursive: true, mode: 0o700 });
         }
         catch (error) {
             if (error.code !== 'EEXIST') {

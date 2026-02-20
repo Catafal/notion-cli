@@ -2,7 +2,9 @@
  * Notion URL Parser
  *
  * Extracts clean Notion IDs from various input formats:
- * - Full URLs: https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00?v=...
+ * - Title-slug URLs: https://www.notion.so/My-Page-Title-1fb79d4c71bb8032b722c82305b63a00
+ * - Workspace URLs: https://www.notion.so/workspace/Page-Title-1fb79d4c71bb8032b722c82305b63a00
+ * - Bare ID URLs: https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00?v=...
  * - Short URLs: notion.so/1fb79d4c71bb8032b722c82305b63a00
  * - Raw IDs with dashes: 1fb79d4c-71bb-8032-b722-c82305b63a00
  * - Raw IDs without dashes: 1fb79d4c71bb8032b722c82305b63a00
@@ -16,18 +18,18 @@
  * @throws Error if input is invalid
  *
  * @example
- * // Full URL
+ * // URL with page title slug (most common format)
+ * extractNotionId('https://www.notion.so/My-Page-1fb79d4c71bb8032b722c82305b63a00')
+ * // Returns: '1fb79d4c71bb8032b722c82305b63a00'
+ *
+ * @example
+ * // Bare ID URL
  * extractNotionId('https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00?v=...')
  * // Returns: '1fb79d4c71bb8032b722c82305b63a00'
  *
  * @example
  * // Raw ID with dashes
  * extractNotionId('1fb79d4c-71bb-8032-b722-c82305b63a00')
- * // Returns: '1fb79d4c71bb8032b722c82305b63a00'
- *
- * @example
- * // Already clean ID
- * extractNotionId('1fb79d4c71bb8032b722c82305b63a00')
  * // Returns: '1fb79d4c71bb8032b722c82305b63a00'
  */
 export function extractNotionId(input: string): string {
@@ -50,23 +52,34 @@ export function extractNotionId(input: string): string {
  * Extract ID from Notion URL
  */
 function extractIdFromUrl(url: string): string {
-  // Notion URL patterns:
-  // https://www.notion.so/{id}
-  // https://www.notion.so/{id}?v={view_id}
-  // https://notion.so/{id}
-  // www.notion.so/{id}
+  // Notion URL formats (the ID is always the last 32 hex chars in the path):
+  // https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00
+  // https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00?v=view_id
+  // https://www.notion.so/My-Page-Title-1fb79d4c71bb8032b722c82305b63a00
+  // https://www.notion.so/workspace/Page-Title-1fb79d4c71bb8032b722c82305b63a00
 
-  // Match notion.so/ followed by hex characters and optional dashes
-  const match = url.match(/notion\.so\/([a-f0-9-]{32,36})/i)
+  // Strip query params and hash before matching
+  const pathOnly = url.split(/[?#]/)[0]
+
+  // Extract the last 32 hex characters from the URL path.
+  // Notion always appends the ID at the end of the slug (after the last dash).
+  const match = pathOnly.match(/([a-f0-9]{32})$/i)
 
   if (match) {
-    return cleanRawId(match[1])
+    return match[1].toLowerCase()
+  }
+
+  // Fallback: try matching a dashed UUID anywhere in the path
+  const dashedMatch = pathOnly.match(/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/i)
+
+  if (dashedMatch) {
+    return cleanRawId(dashedMatch[1])
   }
 
   throw new Error(
     `Could not extract Notion ID from URL: ${url}\n\n` +
-    `Expected format: https://www.notion.so/{id}\n` +
-    `Example: https://www.notion.so/1fb79d4c71bb8032b722c82305b63a00`
+    `Expected format: https://www.notion.so/Page-Title-{id}\n` +
+    `Example: https://www.notion.so/My-Page-1fb79d4c71bb8032b722c82305b63a00`
   )
 }
 

@@ -15,6 +15,7 @@ Essential guides for using the CLI effectively:
 - **[Verbose Logging](user-guides/verbose-logging.md)** - Debug mode and troubleshooting
 - **[Envelope System](user-guides/envelope-index.md)** - Standardized response format
 - **[Error Handling](user-guides/error-handling-examples.md)** - Understanding and handling errors
+- **[Interactive Browsing](user-guides/interactive-browsing.md)** - Navigate Notion page trees with arrow keys
 
 ## Architecture
 
@@ -24,6 +25,7 @@ Deep dives into internal systems:
 - **[Envelopes](architecture/envelopes.md)** - Response envelope architecture
 - **[Error Handling](architecture/error-handling.md)** - Enhanced error system architecture
 - **[Smart ID Resolution](architecture/smart-id-resolution.md)** - Automatic database_id ↔ data_source_id conversion
+- **[Interactive Navigator](architecture/interactive-navigator.md)** - Browse command internals and data flow
 
 ## API Reference
 

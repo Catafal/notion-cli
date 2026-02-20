@@ -6,11 +6,14 @@ const notion = require("../../notion");
 const helper_1 = require("../../helper");
 const base_flags_1 = require("../../base-flags");
 const errors_1 = require("../../errors");
+const notion_resolver_1 = require("../../utils/notion-resolver");
 class BlockRetrieve extends core_1.Command {
     async run() {
         const { args, flags } = await this.parse(BlockRetrieve);
         try {
-            let res = await notion.retrieveBlock(args.block_id);
+            // Resolve URL/name/ID to clean Notion ID
+            const blockId = await (0, notion_resolver_1.resolveNotionId)(args.block_id, 'page');
+            let res = await notion.retrieveBlock(blockId);
             // Apply minimal flag to strip metadata
             if (flags.minimal) {
                 res = (0, helper_1.stripMetadata)(res);
