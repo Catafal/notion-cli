@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **`browse` command** — interactively navigate Notion page trees with arrow keys (`notion-cli browse PAGE_ID`). Alias: `nav`.
 - **Auto-persist token during `init`** — `notion-cli init ntn_your_token` saves the token to your shell config file (~/.zshrc, ~/.bashrc, etc.) automatically. No manual `export` or editing rc files.
 - **Token argument for `init`** — pass token as a CLI argument to skip interactive prompts. Ideal for scripts and CI.
 - **`ntn_` token format support** — all commands now accept both `ntn_` (current) and `secret_` (legacy) Notion token formats.
