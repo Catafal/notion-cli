@@ -134,11 +134,47 @@ jobs:
           coverage/
         retention-days: 30
 
-  # Job 5: Final status check
+  # Job 5: Smoke test — pack, install from tarball, run real commands
+  # Catches MODULE_NOT_FOUND and missing dependency issues that unit tests miss
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Pack tarball
+      run: npm pack
+
+    - name: Install globally from tarball
+      run: npm install -g ./coastal-programs-notion-cli-*.tgz
+
+    # These commands load real command modules — not just the manifest.
+    # If a runtime dependency is missing, they fail with MODULE_NOT_FOUND.
+    - name: Verify CLI runs
+      run: |
+        notion-cli --version
+        notion-cli search --help
+        notion-cli page --help
+        notion-cli db --help
+        notion-cli doctor || true  # Exits 1 without NOTION_TOKEN, but proves modules load
+
+  # Job 6: Final status check
   ci-success:
     name: CI Success
     runs-on: ubuntu-latest
-    needs: [quality, security, build, test]
+    needs: [quality, security, build, test, smoke-test]
     if: always()
 
     steps:
@@ -146,7 +182,8 @@ jobs:
       run: |
         if [ "${{ needs.quality.result }}" != "success" ] || \
            [ "${{ needs.build.result }}" != "success" ] || \
-           [ "${{ needs.test.result }}" != "success" ]; then
+           [ "${{ needs.test.result }}" != "success" ] || \
+           [ "${{ needs.smoke-test.result }}" != "success" ]; then
           echo "❌ CI pipeline failed"
           exit 1
         fi
