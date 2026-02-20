@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Auto-persist token during `init`** — `notion-cli init ntn_your_token` saves the token to your shell config file (~/.zshrc, ~/.bashrc, etc.) automatically. No manual `export` or editing rc files.
+- **Token argument for `init`** — pass token as a CLI argument to skip interactive prompts. Ideal for scripts and CI.
+- **`ntn_` token format support** — all commands now accept both `ntn_` (current) and `secret_` (legacy) Notion token formats.
+- **Shell config utility** (`src/utils/shell-config.ts`) — shared module for shell detection and token persistence, used by both `init` and `config set-token`.
+- **CI smoke test** — new GitHub Actions job that packs the CLI, installs from tarball, and runs real commands to catch MODULE_NOT_FOUND regressions.
+- **Authentication setup guide** (`docs/user-guides/authentication-setup.md`) — end-to-end guide for getting a token and configuring the CLI.
+
+### Fixed
+- **npm packaging MODULE_NOT_FOUND** — replaced `shx` (devDependency) with native `Node.js fs` in build/postpack lifecycle scripts so they work during `npm install -g`.
+- **Runtime missing dependencies** — moved `undici` and `cli-table3` from devDependencies to dependencies (they are imported at runtime).
+- **Token leak in error context** — raw token in `set-token` error output is now masked via `maskToken()`.
+- **Path traversal in `--file-filter`** — `db query --file-filter` now validates the resolved path stays within the current directory.
+- **Path traversal in `--file-path`** — `page create --file-path` now validates the resolved path stays within the current directory.
+- **Token leak in DEBUG mode** — debug JSON dump now redacts `secret_*` and `ntn_*` patterns.
+- **Prototype pollution in `block update`** — strips `__proto__`, `constructor`, and `prototype` keys from user-provided JSON before `Object.assign`.
+- **World-readable cache files** — cache directories now created with `0700` and files with `0600` permissions (owner-only).
+- **minimatch ReDoS vulnerability** — added npm `overrides` to force `minimatch >= 10.2.1` for all transitive dependencies.
+
+### Changed
+- **`prepack` script** — wrapped in `|| true` to fail gracefully when devDeps are absent during end-user install.
+- **`oclif.manifest.json`** — now committed to git so it always ships in the package, even if prepack fails.
+- Updated all user-facing strings (examples, error messages, descriptions) to reference `ntn_` as the primary token format.
+
 ## [5.9.0] - 2026-02-05
 
 ### Added
