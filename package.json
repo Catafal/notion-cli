@@ -85,6 +85,9 @@
   "engines": {
     "node": ">=22.0.0"
   },
+  "overrides": {
+    "minimatch": ">=10.2.1"
+  },
   "bugs": {
     "url": "https://github.com/Coastal-Programs/notion-cli/issues",
     "email": "jake@coastalprograms.com"
