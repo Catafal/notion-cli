@@ -159,10 +159,13 @@ export class NotionCLIError extends Error {
       })
     }
 
-    // Add debug context in debug mode
+    // Add debug context in debug mode (redact tokens to prevent leakage)
     if (process.env.DEBUG && this.context.originalError) {
       parts.push('\n🐛 Debug Information:')
-      parts.push(`   ${JSON.stringify(this.context.originalError, null, 2)}`)
+      const sanitized = JSON.stringify(this.context.originalError, null, 2)
+        .replace(/secret_[a-zA-Z0-9_-]+/g, 'secret_[REDACTED]')
+        .replace(/ntn_[a-zA-Z0-9_-]+/g, 'ntn_[REDACTED]')
+      parts.push(`   ${sanitized}`)
     }
 
     parts.push('') // Empty line at end

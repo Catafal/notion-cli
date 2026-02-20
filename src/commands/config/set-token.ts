@@ -7,6 +7,7 @@ import {
   wrapNotionError
 } from '../../errors'
 import { persistToken } from '../../utils/shell-config'
+import { maskToken } from '../../utils/token-validator'
 
 export default class ConfigSetToken extends Command {
   static description = 'Set NOTION_TOKEN in your shell configuration file'
@@ -89,7 +90,7 @@ export default class ConfigSetToken extends Command {
             }
           ],
           {
-            userInput: token,
+            userInput: maskToken(token),
             metadata: { tokenFormat: 'invalid' }
           }
         )

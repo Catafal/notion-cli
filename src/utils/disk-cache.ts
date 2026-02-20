@@ -124,7 +124,7 @@ export class DiskCacheManager {
 
     try {
       // Write to temporary file
-      await fs.writeFile(tmpPath, JSON.stringify(entry), 'utf-8')
+      await fs.writeFile(tmpPath, JSON.stringify(entry), { encoding: 'utf-8', mode: 0o600 })
 
       // Atomic rename
       await fs.rename(tmpPath, filePath)
@@ -319,7 +319,7 @@ export class DiskCacheManager {
    */
   private async ensureCacheDir(): Promise<void> {
     try {
-      await fs.mkdir(this.cacheDir, { recursive: true })
+      await fs.mkdir(this.cacheDir, { recursive: true, mode: 0o700 })
     } catch (error: any) {
       if (error.code !== 'EEXIST') {
         throw new Error(`Failed to create cache directory: ${error.message}`)
