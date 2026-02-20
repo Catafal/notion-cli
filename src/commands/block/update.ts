@@ -172,8 +172,9 @@ export default class BlockUpdate extends Command {
       } else if (flags.content) {
         // Use complex JSON
         try {
-          const content = JSON.parse(flags.content)
-          Object.assign(params, content)
+          // Strip prototype pollution keys before merging user-provided JSON
+          const { __proto__, constructor, prototype, ...safeContent } = JSON.parse(flags.content)
+          Object.assign(params, safeContent)
         } catch (error: any) {
           throw NotionCLIErrorFactory.invalidJson(flags.content, error)
         }

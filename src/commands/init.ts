@@ -270,7 +270,7 @@ export default class Init extends Command {
             link: 'https://www.notion.so/my-integrations'
           },
           {
-            description: 'Token should look like: secret_abc123...(40+ more characters)',
+            description: 'Token should look like: ntn_abc123... or secret_abc123... (40+ more characters)',
           }
         ]
       )
