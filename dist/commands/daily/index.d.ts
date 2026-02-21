@@ -1,13 +1,15 @@
-import { Command } from '@oclif/core';
 /**
- * Zero-friction page creation for quick thoughts and notes.
+ * Daily Command
  *
- * Uses the default bookmark (or --to flag) to know which database to target.
- * Title is the first line; remaining lines become page body as markdown blocks.
+ * Zero-friction daily journal entries. After one-time setup:
+ *   `notion-cli daily`             → create (or find) today's entry
+ *   `notion-cli daily "My note"`   → create with body, or append if entry exists
  *
- * Supports stdin piping: echo "notes" | notion-cli quick --title "From pipe"
+ * Queries the configured database by date to detect existing entries,
+ * so you never get duplicate pages for the same day.
  */
-export default class Quick extends Command {
+import { Command } from '@oclif/core';
+export default class Daily extends Command {
     static description: string;
     static aliases: string[];
     static examples: {
@@ -25,11 +27,6 @@ export default class Quick extends Command {
         'no-cache': import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         verbose: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         minimal: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
-        to: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        title: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        template: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
     };
     run(): Promise<void>;
-    /** Read all data from stdin (for piped input). */
-    private readStdin;
 }

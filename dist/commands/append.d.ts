@@ -1,13 +1,17 @@
-import { Command } from '@oclif/core';
 /**
- * Zero-friction page creation for quick thoughts and notes.
+ * Append Shortcut Command
  *
- * Uses the default bookmark (or --to flag) to know which database to target.
- * Title is the first line; remaining lines become page body as markdown blocks.
+ * Quick-append content to any existing Notion page by name, URL, ID, or bookmark.
+ * Combines resolveNotionId (name → page ID) with appendBlockChildren (content → blocks).
  *
- * Supports stdin piping: echo "notes" | notion-cli quick --title "From pipe"
+ * This is the "write to existing page" counterpart of `quick` (which creates new pages).
+ *
+ *   notion-cli append "Daily Log" "New note"
+ *   notion-cli append PAGE_URL "## Heading\n\nBody"
+ *   echo "piped text" | notion-cli append "Daily Log"
  */
-export default class Quick extends Command {
+import { Command } from '@oclif/core';
+export default class Append extends Command {
     static description: string;
     static aliases: string[];
     static examples: {
@@ -15,6 +19,7 @@ export default class Quick extends Command {
         command: string;
     }[];
     static args: {
+        target: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
         content: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
     };
     static flags: {
@@ -25,9 +30,6 @@ export default class Quick extends Command {
         'no-cache': import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         verbose: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         minimal: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
-        to: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        title: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        template: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
     };
     run(): Promise<void>;
     /** Read all data from stdin (for piped input). */

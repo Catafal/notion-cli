@@ -4,6 +4,8 @@ const core_1 = require("@oclif/core");
 const notion = require("../notion");
 const notion_resolver_1 = require("../utils/notion-resolver");
 const bookmarks_1 = require("../utils/bookmarks");
+const templates_1 = require("../utils/templates");
+const property_expander_1 = require("../utils/property-expander");
 const markdown_to_blocks_1 = require("../utils/markdown-to-blocks");
 const base_flags_1 = require("../base-flags");
 const errors_1 = require("../errors");
@@ -48,19 +50,38 @@ class Quick extends core_1.Command {
             const lines = content.split('\n');
             const pageTitle = flags.title || lines[0].trim();
             const body = flags.title ? content : lines.slice(1).join('\n').trim();
-            // 5. Build page properties
-            const properties = {
+            // 5. Build page properties (merge template properties if provided)
+            let properties = {
                 [titlePropName]: {
                     title: [{ text: { content: pageTitle } }]
                 }
             };
-            // 6. Build children blocks from body markdown (if any)
-            const children = body ? (0, markdown_to_blocks_1.markdownToBlocks)(body) : undefined;
+            // 5a. If a template is specified, expand its properties and merge
+            let templateIcon;
+            let templateContent;
+            if (flags.template) {
+                const tmpl = await (0, templates_1.getTemplate)(flags.template);
+                if (!tmpl) {
+                    this.error(`Template "${flags.template}" not found.\nRun \`notion-cli template list\` to see saved templates.`);
+                    process.exit(1);
+                    return;
+                }
+                if (tmpl.properties && Object.keys(tmpl.properties).length > 0) {
+                    const merged = { ...tmpl.properties, [titlePropName]: pageTitle };
+                    properties = await (0, property_expander_1.expandSimpleProperties)(merged, schema.properties);
+                }
+                templateIcon = tmpl.icon;
+                templateContent = tmpl.content;
+            }
+            // 6. Build children blocks — body from arg takes precedence over template content
+            const contentForBlocks = body || templateContent;
+            const children = contentForBlocks ? (0, markdown_to_blocks_1.markdownToBlocks)(contentForBlocks) : undefined;
             // 7. Create page
             const res = await notion.createPage({
                 parent: { data_source_id: dbId },
                 properties,
                 ...(children && { children }),
+                ...(templateIcon && { icon: { emoji: templateIcon } }),
             });
             // 8. Output
             if (flags.json) {
@@ -124,6 +145,9 @@ Quick.flags = {
     title: core_1.Flags.string({
         char: 't',
         description: 'Override title (useful with stdin piping)',
+    }),
+    template: core_1.Flags.string({
+        description: 'Apply a saved template (properties and content)',
     }),
     ...base_flags_1.AutomationFlags,
 };

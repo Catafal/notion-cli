@@ -12,7 +12,7 @@
  * 1. URL extraction
  * 2. Direct ID validation
  * 2.5. Bookmark lookup (user-defined shortcuts)
- * 3. Cache lookup (exact + aliases)
+ * 3. Cache lookup (exact → alias → substring → fuzzy)
  * 4. API search fallback
  * 5. Smart database_id → data_source_id resolution (for databases)
  */
@@ -21,6 +21,7 @@ exports.resolveNotionId = resolveNotionId;
 const notion_url_parser_1 = require("./notion-url-parser");
 const errors_1 = require("../errors");
 const workspace_cache_1 = require("./workspace-cache");
+const fuzzy_1 = require("./fuzzy");
 const bookmarks_1 = require("./bookmarks");
 const notion_1 = require("../notion");
 const client_1 = require("@notionhq/client");
@@ -205,6 +206,7 @@ function isValidNotionId(input) {
  * 1. Exact title match (case-insensitive)
  * 2. Alias match (case-insensitive)
  * 3. Partial title match (case-insensitive substring)
+ * 4. Fuzzy match (Levenshtein distance for typo tolerance)
  *
  * @param query - Search query (database/page name)
  * @returns Database/page ID if found, null otherwise
@@ -232,6 +234,14 @@ async function searchCache(query) {
             return db.id;
         }
     }
+    // 4. Try fuzzy match (typo tolerance via Levenshtein distance)
+    const candidates = cache.databases.flatMap(db => [
+        { key: db.id, value: db.titleNormalized },
+        ...db.aliases.map(alias => ({ key: db.id, value: alias })),
+    ]);
+    const fuzzyResult = (0, fuzzy_1.fuzzyMatch)(normalized, candidates);
+    if (fuzzyResult)
+        return fuzzyResult.match;
     return null;
 }
 /**

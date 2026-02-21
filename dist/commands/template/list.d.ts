@@ -1,5 +1,11 @@
+/**
+ * Template List Command
+ *
+ * Shows all saved templates in a table with name, property count,
+ * content indicator, and icon.
+ */
 import { Command } from '@oclif/core';
-export default class List extends Command {
+export default class TemplateList extends Command {
     static description: string;
     static aliases: string[];
     static examples: {
@@ -7,10 +13,6 @@ export default class List extends Command {
         command: string;
     }[];
     static flags: {
-        filter: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        markdown: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
-        'compact-json': import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
-        pretty: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         json: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         'page-size': import("@oclif/core/lib/interfaces").OptionFlag<number, import("@oclif/core/lib/interfaces").CustomOptions>;
         retry: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
@@ -20,6 +22,7 @@ export default class List extends Command {
         minimal: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         columns: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
         sort: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
+        filter: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
         csv: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         extended: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         'no-truncate': import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
