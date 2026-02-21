@@ -9,6 +9,7 @@ component:
   source_files:
     - src/utils/notion-resolver.ts
     - src/utils/notion-url-parser.ts
+    - src/utils/fuzzy.ts
     - src/errors/enhanced-errors.ts
   test_files:
     - test/utils/notion-url-parser.test.ts
@@ -26,7 +27,7 @@ resolution:
   pipeline:
     - url_extraction
     - id_validation
-    - cache_lookup
+    - cache_lookup          # exact → alias → substring → fuzzy
     - api_search
     - smart_database_resolution
 
@@ -76,7 +77,7 @@ User Input
   │
   ├─ Raw ID? ───────► cleanRawId() ────────► remove dashes ──► validate 32 hex chars
   │
-  └─ Name? ─────────► searchCache() ───────► exact ──► alias ──► substring match
+  └─ Name? ─────────► searchCache() ───────► exact ──► alias ──► substring ──► fuzzy
                         │
                         └─ miss ──► Notion API search
                               │
@@ -89,14 +90,33 @@ User Input
 ### Key Implementation: `src/utils/notion-resolver.ts`
 
 ```typescript
-// [src/utils/notion-resolver.ts] — 4-stage resolution
+// [src/utils/notion-resolver.ts] — 5-stage resolution
 async function resolveNotionId(input: string, type: 'page' | 'database'): Promise<string> {
   // Stage 1: URL extraction
   // Stage 2: ID validation (32 hex chars)
-  // Stage 3: Cache lookup (exact → alias → substring)
+  // Stage 3: Cache lookup (exact → alias → substring → fuzzy)
   // Stage 4: API search + smart database resolution
 }
 ```
+
+### Stage 3 Detail: Cache Lookup with Fuzzy Matching
+
+The cache lookup in `searchCache()` runs four sub-stages in order, returning on the first hit:
+
+1. **Exact title** — case-insensitive comparison against `titleNormalized`
+2. **Alias** — checks all aliases generated during `notion-cli sync`
+3. **Substring** — `titleNormalized.includes(query)` check
+4. **Fuzzy** — Levenshtein distance against all titles and aliases
+
+The fuzzy stage (`src/utils/fuzzy.ts`) uses a dynamic threshold: `max(2, floor(query.length / 4))`. Short queries (8 chars or less) allow up to 2 edits. Longer queries allow roughly 25% of their length in edits. The stage builds a flat candidate list from all database titles and aliases, then returns the single closest match within the threshold.
+
+```typescript
+// [src/utils/fuzzy.ts] — typo tolerance via Levenshtein distance
+export function levenshtein(a: string, b: string): number { /* O(m*n) DP */ }
+export function fuzzyMatch(query, candidates): { match, distance } | null { /* best match within threshold */ }
+```
+
+This means `"knowldge hub"` (1 edit) resolves to `"Knowledge Hub"` locally, without an API call.
 
 ## URL Parsing
 
@@ -172,7 +192,8 @@ The CLI surfaces the most common cause first:
 ## Performance
 
 - **Fast path**: Valid IDs resolve in 0ms (no API call)
-- **Cache hit**: Name lookups resolve from local cache (~1ms)
+- **Cache hit (exact/alias/substring)**: Name lookups resolve from local cache (~1ms)
+- **Cache hit (fuzzy)**: Levenshtein scan over all titles + aliases (~1-5ms for typical workspace sizes)
 - **Fallback path**: API search adds one request (~200-500ms)
 - **Smart DB resolution**: Adds one additional search if database_id detected (~200-500ms)
 - **Caching**: Resolved IDs are cached to avoid repeated lookups
@@ -236,6 +257,8 @@ notion-cli page retrieve "https://www.notion.so/My-Page-<id>"
 ## Changelog
 
 ### Unreleased
+- Fuzzy matching stage added to `searchCache()` via Levenshtein distance (`src/utils/fuzzy.ts`)
+- `list --filter` flag for fuzzy database filtering
 - URL parser handles title-slug URLs (`notion.so/My-Page-abc123`)
 - All block and page property commands now route through `resolveNotionId()`
 - 404 error message reordered — "not shared" hint appears first
@@ -251,11 +274,12 @@ notion-cli page retrieve "https://www.notion.so/My-Page-<id>"
 **Last Updated**: 2026-02-20
 **Component Status**: Production
 **Machine-Readable**: YAML frontmatter + JSON error schemas
-**Source**: [`src/utils/notion-resolver.ts`](../../src/utils/notion-resolver.ts), [`src/utils/notion-url-parser.ts`](../../src/utils/notion-url-parser.ts)
+**Source**: [`src/utils/notion-resolver.ts`](../../src/utils/notion-resolver.ts), [`src/utils/notion-url-parser.ts`](../../src/utils/notion-url-parser.ts), [`src/utils/fuzzy.ts`](../../src/utils/fuzzy.ts)
 
 ---
 
 **Related Documentation:**
+- [Fuzzy Search Guide](../user-guides/fuzzy-search.md) — How-to guide for typo-tolerant search and filtering
 - [Database Commands](./db.md)
 - [Page Commands](./page.md)
 - [Authentication Setup](../user-guides/authentication-setup.md)

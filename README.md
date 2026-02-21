@@ -45,6 +45,7 @@ A powerful command-line interface for Notion's API, optimized for AI coding assi
 - 🔍 **Schema Discovery**: AI-friendly database schema extraction
 - 🗄️ **Workspace Caching**: Fast database lookups without API calls
 - 🧠 **Smart ID Resolution**: Automatic database_id → data_source_id conversion
+- 🔎 **Fuzzy Search**: Typo-tolerant name resolution and database filtering
 - 🔄 **Reliable**: Automatic retry with exponential backoff and circuit breaker
 - 🔒 **Secure**: 0 production vulnerabilities
 
@@ -183,6 +184,7 @@ Cache your workspace locally for instant lookups:
 ```bash
 notion-cli sync                          # One-time sync
 notion-cli db query "Tasks Database" --json  # Use names instead of IDs
+notion-cli list --filter "tasks"         # Fuzzy-filter cached databases
 notion-cli cache:info --json             # Check cache freshness
 ```
 
@@ -467,6 +469,7 @@ Full documentation lives in the `/docs` folder:
 - **[Templates](./docs/user-guides/templates-guide.md)** — Reusable page presets
 - **[Error Handling](./docs/user-guides/error-handling-examples.md)** — Understanding errors
 - **[Envelope System](./docs/user-guides/envelope-index.md)** — Standardized response format
+- **[Fuzzy Search](./docs/user-guides/fuzzy-search.md)** — Typo-tolerant name resolution and filtering
 - **[Smart ID Resolution](./docs/architecture/smart-id-resolution.md)** — Auto ID conversion
 
 See [docs/README.md](./docs/README.md) for the complete index.
