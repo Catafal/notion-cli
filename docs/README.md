@@ -22,6 +22,7 @@ Essential guides for using the CLI effectively:
 - **[Templates Guide](user-guides/templates-guide.md)** - Reusable page presets for consistent page creation
 - **[Fuzzy Search](user-guides/fuzzy-search.md)** - Typo-tolerant name resolution and database filtering
 - **[Append Command](append.md)** - Add content to existing pages by name
+- **[Stats Dashboard](stats.md)** - Workspace statistics at a glance
 
 ## Architecture
 

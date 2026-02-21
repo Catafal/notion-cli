@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **README cleanup** — trimmed from 1300 to ~460 lines; removed stale release notes, condensed verbose sections, fixed all 9 broken doc links, added missing `page export` to command reference, removed duplicate sections.
 
 ### Added
+- **`stats` command** — workspace statistics dashboard showing database count, user count, property type breakdown, and per-database details. Uses cache for instant results; optional `--live` flag fetches page counts per database. Alias: `dashboard`.
 - **`append` command** — quick-append content to any existing page by name, URL, ID, or bookmark (`notion-cli append "Daily Log" "New note"`). Supports markdown and stdin piping. Alias: `a`.
 - **Fuzzy search** — typo-tolerant name resolution via Levenshtein distance. The resolver now handles typos like "daly log" → "daily log" locally before falling back to the API. Also adds `--filter` / `-f` flag to `list` command for fuzzy database filtering.
 - **`template` commands** — reusable page presets with properties, body content, and icon. Save once, create pages from templates anywhere. Commands: `save`, `list`, `get`, `remove`, `use`. Aliases: `tpl:save`, `tpl:ls`, `tpl:get`, `tpl:rm`, `tpl:use`. Templates are database-agnostic — properties expand against the target schema at runtime.
