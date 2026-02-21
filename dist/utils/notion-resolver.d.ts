@@ -10,6 +10,7 @@
  * Resolution stages:
  * 1. URL extraction
  * 2. Direct ID validation
+ * 2.5. Bookmark lookup (user-defined shortcuts)
  * 3. Cache lookup (exact + aliases)
  * 4. API search fallback
  * 5. Smart database_id → data_source_id resolution (for databases)

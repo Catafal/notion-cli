@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **README cleanup** — trimmed from 1300 to ~460 lines; removed stale release notes, condensed verbose sections, fixed all 9 broken doc links, added missing `page export` to command reference, removed duplicate sections.
 
 ### Added
+- **`bookmark` commands** — save named shortcuts to frequently-used pages/databases (`notion-cli bookmark set inbox DB_ID --default`). Bookmarks resolve everywhere IDs do — `notion-cli db query inbox` just works. Commands: `set`, `list`, `remove`. Aliases: `bm:set`, `bm:ls`, `bm:rm`.
+- **`quick` command** — zero-friction page creation (`notion-cli quick "Buy groceries"`). Uses default bookmark or `--to` flag. Supports stdin piping. Alias: `q`.
+- **`open` command** — search and open a page/database in the browser (`notion-cli open "weekly meeting"`). Alias: `o`.
+- **Bookmark-aware resolver** — `resolveNotionId()` now checks user bookmarks (Stage 2.5) between direct ID validation and cache lookup, so bookmark names work in every command.
 - **`page delete` command** — convenience alias for archiving a page (`notion-cli page delete PAGE_ID`). Alias: `page:d`. Equivalent to `page update PAGE_ID -a`.
 - **`-S` flag works with sub-pages** — `page create -p PARENT -S --properties '{"title": "My Page"}'` now works. Previously `-S` only worked with database pages.
 
