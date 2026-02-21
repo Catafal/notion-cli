@@ -9,19 +9,19 @@
 </pre>
 
 <p align="center">
-  <a href="https://github.com/Coastal-Programs/notion-cli/actions/workflows/ci.yml">
-    <img src="https://github.com/Coastal-Programs/notion-cli/actions/workflows/ci.yml/badge.svg" alt="CI/CD Pipeline">
+  <a href="https://github.com/Catafal/notion-cli/actions/workflows/ci.yml">
+    <img src="https://github.com/Catafal/notion-cli/actions/workflows/ci.yml/badge.svg" alt="CI/CD Pipeline">
   </a>
-  <a href="https://codecov.io/gh/Coastal-Programs/notion-cli">
-    <img src="https://codecov.io/gh/Coastal-Programs/notion-cli/branch/main/graph/badge.svg" alt="Code Coverage">
+  <a href="https://codecov.io/gh/Catafal/notion-cli">
+    <img src="https://codecov.io/gh/Catafal/notion-cli/branch/main/graph/badge.svg" alt="Code Coverage">
   </a>
-  <a href="https://www.npmjs.com/package/@coastal-programs/notion-cli">
-    <img src="https://img.shields.io/npm/v/@coastal-programs/notion-cli.svg" alt="npm version">
+  <a href="https://www.npmjs.com/package/@catafal/notion-cli">
+    <img src="https://img.shields.io/npm/v/@catafal/notion-cli.svg" alt="npm version">
   </a>
   <a href="https://nodejs.org">
     <img src="https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen.svg" alt="Node.js Version">
   </a>
-  <a href="https://github.com/Coastal-Programs/notion-cli/blob/main/LICENSE">
+  <a href="https://github.com/Catafal/notion-cli/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
   </a>
 </p>
@@ -58,15 +58,15 @@ See [CHANGELOG.md](./CHANGELOG.md) for version history and release notes.
 
 ```bash
 # From npm (recommended)
-npm install -g @coastal-programs/notion-cli
+npm install -g @catafal/notion-cli
 
 # Or from source
-npm install -g Coastal-Programs/notion-cli
+npm install -g Catafal/notion-cli
 ```
 
 **Note**: Windows users installing from source should use the local clone method due to symlink limitations:
 ```bash
-git clone https://github.com/Coastal-Programs/notion-cli
+git clone https://github.com/Catafal/notion-cli
 cd notion-cli
 npm install
 npm run build
@@ -393,7 +393,7 @@ notion-cli doctor   # Shows 7 checks with pass/fail and recommendations
 ### Setup
 
 ```bash
-git clone https://github.com/Coastal-Programs/notion-cli
+git clone https://github.com/Catafal/notion-cli
 cd notion-cli
 npm install
 npm run build
@@ -469,8 +469,8 @@ This CLI uses **Notion API v5.2.1** with full support for:
 ## Support
 
 - **Documentation**: Full guides in `/docs` folder
-- **Issues**: Report bugs on [GitHub Issues](https://github.com/Coastal-Programs/notion-cli/issues)
-- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/Coastal-Programs/notion-cli/discussions)
+- **Issues**: Report bugs on [GitHub Issues](https://github.com/Catafal/notion-cli/issues)
+- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/Catafal/notion-cli/discussions)
 
 ## Related Projects
 

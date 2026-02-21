@@ -54,7 +54,7 @@ jobs:
         PACKAGE_VERSION=$(node -p "require('./package.json').version")
         echo "package_version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
 
-        if npm view @coastal-programs/notion-cli@$PACKAGE_VERSION version 2>/dev/null; then
+        if npm view @catafal/notion-cli@$PACKAGE_VERSION version 2>/dev/null; then
           echo "version_exists=true" >> $GITHUB_OUTPUT
           echo "⚠️ Version $PACKAGE_VERSION already published to npm"
         else
@@ -91,6 +91,6 @@ jobs:
       if: steps.check-version.outputs.version_exists == 'false'
       run: |
         VERSION=${{ steps.check-version.outputs.package_version }}
-        echo "✅ Successfully published @coastal-programs/notion-cli@$VERSION to npm!"
-        echo "📦 Package URL: https://www.npmjs.com/package/@coastal-programs/notion-cli"
-        echo "🚀 Users can now install: npm install -g @coastal-programs/notion-cli@$VERSION"
+        echo "✅ Successfully published @catafal/notion-cli@$VERSION to npm!"
+        echo "📦 Package URL: https://www.npmjs.com/package/@catafal/notion-cli"
+        echo "🚀 Users can now install: npm install -g @catafal/notion-cli@$VERSION"

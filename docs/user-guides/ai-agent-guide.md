@@ -25,10 +25,10 @@ This guide provides comprehensive instructions for AI agents to effectively use 
 
 ```bash
 # Mac/Linux: Install from GitHub
-npm install -g Coastal-Programs/notion-cli
+npm install -g Catafal/notion-cli
 
 # Windows: Use local install (GitHub has symlink issues)
-git clone https://github.com/Coastal-Programs/notion-cli
+git clone https://github.com/Catafal/notion-cli
 cd notion-cli
 npm install -g .
 ```

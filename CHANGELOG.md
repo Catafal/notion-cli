@@ -294,7 +294,7 @@ No breaking changes! This is a quality-focused release. All existing commands an
 - All tests must pass before commits
 
 **For users:**
-- Update normally: `npm update -g @coastal-programs/notion-cli`
+- Update normally: `npm update -g @catafal/notion-cli`
 - No configuration changes needed
 - All commands remain backward compatible
 
@@ -366,7 +366,7 @@ No breaking changes! This is a quality-focused release. All existing commands an
 **No breaking changes!** All existing commands work exactly as before.
 
 **New recommended workflow for new users:**
-1. Install: `npm install -g @coastal-programs/notion-cli`
+1. Install: `npm install -g @catafal/notion-cli`
 2. Run setup wizard: `notion-cli init`
 3. Verify health: `notion-cli doctor`
 4. Start using: `notion-cli list`, `notion-cli db query`, etc.
@@ -772,6 +772,6 @@ No migration needed! This is a purely additive feature. All existing commands co
 ---
 
 **Links:**
-- [GitHub Releases](https://github.com/Coastal-Programs/notion-cli/releases)
+- [GitHub Releases](https://github.com/Catafal/notion-cli/releases)
 - [Notion API Documentation](https://developers.notion.com/)
 - [AI Agent Cookbook](./docs/AI-AGENT-COOKBOOK.md)

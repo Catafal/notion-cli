@@ -721,7 +721,7 @@ export function wrapNotionError(error: any, context: ErrorContext = {}): NotionC
     [
       {
         description: 'If this error persists, please report it',
-        link: 'https://github.com/Coastal-Programs/notion-cli/issues'
+        link: 'https://github.com/Catafal/notion-cli/issues'
       }
     ],
     { ...context, originalError: error }

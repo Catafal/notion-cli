@@ -546,7 +546,7 @@ function wrapNotionError(error, context = {}) {
     return new NotionCLIError(NotionCLIErrorCode.UNKNOWN, error.message || 'An unexpected error occurred', [
         {
             description: 'If this error persists, please report it',
-            link: 'https://github.com/Coastal-Programs/notion-cli/issues'
+            link: 'https://github.com/Catafal/notion-cli/issues'
         }
     ], { ...context, originalError: error });
 }

@@ -114,7 +114,7 @@ jobs:
 
     # Upload coverage to Codecov for tracking and PR comments
     # Free for public repositories: https://about.codecov.io/
-    # View reports: https://codecov.io/gh/Coastal-Programs/notion-cli
+    # View reports: https://codecov.io/gh/Catafal/notion-cli
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
@@ -158,7 +158,7 @@ jobs:
       run: npm pack
 
     - name: Install globally from tarball
-      run: npm install -g ./coastal-programs-notion-cli-*.tgz
+      run: npm install -g ./catafal-notion-cli-*.tgz
 
     # These commands load real command modules — not just the manifest.
     # If a runtime dependency is missing, they fail with MODULE_NOT_FOUND.

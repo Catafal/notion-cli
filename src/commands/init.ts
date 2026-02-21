@@ -538,7 +538,7 @@ export default class Init extends Command {
       this.log('  notion-cli sync              - Refresh workspace cache')
       this.log('')
       this.log('Documentation:')
-      this.log('  https://github.com/Coastal-Programs/notion-cli')
+      this.log('  https://github.com/Catafal/notion-cli')
       this.log('')
       this.log('Need help? Run any command with --help flag')
       this.log('')

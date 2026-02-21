@@ -28,7 +28,7 @@ This project follows a simple code of conduct: be respectful, constructive, and 
    ```
 3. **Add upstream remote**:
    ```bash
-   git remote add upstream https://github.com/Coastal-Programs/notion-cli.git
+   git remote add upstream https://github.com/Catafal/notion-cli.git
    ```
 4. **Create a branch** for your changes:
    ```bash
@@ -400,7 +400,7 @@ notion-cli --version
 notion-cli db query <id>
 
 # Unlink when done
-npm unlink -g @coastal-programs/notion-cli
+npm unlink -g @catafal/notion-cli
 ```
 
 ### Working with oclif

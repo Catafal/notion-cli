@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Post-install script for @coastal-programs/notion-cli
+ * Post-install script for @catafal/notion-cli
  * Shows welcome message and next steps after installation
  */
 
@@ -26,9 +26,9 @@ try {
   console.log(`  ${colors.cyan}notion-cli init${colors.reset}          ${colors.dim}# Interactive setup wizard${colors.reset}`);
   console.log(`  ${colors.cyan}notion-cli --help${colors.reset}        ${colors.dim}# View all commands${colors.reset}\n`);
   console.log(`${colors.blue}Resources:${colors.reset}`);
-  console.log(`  ${colors.gray}•${colors.reset} Documentation: ${colors.dim}https://github.com/Coastal-Programs/notion-cli${colors.reset}`);
+  console.log(`  ${colors.gray}•${colors.reset} Documentation: ${colors.dim}https://github.com/Catafal/notion-cli${colors.reset}`);
   console.log(`  ${colors.gray}•${colors.reset} Get API Token:  ${colors.dim}https://developers.notion.com/docs/create-a-notion-integration${colors.reset}`);
-  console.log(`  ${colors.gray}•${colors.reset} Report Issues:  ${colors.dim}https://github.com/Coastal-Programs/notion-cli/issues${colors.reset}`);
+  console.log(`  ${colors.gray}•${colors.reset} Report Issues:  ${colors.dim}https://github.com/Catafal/notion-cli/issues${colors.reset}`);
   console.log('');
 } catch (error) {
   // Fallback to simple message if anything goes wrong
@@ -39,6 +39,6 @@ Quick Start:
   notion-cli init          # Interactive setup wizard
   notion-cli --help        # View all commands
 
-Get help: https://github.com/Coastal-Programs/notion-cli
+Get help: https://github.com/Catafal/notion-cli
 `);
 }

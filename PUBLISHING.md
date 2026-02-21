@@ -17,7 +17,7 @@ The project now has **automated npm publishing** via GitHub Actions!
    - **Expiration**: 90 days (maximum for write tokens)
 4. **Packages and scopes**:
    - Change permissions dropdown to: **"Read and write"**
-   - Select package: `@coastal-programs/notion-cli`
+   - Select package: `@catafal/notion-cli`
 5. **Organizations**: Leave as "No access"
 6. Click "Generate token"
 7. **Copy the token immediately** (starts with `npm_...`) - you won't see it again!
@@ -25,7 +25,7 @@ The project now has **automated npm publishing** via GitHub Actions!
 **⚠️ Important**: The "Bypass 2FA" checkbox is essential! Without it, automated publishing will fail with OTP errors even if you have a valid token.
 
 #### 2. Add Token to GitHub Secrets
-1. Go to https://github.com/Coastal-Programs/notion-cli/settings/secrets/actions
+1. Go to https://github.com/Catafal/notion-cli/settings/secrets/actions
 2. Click "New repository secret"
 3. Name: `NPM_TOKEN`
 4. Value: Paste your npm token
@@ -46,7 +46,7 @@ npm version major  # 5.6.0 → 6.0.0 (breaking changes)
 git push --follow-tags
 
 # 3. Create GitHub Release
-# Go to: https://github.com/Coastal-Programs/notion-cli/releases/new
+# Go to: https://github.com/Catafal/notion-cli/releases/new
 # - Tag: Select the tag you just pushed (e.g., v5.6.1)
 # - Title: v5.6.1 - Production Polish
 # - Description: Copy from CHANGELOG
@@ -56,7 +56,7 @@ git push --follow-tags
 ```
 
 **Option 2: Manual Trigger**
-1. Go to Actions tab: https://github.com/Coastal-Programs/notion-cli/actions/workflows/publish.yml
+1. Go to Actions tab: https://github.com/Catafal/notion-cli/actions/workflows/publish.yml
 2. Click "Run workflow"
 3. Click "Run workflow" button
 4. Workflow builds, tests, and publishes to npm automatically
@@ -85,7 +85,7 @@ npm login
 
 ### 2. Verify Package Name is Available
 ```bash
-npm search @coastal-programs/notion-cli
+npm search @catafal/notion-cli
 # Should return no results or confirm your package
 ```
 
@@ -96,10 +96,10 @@ Update the README to include npm installation as the primary method:
 
 ```bash
 # From npm (recommended)
-npm install -g @coastal-programs/notion-cli
+npm install -g @catafal/notion-cli
 
 # Or from source
-npm install -g Coastal-Programs/notion-cli
+npm install -g Catafal/notion-cli
 ```
 
 This should be done BEFORE your first publish so the README is ready when the package goes live.
@@ -126,8 +126,8 @@ npm run lint
 ### 3. Test Installation Locally
 ```bash
 npm pack
-# Creates: coastal-programs-notion-cli-5.6.0.tgz
-# Test it: npm install -g ./coastal-programs-notion-cli-5.6.0.tgz
+# Creates: catafal-notion-cli-5.6.0.tgz
+# Test it: npm install -g ./catafal-notion-cli-5.6.0.tgz
 ```
 
 ## Publishing
@@ -138,13 +138,13 @@ npm publish --access public
 ```
 
 That's it! Your package is live at:
-- **Install**: `npm install -g @coastal-programs/notion-cli`
-- **Page**: https://www.npmjs.com/package/@coastal-programs/notion-cli
+- **Install**: `npm install -g @catafal/notion-cli`
+- **Page**: https://www.npmjs.com/package/@catafal/notion-cli
 
 ## After Publishing
 
 ### Create GitHub Release
-1. Go to: https://github.com/Coastal-Programs/notion-cli/releases
+1. Go to: https://github.com/Catafal/notion-cli/releases
 2. Click "Draft a new release"
 3. Tag: `v5.6.0` (match your version)
 4. Title: `v5.6.0 - Your Release Name`
@@ -155,7 +155,7 @@ That's it! Your package is live at:
 
 - **Dry run first**: `npm publish --dry-run` to test
 - **Check files**: `npm pack --dry-run` shows what will be published
-- **Scoped packages**: Already using `@coastal-programs/` scope ✅
+- **Scoped packages**: Already using `@catafal/` scope ✅
 - **Update often**: Users love frequent, small updates
 - **Semantic versioning**: Follow semver.org strictly
 
@@ -166,7 +166,7 @@ That's it! Your package is live at:
 
 **"403 Forbidden"**
 - Not logged in: `npm login`
-- No access: `npm owner add <username> @coastal-programs/notion-cli`
+- No access: `npm owner add <username> @catafal/notion-cli`
 
 **"Payment required"**
 - Use `--access public` flag

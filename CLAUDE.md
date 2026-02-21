@@ -76,12 +76,12 @@ VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F'"' '{print $4}'
 git tag -a v$VERSION -m "Release v$VERSION"
 git push origin v$VERSION
 echo "✅ Created and pushed tag v$VERSION"
-echo "📝 Now create GitHub release at: https://github.com/Coastal-Programs/notion-cli/releases/new?tag=v$VERSION"
+echo "📝 Now create GitHub release at: https://github.com/Catafal/notion-cli/releases/new?tag=v$VERSION"
 ```
 
 ### 5. Verify Release
-- [ ] Tag appears at https://github.com/Coastal-Programs/notion-cli/tags
-- [ ] GitHub Release created at https://github.com/Coastal-Programs/notion-cli/releases
+- [ ] Tag appears at https://github.com/Catafal/notion-cli/tags
+- [ ] GitHub Release created at https://github.com/Catafal/notion-cli/releases
 - [ ] CI/CD pipeline triggered (if configured)
 - [ ] npm package published (if automated)
 
@@ -220,7 +220,7 @@ Before requesting review:
 5. [ ] **Release tag created** (see above)
 6. [ ] GitHub Release published
 7. [ ] npm package published (automated)
-8. [ ] Verify installation: `npm install -g @coastal-programs/notion-cli@latest`
+8. [ ] Verify installation: `npm install -g @catafal/notion-cli@latest`
 
 ---
 
@@ -244,7 +244,7 @@ npm run lint
 npm run build && npm test && npm run lint
 
 # Local package test
-npm pack && npm install -g ./coastal-programs-notion-cli-*.tgz
+npm pack && npm install -g ./catafal-notion-cli-*.tgz
 ```
 
 ### Code Patterns
@@ -284,4 +284,4 @@ git tag -a v$VERSION -m "Release v$VERSION" && git push origin v$VERSION
 - [PUBLISHING.md](./PUBLISHING.md) - Detailed publishing guide
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guidelines
 - [CHANGELOG.md](./CHANGELOG.md) - Release history
-- [GitHub Releases](https://github.com/Coastal-Programs/notion-cli/releases) - View releases
+- [GitHub Releases](https://github.com/Catafal/notion-cli/releases) - View releases

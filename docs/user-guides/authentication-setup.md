@@ -6,7 +6,7 @@ How to get a Notion integration token and configure the CLI so it works in every
 
 - Node.js 22 or later
 - A Notion account with workspace access
-- `notion-cli` installed (`npm install -g @coastal-programs/notion-cli`)
+- `notion-cli` installed (`npm install -g @catafal/notion-cli`)
 
 ## Step 1: Create a Notion Integration
 

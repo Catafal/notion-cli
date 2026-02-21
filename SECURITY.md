@@ -121,14 +121,14 @@ Don't share your entire workspace if you only need a few databases
 
 1. **Verify package integrity** before installation:
    ```bash
-   npm install @coastal-programs/notion-cli --dry-run
+   npm install @catafal/notion-cli --dry-run
    ```
 
 2. **Use specific versions** in production:
    ```json
    {
      "dependencies": {
-       "@coastal-programs/notion-cli": "5.6.0"
+       "@catafal/notion-cli": "5.6.0"
      }
    }
    ```
@@ -140,7 +140,7 @@ Don't share your entire workspace if you only need a few databases
 
 4. **Keep updated** to latest version:
    ```bash
-   npm update @coastal-programs/notion-cli
+   npm update @catafal/notion-cli
    ```
 
 ### CI/CD Security
@@ -232,9 +232,9 @@ Security considerations for code reviewers:
 
 **Security Issues:** jake@coastalprograms.com
 
-**General Issues:** https://github.com/Coastal-Programs/notion-cli/issues
+**General Issues:** https://github.com/Catafal/notion-cli/issues
 
-**Discussions:** https://github.com/Coastal-Programs/notion-cli/discussions
+**Discussions:** https://github.com/Catafal/notion-cli/discussions
 
 ## Additional Resources
 

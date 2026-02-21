@@ -597,7 +597,7 @@ describe('db query command', () => {
 - Exports: `src/errors/index.ts`
 
 ### Issues
-- GitHub: [Coastal-Programs/notion-cli/issues](https://github.com/Coastal-Programs/notion-cli/issues)
+- GitHub: [Catafal/notion-cli/issues](https://github.com/Catafal/notion-cli/issues)
 - Tag: `error-handling`
 
 ---

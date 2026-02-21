@@ -26,8 +26,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "browse",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -67,8 +67,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "doctor",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -157,8 +157,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "init",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -336,8 +336,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "list",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -675,8 +675,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "search",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -768,8 +768,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "sync",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -856,8 +856,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "whoami",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -1050,8 +1050,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "batch:delete",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -1270,8 +1270,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "batch:retrieve",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -1553,8 +1553,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "block:append",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -1707,8 +1707,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "block:delete",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -1861,8 +1861,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "block:retrieve",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -2159,8 +2159,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "block:update",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -2243,8 +2243,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "cache:info",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -2254,6 +2254,1204 @@
         "commands",
         "cache",
         "info.js"
+      ]
+    },
+    "config:set-token": {
+      "aliases": [
+        "config:token"
+      ],
+      "args": {
+        "token": {
+          "description": "Notion integration token (starts with secret_ or ntn_)",
+          "name": "token",
+          "required": false
+        }
+      },
+      "description": "Set NOTION_TOKEN in your shell configuration file",
+      "examples": [
+        {
+          "description": "Set Notion token interactively",
+          "command": "notion-cli config set-token"
+        },
+        {
+          "description": "Set Notion token directly",
+          "command": "notion-cli config set-token ntn_abc123..."
+        },
+        {
+          "description": "Set token with JSON output",
+          "command": "notion-cli config set-token ntn_abc123... --json"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "config:set-token",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "config",
+        "set-token.js"
+      ]
+    },
+    "page:create": {
+      "aliases": [
+        "page:c"
+      ],
+      "args": {},
+      "description": "Create a page",
+      "examples": [
+        {
+          "description": "Create a page via interactive mode",
+          "command": "$ notion-cli page create"
+        },
+        {
+          "description": "Create a page with a specific parent_page_id",
+          "command": "$ notion-cli page create -p PARENT_PAGE_ID"
+        },
+        {
+          "description": "Create a page with a parent page URL",
+          "command": "$ notion-cli page create -p https://notion.so/PARENT_PAGE_ID"
+        },
+        {
+          "description": "Create a page with a specific parent_db_id",
+          "command": "$ notion-cli page create -d PARENT_DB_ID"
+        },
+        {
+          "description": "Create a page with simple properties (recommended for AI agents)",
+          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"My Task\", \"Status\": \"In Progress\", \"Due Date\": \"2025-12-31\"}'"
+        },
+        {
+          "description": "Create a page with simple properties using relative dates",
+          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"Review\", \"Due Date\": \"tomorrow\", \"Priority\": \"High\"}'"
+        },
+        {
+          "description": "Create a page with simple properties and multi-select",
+          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"Bug Fix\", \"Tags\": [\"urgent\", \"bug\"], \"Status\": \"Done\"}'"
+        },
+        {
+          "description": "Create a page with a specific source markdown file and parent_page_id",
+          "command": "$ notion-cli page create -f ./path/to/source.md -p PARENT_PAGE_ID"
+        },
+        {
+          "description": "Create a page with a specific source markdown file and parent_db_id",
+          "command": "$ notion-cli page create -f ./path/to/source.md -d PARENT_DB_ID"
+        },
+        {
+          "description": "Create a page with a specific source markdown file and output raw json with parent_page_id",
+          "command": "$ notion-cli page create -f ./path/to/source.md -p PARENT_PAGE_ID -r"
+        },
+        {
+          "description": "Create a page and output JSON for automation",
+          "command": "$ notion-cli page create -p PARENT_PAGE_ID --json"
+        }
+      ],
+      "flags": {
+        "parent_page_id": {
+          "char": "p",
+          "description": "Parent page ID or URL (to create a sub-page)",
+          "name": "parent_page_id",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "parent_data_source_id": {
+          "char": "d",
+          "description": "Parent data source ID or URL (to create a page in a table)",
+          "name": "parent_data_source_id",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "file_path": {
+          "char": "f",
+          "description": "Path to a source markdown file",
+          "name": "file_path",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "title_property": {
+          "char": "t",
+          "description": "Title property name (auto-detected: \"title\" for sub-pages, \"Name\" for databases)",
+          "name": "title_property",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "properties": {
+          "description": "Page properties as JSON string",
+          "name": "properties",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "simple-properties": {
+          "char": "S",
+          "description": "Use simplified property format (flat key-value pairs, recommended for AI agents)",
+          "name": "simple-properties",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "raw": {
+          "char": "r",
+          "description": "output raw json",
+          "name": "raw",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "page:create",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "page",
+        "create.js"
+      ]
+    },
+    "page:export": {
+      "aliases": [
+        "page:e"
+      ],
+      "args": {
+        "page_id": {
+          "description": "Page ID or full Notion URL",
+          "name": "page_id",
+          "required": true
+        }
+      },
+      "description": "Export a Notion page to markdown or JSON",
+      "examples": [
+        {
+          "description": "Export page as markdown to stdout",
+          "command": "$ notion-cli page export PAGE_ID"
+        },
+        {
+          "description": "Export page as markdown to a file",
+          "command": "$ notion-cli page export PAGE_ID -o notes.md"
+        },
+        {
+          "description": "Export page as JSON to a file",
+          "command": "$ notion-cli page export PAGE_ID --json -o page.json"
+        },
+        {
+          "description": "Export using a Notion URL",
+          "command": "$ notion-cli page export \"https://notion.so/My-Page-abc123\" -o notes.md"
+        },
+        {
+          "description": "Pipe markdown to another command",
+          "command": "$ notion-cli page export PAGE_ID | head -20"
+        }
+      ],
+      "flags": {
+        "output": {
+          "char": "o",
+          "description": "File path to write (omit for stdout)",
+          "name": "output",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "page:export",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "page",
+        "export.js"
+      ]
+    },
+    "page:retrieve": {
+      "aliases": [
+        "page:r"
+      ],
+      "args": {
+        "page_id": {
+          "description": "Page ID or full Notion URL (e.g., https://notion.so/...)",
+          "name": "page_id",
+          "required": true
+        }
+      },
+      "description": "Retrieve a page",
+      "examples": [
+        {
+          "description": "Retrieve a page with full data (recommended for AI assistants)",
+          "command": "$ notion-cli page retrieve PAGE_ID -r"
+        },
+        {
+          "description": "Fast structure overview (90% faster than full fetch)",
+          "command": "$ notion-cli page retrieve PAGE_ID --map"
+        },
+        {
+          "description": "Fast structure overview with compact JSON",
+          "command": "$ notion-cli page retrieve PAGE_ID --map --compact-json"
+        },
+        {
+          "description": "Retrieve entire page tree with all nested content (35% token reduction)",
+          "command": "$ notion-cli page retrieve PAGE_ID --recursive --compact-json"
+        },
+        {
+          "description": "Retrieve page tree with custom depth limit",
+          "command": "$ notion-cli page retrieve PAGE_ID -R --max-depth 5 --json"
+        },
+        {
+          "description": "Retrieve a page and output table",
+          "command": "$ notion-cli page retrieve PAGE_ID"
+        },
+        {
+          "description": "Retrieve a page via URL",
+          "command": "$ notion-cli page retrieve https://notion.so/PAGE_ID"
+        },
+        {
+          "description": "Retrieve a page and output raw json",
+          "command": "$ notion-cli page retrieve PAGE_ID -r"
+        },
+        {
+          "description": "Retrieve a page and output markdown",
+          "command": "$ notion-cli page retrieve PAGE_ID -m"
+        },
+        {
+          "description": "Retrieve a page metadata and output as markdown table",
+          "command": "$ notion-cli page retrieve PAGE_ID --markdown"
+        },
+        {
+          "description": "Retrieve a page metadata and output as compact JSON",
+          "command": "$ notion-cli page retrieve PAGE_ID --compact-json"
+        },
+        {
+          "description": "Retrieve a page and output JSON for automation",
+          "command": "$ notion-cli page retrieve PAGE_ID --json"
+        }
+      ],
+      "flags": {
+        "raw": {
+          "char": "r",
+          "description": "output raw json (recommended for AI assistants - returns all fields)",
+          "name": "raw",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "markdown": {
+          "char": "m",
+          "description": "Output as markdown table (GitHub-flavored)",
+          "exclusive": [
+            "compact-json",
+            "pretty"
+          ],
+          "name": "markdown",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "map": {
+          "description": "fast structure discovery (returns minimal info: titles, types, IDs)",
+          "exclusive": [
+            "raw",
+            "markdown"
+          ],
+          "name": "map",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "recursive": {
+          "char": "R",
+          "description": "recursively fetch all blocks and nested pages (reduces API calls)",
+          "name": "recursive",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "max-depth": {
+          "dependsOn": [
+            "recursive"
+          ],
+          "description": "maximum recursion depth for --recursive (default: 3)",
+          "name": "max-depth",
+          "default": 3,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "compact-json": {
+          "char": "c",
+          "description": "Output as compact JSON (single-line, ideal for piping)",
+          "exclusive": [
+            "markdown",
+            "pretty"
+          ],
+          "name": "compact-json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "pretty": {
+          "char": "P",
+          "description": "Output as pretty table with borders",
+          "exclusive": [
+            "markdown",
+            "compact-json"
+          ],
+          "name": "pretty",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "page:retrieve",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "page",
+        "retrieve.js"
+      ]
+    },
+    "page:update": {
+      "aliases": [
+        "page:u"
+      ],
+      "args": {
+        "page_id": {
+          "description": "Page ID or full Notion URL (e.g., https://notion.so/...)",
+          "name": "page_id",
+          "required": true
+        }
+      },
+      "description": "Update a page",
+      "examples": [
+        {
+          "description": "Update a page and output table",
+          "command": "$ notion-cli page update PAGE_ID"
+        },
+        {
+          "description": "Update a page via URL",
+          "command": "$ notion-cli page update https://notion.so/PAGE_ID -a"
+        },
+        {
+          "description": "Update page properties with simple format (recommended for AI agents)",
+          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Status\": \"Done\", \"Priority\": \"High\"}'"
+        },
+        {
+          "description": "Update page properties with relative date",
+          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Due Date\": \"tomorrow\", \"Status\": \"In Progress\"}'"
+        },
+        {
+          "description": "Update page with multi-select tags",
+          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Tags\": [\"urgent\", \"bug\"], \"Status\": \"Done\"}'"
+        },
+        {
+          "description": "Update a page and output raw json",
+          "command": "$ notion-cli page update PAGE_ID -r"
+        },
+        {
+          "description": "Update a page and archive",
+          "command": "$ notion-cli page update PAGE_ID -a"
+        },
+        {
+          "description": "Update a page and unarchive",
+          "command": "$ notion-cli page update PAGE_ID -u"
+        },
+        {
+          "description": "Update a page and archive and output raw json",
+          "command": "$ notion-cli page update PAGE_ID -a -r"
+        },
+        {
+          "description": "Update a page and unarchive and output raw json",
+          "command": "$ notion-cli page update PAGE_ID -u -r"
+        },
+        {
+          "description": "Update a page and output JSON for automation",
+          "command": "$ notion-cli page update PAGE_ID -a --json"
+        }
+      ],
+      "flags": {
+        "archived": {
+          "char": "a",
+          "description": "Archive the page",
+          "name": "archived",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "unarchive": {
+          "char": "u",
+          "description": "Unarchive the page",
+          "name": "unarchive",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "properties": {
+          "description": "Page properties to update as JSON string",
+          "name": "properties",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "simple-properties": {
+          "char": "S",
+          "description": "Use simplified property format (flat key-value pairs, recommended for AI agents)",
+          "name": "simple-properties",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "raw": {
+          "char": "r",
+          "description": "output raw json",
+          "name": "raw",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "page:update",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "page",
+        "update.js"
+      ]
+    },
+    "user:list": {
+      "aliases": [
+        "user:l"
+      ],
+      "args": {},
+      "description": "List all users",
+      "examples": [
+        {
+          "description": "List all users",
+          "command": "$ notion-cli user list"
+        },
+        {
+          "description": "List all users and output raw json",
+          "command": "$ notion-cli user list -r"
+        },
+        {
+          "description": "List all users and output JSON for automation",
+          "command": "$ notion-cli user list --json"
+        }
+      ],
+      "flags": {
+        "raw": {
+          "char": "r",
+          "description": "output raw json",
+          "name": "raw",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "user:list",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "user",
+        "list.js"
+      ]
+    },
+    "user:retrieve": {
+      "aliases": [
+        "user:r"
+      ],
+      "args": {
+        "user_id": {
+          "name": "user_id"
+        }
+      },
+      "description": "Retrieve a user",
+      "examples": [
+        {
+          "description": "Retrieve a user",
+          "command": "$ notion-cli user retrieve USER_ID"
+        },
+        {
+          "description": "Retrieve a user and output raw json",
+          "command": "$ notion-cli user retrieve USER_ID -r"
+        },
+        {
+          "description": "Retrieve a user and output JSON for automation",
+          "command": "$ notion-cli user retrieve USER_ID --json"
+        }
+      ],
+      "flags": {
+        "raw": {
+          "char": "r",
+          "description": "output raw json",
+          "name": "raw",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "user:retrieve",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "user",
+        "retrieve.js"
       ]
     },
     "db:create": {
@@ -2407,8 +3605,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "db:create",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -2740,8 +3938,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "db:query",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -2938,8 +4136,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "db:retrieve",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -3055,8 +4253,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "db:schema",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -3221,8 +4419,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "db:update",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -3232,1204 +4430,6 @@
         "commands",
         "db",
         "update.js"
-      ]
-    },
-    "config:set-token": {
-      "aliases": [
-        "config:token"
-      ],
-      "args": {
-        "token": {
-          "description": "Notion integration token (starts with secret_ or ntn_)",
-          "name": "token",
-          "required": false
-        }
-      },
-      "description": "Set NOTION_TOKEN in your shell configuration file",
-      "examples": [
-        {
-          "description": "Set Notion token interactively",
-          "command": "notion-cli config set-token"
-        },
-        {
-          "description": "Set Notion token directly",
-          "command": "notion-cli config set-token ntn_abc123..."
-        },
-        {
-          "description": "Set token with JSON output",
-          "command": "notion-cli config set-token ntn_abc123... --json"
-        }
-      ],
-      "flags": {
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "config:set-token",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "config",
-        "set-token.js"
-      ]
-    },
-    "page:create": {
-      "aliases": [
-        "page:c"
-      ],
-      "args": {},
-      "description": "Create a page",
-      "examples": [
-        {
-          "description": "Create a page via interactive mode",
-          "command": "$ notion-cli page create"
-        },
-        {
-          "description": "Create a page with a specific parent_page_id",
-          "command": "$ notion-cli page create -p PARENT_PAGE_ID"
-        },
-        {
-          "description": "Create a page with a parent page URL",
-          "command": "$ notion-cli page create -p https://notion.so/PARENT_PAGE_ID"
-        },
-        {
-          "description": "Create a page with a specific parent_db_id",
-          "command": "$ notion-cli page create -d PARENT_DB_ID"
-        },
-        {
-          "description": "Create a page with simple properties (recommended for AI agents)",
-          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"My Task\", \"Status\": \"In Progress\", \"Due Date\": \"2025-12-31\"}'"
-        },
-        {
-          "description": "Create a page with simple properties using relative dates",
-          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"Review\", \"Due Date\": \"tomorrow\", \"Priority\": \"High\"}'"
-        },
-        {
-          "description": "Create a page with simple properties and multi-select",
-          "command": "$ notion-cli page create -d DATA_SOURCE_ID -S --properties '{\"Name\": \"Bug Fix\", \"Tags\": [\"urgent\", \"bug\"], \"Status\": \"Done\"}'"
-        },
-        {
-          "description": "Create a page with a specific source markdown file and parent_page_id",
-          "command": "$ notion-cli page create -f ./path/to/source.md -p PARENT_PAGE_ID"
-        },
-        {
-          "description": "Create a page with a specific source markdown file and parent_db_id",
-          "command": "$ notion-cli page create -f ./path/to/source.md -d PARENT_DB_ID"
-        },
-        {
-          "description": "Create a page with a specific source markdown file and output raw json with parent_page_id",
-          "command": "$ notion-cli page create -f ./path/to/source.md -p PARENT_PAGE_ID -r"
-        },
-        {
-          "description": "Create a page and output JSON for automation",
-          "command": "$ notion-cli page create -p PARENT_PAGE_ID --json"
-        }
-      ],
-      "flags": {
-        "parent_page_id": {
-          "char": "p",
-          "description": "Parent page ID or URL (to create a sub-page)",
-          "name": "parent_page_id",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "parent_data_source_id": {
-          "char": "d",
-          "description": "Parent data source ID or URL (to create a page in a table)",
-          "name": "parent_data_source_id",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "file_path": {
-          "char": "f",
-          "description": "Path to a source markdown file",
-          "name": "file_path",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "title_property": {
-          "char": "t",
-          "description": "Title property name (auto-detected: \"title\" for sub-pages, \"Name\" for databases)",
-          "name": "title_property",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "properties": {
-          "description": "Page properties as JSON string",
-          "name": "properties",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "simple-properties": {
-          "char": "S",
-          "description": "Use simplified property format (flat key-value pairs, recommended for AI agents)",
-          "name": "simple-properties",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "raw": {
-          "char": "r",
-          "description": "output raw json",
-          "name": "raw",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "page:create",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "page",
-        "create.js"
-      ]
-    },
-    "page:export": {
-      "aliases": [
-        "page:e"
-      ],
-      "args": {
-        "page_id": {
-          "description": "Page ID or full Notion URL",
-          "name": "page_id",
-          "required": true
-        }
-      },
-      "description": "Export a Notion page to markdown or JSON",
-      "examples": [
-        {
-          "description": "Export page as markdown to stdout",
-          "command": "$ notion-cli page export PAGE_ID"
-        },
-        {
-          "description": "Export page as markdown to a file",
-          "command": "$ notion-cli page export PAGE_ID -o notes.md"
-        },
-        {
-          "description": "Export page as JSON to a file",
-          "command": "$ notion-cli page export PAGE_ID --json -o page.json"
-        },
-        {
-          "description": "Export using a Notion URL",
-          "command": "$ notion-cli page export \"https://notion.so/My-Page-abc123\" -o notes.md"
-        },
-        {
-          "description": "Pipe markdown to another command",
-          "command": "$ notion-cli page export PAGE_ID | head -20"
-        }
-      ],
-      "flags": {
-        "output": {
-          "char": "o",
-          "description": "File path to write (omit for stdout)",
-          "name": "output",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "page:export",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "page",
-        "export.js"
-      ]
-    },
-    "page:retrieve": {
-      "aliases": [
-        "page:r"
-      ],
-      "args": {
-        "page_id": {
-          "description": "Page ID or full Notion URL (e.g., https://notion.so/...)",
-          "name": "page_id",
-          "required": true
-        }
-      },
-      "description": "Retrieve a page",
-      "examples": [
-        {
-          "description": "Retrieve a page with full data (recommended for AI assistants)",
-          "command": "$ notion-cli page retrieve PAGE_ID -r"
-        },
-        {
-          "description": "Fast structure overview (90% faster than full fetch)",
-          "command": "$ notion-cli page retrieve PAGE_ID --map"
-        },
-        {
-          "description": "Fast structure overview with compact JSON",
-          "command": "$ notion-cli page retrieve PAGE_ID --map --compact-json"
-        },
-        {
-          "description": "Retrieve entire page tree with all nested content (35% token reduction)",
-          "command": "$ notion-cli page retrieve PAGE_ID --recursive --compact-json"
-        },
-        {
-          "description": "Retrieve page tree with custom depth limit",
-          "command": "$ notion-cli page retrieve PAGE_ID -R --max-depth 5 --json"
-        },
-        {
-          "description": "Retrieve a page and output table",
-          "command": "$ notion-cli page retrieve PAGE_ID"
-        },
-        {
-          "description": "Retrieve a page via URL",
-          "command": "$ notion-cli page retrieve https://notion.so/PAGE_ID"
-        },
-        {
-          "description": "Retrieve a page and output raw json",
-          "command": "$ notion-cli page retrieve PAGE_ID -r"
-        },
-        {
-          "description": "Retrieve a page and output markdown",
-          "command": "$ notion-cli page retrieve PAGE_ID -m"
-        },
-        {
-          "description": "Retrieve a page metadata and output as markdown table",
-          "command": "$ notion-cli page retrieve PAGE_ID --markdown"
-        },
-        {
-          "description": "Retrieve a page metadata and output as compact JSON",
-          "command": "$ notion-cli page retrieve PAGE_ID --compact-json"
-        },
-        {
-          "description": "Retrieve a page and output JSON for automation",
-          "command": "$ notion-cli page retrieve PAGE_ID --json"
-        }
-      ],
-      "flags": {
-        "raw": {
-          "char": "r",
-          "description": "output raw json (recommended for AI assistants - returns all fields)",
-          "name": "raw",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "markdown": {
-          "char": "m",
-          "description": "Output as markdown table (GitHub-flavored)",
-          "exclusive": [
-            "compact-json",
-            "pretty"
-          ],
-          "name": "markdown",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "map": {
-          "description": "fast structure discovery (returns minimal info: titles, types, IDs)",
-          "exclusive": [
-            "raw",
-            "markdown"
-          ],
-          "name": "map",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "recursive": {
-          "char": "R",
-          "description": "recursively fetch all blocks and nested pages (reduces API calls)",
-          "name": "recursive",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "max-depth": {
-          "dependsOn": [
-            "recursive"
-          ],
-          "description": "maximum recursion depth for --recursive (default: 3)",
-          "name": "max-depth",
-          "default": 3,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "compact-json": {
-          "char": "c",
-          "description": "Output as compact JSON (single-line, ideal for piping)",
-          "exclusive": [
-            "markdown",
-            "pretty"
-          ],
-          "name": "compact-json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "pretty": {
-          "char": "P",
-          "description": "Output as pretty table with borders",
-          "exclusive": [
-            "markdown",
-            "compact-json"
-          ],
-          "name": "pretty",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "page:retrieve",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "page",
-        "retrieve.js"
-      ]
-    },
-    "page:update": {
-      "aliases": [
-        "page:u"
-      ],
-      "args": {
-        "page_id": {
-          "description": "Page ID or full Notion URL (e.g., https://notion.so/...)",
-          "name": "page_id",
-          "required": true
-        }
-      },
-      "description": "Update a page",
-      "examples": [
-        {
-          "description": "Update a page and output table",
-          "command": "$ notion-cli page update PAGE_ID"
-        },
-        {
-          "description": "Update a page via URL",
-          "command": "$ notion-cli page update https://notion.so/PAGE_ID -a"
-        },
-        {
-          "description": "Update page properties with simple format (recommended for AI agents)",
-          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Status\": \"Done\", \"Priority\": \"High\"}'"
-        },
-        {
-          "description": "Update page properties with relative date",
-          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Due Date\": \"tomorrow\", \"Status\": \"In Progress\"}'"
-        },
-        {
-          "description": "Update page with multi-select tags",
-          "command": "$ notion-cli page update PAGE_ID -S --properties '{\"Tags\": [\"urgent\", \"bug\"], \"Status\": \"Done\"}'"
-        },
-        {
-          "description": "Update a page and output raw json",
-          "command": "$ notion-cli page update PAGE_ID -r"
-        },
-        {
-          "description": "Update a page and archive",
-          "command": "$ notion-cli page update PAGE_ID -a"
-        },
-        {
-          "description": "Update a page and unarchive",
-          "command": "$ notion-cli page update PAGE_ID -u"
-        },
-        {
-          "description": "Update a page and archive and output raw json",
-          "command": "$ notion-cli page update PAGE_ID -a -r"
-        },
-        {
-          "description": "Update a page and unarchive and output raw json",
-          "command": "$ notion-cli page update PAGE_ID -u -r"
-        },
-        {
-          "description": "Update a page and output JSON for automation",
-          "command": "$ notion-cli page update PAGE_ID -a --json"
-        }
-      ],
-      "flags": {
-        "archived": {
-          "char": "a",
-          "description": "Archive the page",
-          "name": "archived",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "unarchive": {
-          "char": "u",
-          "description": "Unarchive the page",
-          "name": "unarchive",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "properties": {
-          "description": "Page properties to update as JSON string",
-          "name": "properties",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "simple-properties": {
-          "char": "S",
-          "description": "Use simplified property format (flat key-value pairs, recommended for AI agents)",
-          "name": "simple-properties",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "raw": {
-          "char": "r",
-          "description": "output raw json",
-          "name": "raw",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "page:update",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "page",
-        "update.js"
-      ]
-    },
-    "user:list": {
-      "aliases": [
-        "user:l"
-      ],
-      "args": {},
-      "description": "List all users",
-      "examples": [
-        {
-          "description": "List all users",
-          "command": "$ notion-cli user list"
-        },
-        {
-          "description": "List all users and output raw json",
-          "command": "$ notion-cli user list -r"
-        },
-        {
-          "description": "List all users and output JSON for automation",
-          "command": "$ notion-cli user list --json"
-        }
-      ],
-      "flags": {
-        "raw": {
-          "char": "r",
-          "description": "output raw json",
-          "name": "raw",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "user:list",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "user",
-        "list.js"
-      ]
-    },
-    "user:retrieve": {
-      "aliases": [
-        "user:r"
-      ],
-      "args": {
-        "user_id": {
-          "name": "user_id"
-        }
-      },
-      "description": "Retrieve a user",
-      "examples": [
-        {
-          "description": "Retrieve a user",
-          "command": "$ notion-cli user retrieve USER_ID"
-        },
-        {
-          "description": "Retrieve a user and output raw json",
-          "command": "$ notion-cli user retrieve USER_ID -r"
-        },
-        {
-          "description": "Retrieve a user and output JSON for automation",
-          "command": "$ notion-cli user retrieve USER_ID --json"
-        }
-      ],
-      "flags": {
-        "raw": {
-          "char": "r",
-          "description": "output raw json",
-          "name": "raw",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "user:retrieve",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "user",
-        "retrieve.js"
       ]
     },
     "block:retrieve:children": {
@@ -4589,8 +4589,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "block:retrieve:children",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -4693,8 +4693,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "page:retrieve:property_item",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
@@ -4843,8 +4843,8 @@
       "hasDynamicHelp": false,
       "hiddenAliases": [],
       "id": "user:retrieve:bot",
-      "pluginAlias": "@coastal-programs/notion-cli",
-      "pluginName": "@coastal-programs/notion-cli",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
