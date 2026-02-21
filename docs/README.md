@@ -18,6 +18,7 @@ Essential guides for using the CLI effectively:
 - **[Batch Operations](user-guides/batch-operations.md)** - Retrieve or delete multiple resources at once
 - **[Interactive Browsing](user-guides/interactive-browsing.md)** - Navigate Notion page trees with arrow keys
 - **[Page Export](export.md)** - Export Notion pages to markdown or JSON files
+- **[Daily Journal Setup](user-guides/daily-journal-setup.md)** - Zero-friction daily entries from the command line
 
 ## Architecture
 

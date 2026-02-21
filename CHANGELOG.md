@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **README cleanup** — trimmed from 1300 to ~460 lines; removed stale release notes, condensed verbose sections, fixed all 9 broken doc links, added missing `page export` to command reference, removed duplicate sections.
 
 ### Added
+- **`daily` command** — zero-friction daily journal entries (`notion-cli daily`). Creates today's entry or finds it if it already exists. Supports body content (`notion-cli daily "My note"`), appending to existing entries, and `--json` output. One-time setup via `notion-cli daily setup` (manual or auto-create database). Alias: `d`.
 - **`bookmark` commands** — save named shortcuts to frequently-used pages/databases (`notion-cli bookmark set inbox DB_ID --default`). Bookmarks resolve everywhere IDs do — `notion-cli db query inbox` just works. Commands: `set`, `list`, `remove`. Aliases: `bm:set`, `bm:ls`, `bm:rm`.
 - **`quick` command** — zero-friction page creation (`notion-cli quick "Buy groceries"`). Uses default bookmark or `--to` flag. Supports stdin piping. Alias: `q`.
 - **`open` command** — search and open a page/database in the browser (`notion-cli open "weekly meeting"`). Alias: `o`.

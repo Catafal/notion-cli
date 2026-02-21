@@ -254,6 +254,18 @@ notion-cli batch delete <ID1> <ID2> <ID3>             # Delete multiple in paral
 
 [📖 Batch Operations Guide](./docs/batch.md)
 
+### Daily Journal
+
+```bash
+notion-cli daily                                       # Create/find today's entry
+notion-cli daily "Had a productive standup"            # Create with body content
+notion-cli daily "Another thought"                     # Append to existing entry
+notion-cli daily setup DB_ID                           # Setup: point to existing database
+notion-cli daily setup --auto PAGE_ID                  # Setup: auto-create database
+```
+
+[📖 Daily Journal Guide](./docs/user-guides/daily-journal-setup.md)
+
 ### Search
 
 ```bash
