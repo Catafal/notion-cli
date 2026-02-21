@@ -10,6 +10,7 @@
  * Resolution stages:
  * 1. URL extraction
  * 2. Direct ID validation
+ * 2.5. Bookmark lookup (user-defined shortcuts)
  * 3. Cache lookup (exact + aliases)
  * 4. API search fallback
  * 5. Smart database_id → data_source_id resolution (for databases)
@@ -23,6 +24,7 @@ import {
   wrapNotionError
 } from '../errors'
 import { loadCache } from './workspace-cache'
+import { getBookmark } from './bookmarks'
 import { search, retrieveDataSource } from '../notion'
 import { isFullPage } from '@notionhq/client'
 
@@ -95,6 +97,10 @@ export async function resolveNotionId(
     }
     return extractedId
   }
+
+  // Stage 2.5: Bookmark lookup — user-defined shortcuts (e.g. "inbox", "tasks")
+  const bookmark = await getBookmark(trimmed)
+  if (bookmark) return bookmark.id
 
   // Stage 3: Cache lookup (exact + aliases)
   const fromCache = await searchCache(trimmed)
