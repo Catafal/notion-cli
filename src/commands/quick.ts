@@ -2,6 +2,8 @@ import { Args, Command, Flags } from '@oclif/core'
 import * as notion from '../notion'
 import { resolveNotionId } from '../utils/notion-resolver'
 import { getDefaultBookmark } from '../utils/bookmarks'
+import { getTemplate } from '../utils/templates'
+import { expandSimpleProperties } from '../utils/property-expander'
 import { markdownToBlocks } from '../utils/markdown-to-blocks'
 import { AutomationFlags } from '../base-flags'
 import { NotionCLIError, wrapNotionError } from '../errors'
@@ -47,6 +49,9 @@ export default class Quick extends Command {
       char: 't',
       description: 'Override title (useful with stdin piping)',
     }),
+    template: Flags.string({
+      description: 'Apply a saved template (properties and content)',
+    }),
     ...AutomationFlags,
   }
 
@@ -87,21 +92,41 @@ export default class Quick extends Command {
       const pageTitle = flags.title || lines[0].trim()
       const body = flags.title ? content : lines.slice(1).join('\n').trim()
 
-      // 5. Build page properties
-      const properties: any = {
+      // 5. Build page properties (merge template properties if provided)
+      let properties: any = {
         [titlePropName]: {
           title: [{ text: { content: pageTitle } }]
         }
       }
 
-      // 6. Build children blocks from body markdown (if any)
-      const children = body ? markdownToBlocks(body) as BlockObjectRequest[] : undefined
+      // 5a. If a template is specified, expand its properties and merge
+      let templateIcon: string | undefined
+      let templateContent: string | undefined
+      if (flags.template) {
+        const tmpl = await getTemplate(flags.template)
+        if (!tmpl) {
+          this.error(`Template "${flags.template}" not found.\nRun \`notion-cli template list\` to see saved templates.`)
+          process.exit(1)
+          return
+        }
+        if (tmpl.properties && Object.keys(tmpl.properties).length > 0) {
+          const merged = { ...tmpl.properties, [titlePropName]: pageTitle }
+          properties = await expandSimpleProperties(merged, schema.properties)
+        }
+        templateIcon = tmpl.icon
+        templateContent = tmpl.content
+      }
+
+      // 6. Build children blocks — body from arg takes precedence over template content
+      const contentForBlocks = body || templateContent
+      const children = contentForBlocks ? markdownToBlocks(contentForBlocks) as BlockObjectRequest[] : undefined
 
       // 7. Create page
       const res = await notion.createPage({
         parent: { data_source_id: dbId },
         properties,
         ...(children && { children }),
+        ...(templateIcon && { icon: { emoji: templateIcon } }),
       })
 
       // 8. Output
