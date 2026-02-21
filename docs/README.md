@@ -23,6 +23,7 @@ Essential guides for using the CLI effectively:
 - **[Fuzzy Search](user-guides/fuzzy-search.md)** - Typo-tolerant name resolution and database filtering
 - **[Append Command](append.md)** - Add content to existing pages by name
 - **[Stats Dashboard](stats.md)** - Workspace statistics at a glance
+- **[Markdown to Notion](user-guides/markdown-to-notion.md)** - Supported markdown features and how they map to Notion blocks
 
 ## Architecture
 
