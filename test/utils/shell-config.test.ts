@@ -3,28 +3,54 @@ import * as fs from 'fs'
 import * as fsPromises from 'fs/promises'
 import * as path from 'path'
 import * as os from 'os'
-import { readTokenFromConfig, persistToken } from '../../src/utils/shell-config'
+import { readTokenFromConfig, persistToken, detectShell, getRcFilePath } from '../../src/utils/shell-config'
 
 const CONFIG_DIR = path.join(os.homedir(), '.notion-cli')
 const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json')
 
+// persistToken() writes to 3 real files: rc file, ~/.zshenv (zsh), config.json.
+// We MUST back up and restore ALL of them to avoid corrupting the user's env.
+const shell = detectShell()
+const rcFilePath = getRcFilePath(shell)
+const zshenvPath = path.join(os.homedir(), '.zshenv')
+
+/** Safely read a file; returns null if it doesn't exist */
+function safeReadSync(filePath: string): string | null {
+  try {
+    return fs.readFileSync(filePath, 'utf-8')
+  } catch {
+    return null
+  }
+}
+
+/** Restore a file to its original content, or delete if it didn't exist before */
+async function safeRestore(filePath: string, original: string | null): Promise<void> {
+  if (original !== null) {
+    await fsPromises.writeFile(filePath, original, 'utf-8')
+  } else {
+    try { await fsPromises.unlink(filePath) } catch { /* didn't exist before */ }
+  }
+}
+
 describe('shell-config', () => {
-  // Back up and restore config.json around tests
+  // Back up ALL files that persistToken() modifies
   let originalConfig: string | null = null
+  let originalRcFile: string | null = null
+  let originalZshenv: string | null = null
 
   before(() => {
-    try {
-      originalConfig = fs.readFileSync(CONFIG_FILE, 'utf-8')
-    } catch {
-      originalConfig = null
+    originalConfig = safeReadSync(CONFIG_FILE)
+    originalRcFile = safeReadSync(rcFilePath)
+    if (shell === 'zsh') {
+      originalZshenv = safeReadSync(zshenvPath)
     }
   })
 
   after(async () => {
-    if (originalConfig !== null) {
-      await fsPromises.writeFile(CONFIG_FILE, originalConfig, 'utf-8')
-    } else {
-      try { await fsPromises.unlink(CONFIG_FILE) } catch { /* didn't exist before */ }
+    await safeRestore(CONFIG_FILE, originalConfig)
+    await safeRestore(rcFilePath, originalRcFile)
+    if (shell === 'zsh') {
+      await safeRestore(zshenvPath, originalZshenv)
     }
   })
 
