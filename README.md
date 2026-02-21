@@ -266,6 +266,19 @@ notion-cli daily setup --auto PAGE_ID                  # Setup: auto-create data
 
 [📖 Daily Journal Guide](./docs/user-guides/daily-journal-setup.md)
 
+### Templates
+
+```bash
+notion-cli template save "meeting" -p '{"Status": "To Do"}' -c "# Agenda" --icon "📋"
+notion-cli template list                                       # List all templates
+notion-cli template get "meeting"                              # View template details
+notion-cli template use "meeting" --to tasks --title "Sprint"  # Create page from template
+notion-cli template remove "meeting"                           # Delete a template
+notion-cli quick "My Meeting" --template meeting --to tasks    # Quick capture with template
+```
+
+[📖 Templates Guide](./docs/user-guides/templates-guide.md)
+
 ### Search
 
 ```bash
@@ -451,6 +464,7 @@ Full documentation lives in the `/docs` folder:
 - **[Batch Operations](./docs/batch.md)** — Retrieve or delete multiple resources
 - **[Page Export](./docs/export.md)** — Export pages to markdown or JSON
 - **[Interactive Browsing](./docs/user-guides/interactive-browsing.md)** — Navigate page trees
+- **[Templates](./docs/user-guides/templates-guide.md)** — Reusable page presets
 - **[Error Handling](./docs/user-guides/error-handling-examples.md)** — Understanding errors
 - **[Envelope System](./docs/user-guides/envelope-index.md)** — Standardized response format
 - **[Smart ID Resolution](./docs/architecture/smart-id-resolution.md)** — Auto ID conversion
