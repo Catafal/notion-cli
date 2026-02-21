@@ -3,6 +3,7 @@ import * as nock from 'nock'
 import * as sinon from 'sinon'
 
 const BLOCK_ID = '87654321-4321-4321-4321-210987654321'
+const BLOCK_ID_NO_DASHES = BLOCK_ID.replace(/-/g, '')
 const PAGE_ID = '87654321-4321-4321-4321-210987654322'
 
 const response = {
@@ -43,7 +44,7 @@ describe('block:delete', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .delete(`/v1/blocks/${BLOCK_ID}`)
+          .delete(`/v1/blocks/${BLOCK_ID_NO_DASHES}`)
           .reply(200, response)
       })
       .stdout({ print: process.env.TEST_DEBUG ? true : false })
@@ -58,7 +59,7 @@ describe('block:delete', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .delete(`/v1/blocks/${BLOCK_ID}`)
+          .delete(`/v1/blocks/${BLOCK_ID_NO_DASHES}`)
           .reply(200, response)
       })
       .stdout({ print: process.env.TEST_DEBUG ? true : false })

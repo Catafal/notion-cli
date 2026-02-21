@@ -3,6 +3,7 @@ import * as nock from 'nock'
 import * as sinon from 'sinon'
 
 const BLOCK_ID = '12345678-1234-1234-1234-123456789012'
+const BLOCK_ID_NO_DASHES = BLOCK_ID.replace(/-/g, '')
 
 const response = {
   object: 'list',
@@ -51,7 +52,7 @@ describe('block:retrieve:children', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .get(`/v1/blocks/${BLOCK_ID}/children`)
+          .get(`/v1/blocks/${BLOCK_ID_NO_DASHES}/children`)
           .query(true) // Accept any query parameters
           .reply(200, response)
       })
@@ -67,7 +68,7 @@ describe('block:retrieve:children', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .get(`/v1/blocks/${BLOCK_ID}/children`)
+          .get(`/v1/blocks/${BLOCK_ID_NO_DASHES}/children`)
           .query(true) // Accept any query parameters
           .reply(200, response)
       })

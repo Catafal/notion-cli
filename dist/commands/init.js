@@ -189,7 +189,7 @@ class Init extends core_1.Command {
                 }
             ]);
         }
-        // Auto-prepend "secret_" only if token doesn't already have a known prefix
+        // Accept tokens with or without "secret_" prefix — auto-prepend if needed
         // Notion tokens can start with "secret_" (legacy) or "ntn_" (current)
         if (!token.startsWith('secret_') && !token.startsWith('ntn_')) {
             token = `secret_${token}`;
