@@ -17,12 +17,13 @@ export declare function detectShell(): string;
  */
 export declare function getRcFilePath(shell: string): string;
 /**
- * Persist a Notion token to the user's shell rc file.
+ * Persist a Notion token to the user's shell config files.
  *
- * Reads the rc file, checks if NOTION_TOKEN already exists (replaces it if so),
- * otherwise appends a new export line. Creates the file if it doesn't exist.
+ * For zsh: writes to both .zshrc (interactive shells) and .zshenv
+ * (non-interactive subprocesses like AI agents, e.g. OpenClaw exec).
+ * For other shells: writes to the single rc/config file.
  *
- * Returns the shell name and rc file path so callers can inform the user.
+ * Returns the shell name and primary rc file path so callers can inform the user.
  */
 export declare function persistToken(token: string): Promise<{
     rcFile: string;

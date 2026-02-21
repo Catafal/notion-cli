@@ -48,20 +48,13 @@ function getRcFilePath(shell) {
     }
 }
 /**
- * Persist a Notion token to the user's shell rc file.
- *
- * Reads the rc file, checks if NOTION_TOKEN already exists (replaces it if so),
- * otherwise appends a new export line. Creates the file if it doesn't exist.
- *
- * Returns the shell name and rc file path so callers can inform the user.
+ * Upsert a NOTION_TOKEN export line in a single file.
+ * Replaces existing line if found, otherwise appends a new one.
  */
-async function persistToken(token) {
-    const shell = detectShell();
-    const rcFile = getRcFilePath(shell);
-    // Read existing rc file (create if missing)
-    let rcContent = '';
+async function upsertTokenInFile(filePath, token) {
+    let content = '';
     try {
-        rcContent = await fs.readFile(rcFile, 'utf-8');
+        content = await fs.readFile(filePath, 'utf-8');
     }
     catch (error) {
         if (error && typeof error === 'object' && 'code' in error && error.code !== 'ENOENT') {
@@ -69,16 +62,35 @@ async function persistToken(token) {
         }
         // File doesn't exist — will be created on write
     }
-    // Upsert the NOTION_TOKEN export line
     const tokenLineRegex = /^export\s+NOTION_TOKEN=.*/gm;
     const newTokenLine = `export NOTION_TOKEN="${token}"`;
-    let updatedContent;
-    if (tokenLineRegex.test(rcContent)) {
-        updatedContent = rcContent.replace(tokenLineRegex, newTokenLine);
+    let updated;
+    if (tokenLineRegex.test(content)) {
+        updated = content.replace(tokenLineRegex, newTokenLine);
     }
     else {
-        updatedContent = rcContent.trim() + '\n\n# Notion CLI Token\n' + newTokenLine + '\n';
+        updated = content.trim() + '\n\n# Notion CLI Token\n' + newTokenLine + '\n';
     }
-    await fs.writeFile(rcFile, updatedContent, 'utf-8');
+    await fs.writeFile(filePath, updated, 'utf-8');
+}
+/**
+ * Persist a Notion token to the user's shell config files.
+ *
+ * For zsh: writes to both .zshrc (interactive shells) and .zshenv
+ * (non-interactive subprocesses like AI agents, e.g. OpenClaw exec).
+ * For other shells: writes to the single rc/config file.
+ *
+ * Returns the shell name and primary rc file path so callers can inform the user.
+ */
+async function persistToken(token) {
+    const shell = detectShell();
+    const rcFile = getRcFilePath(shell);
+    await upsertTokenInFile(rcFile, token);
+    // zsh: also write to ~/.zshenv so non-interactive subprocesses inherit the token
+    // (.zshrc is only sourced for interactive shells)
+    if (shell === 'zsh') {
+        const zshenvPath = path.join(os.homedir(), '.zshenv');
+        await upsertTokenInFile(zshenvPath, token);
+    }
     return { rcFile, shell };
 }
