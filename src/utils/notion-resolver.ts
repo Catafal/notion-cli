@@ -11,7 +11,7 @@
  * 1. URL extraction
  * 2. Direct ID validation
  * 2.5. Bookmark lookup (user-defined shortcuts)
- * 3. Cache lookup (exact + aliases)
+ * 3. Cache lookup (exact → alias → substring → fuzzy)
  * 4. API search fallback
  * 5. Smart database_id → data_source_id resolution (for databases)
  */
@@ -24,6 +24,7 @@ import {
   wrapNotionError
 } from '../errors'
 import { loadCache } from './workspace-cache'
+import { fuzzyMatch } from './fuzzy'
 import { getBookmark } from './bookmarks'
 import { search, retrieveDataSource } from '../notion'
 import { isFullPage } from '@notionhq/client'
@@ -228,6 +229,7 @@ function isValidNotionId(input: string): boolean {
  * 1. Exact title match (case-insensitive)
  * 2. Alias match (case-insensitive)
  * 3. Partial title match (case-insensitive substring)
+ * 4. Fuzzy match (Levenshtein distance for typo tolerance)
  *
  * @param query - Search query (database/page name)
  * @returns Database/page ID if found, null otherwise
@@ -258,6 +260,14 @@ async function searchCache(query: string): Promise<string | null> {
       return db.id
     }
   }
+
+  // 4. Try fuzzy match (typo tolerance via Levenshtein distance)
+  const candidates = cache.databases.flatMap(db => [
+    { key: db.id, value: db.titleNormalized },
+    ...db.aliases.map(alias => ({ key: db.id, value: alias })),
+  ])
+  const fuzzyResult = fuzzyMatch(normalized, candidates)
+  if (fuzzyResult) return fuzzyResult.match
 
   return null
 }

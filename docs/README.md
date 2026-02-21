@@ -20,6 +20,7 @@ Essential guides for using the CLI effectively:
 - **[Page Export](export.md)** - Export Notion pages to markdown or JSON files
 - **[Daily Journal Setup](user-guides/daily-journal-setup.md)** - Zero-friction daily entries from the command line
 - **[Templates Guide](user-guides/templates-guide.md)** - Reusable page presets for consistent page creation
+- **[Fuzzy Search](user-guides/fuzzy-search.md)** - Typo-tolerant name resolution and database filtering
 
 ## Architecture
 
