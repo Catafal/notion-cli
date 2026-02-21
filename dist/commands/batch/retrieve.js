@@ -8,6 +8,7 @@ const base_flags_1 = require("../../base-flags");
 const errors_1 = require("../../errors");
 const client_1 = require("@notionhq/client");
 const readline = require("readline");
+const notion_resolver_1 = require("../../utils/notion-resolver");
 class BatchRetrieve extends core_1.Command {
     /**
      * Read IDs from stdin
@@ -44,10 +45,12 @@ class BatchRetrieve extends core_1.Command {
      */
     async retrieveResource(id, type) {
         try {
+            // Resolve URL/name/ID to clean Notion ID before API call
+            const resolvedId = await (0, notion_resolver_1.resolveNotionId)(id, type === 'database' ? 'database' : 'page');
             let data;
             switch (type) {
                 case 'page': {
-                    const pageResponse = await notion.retrievePage({ page_id: id });
+                    const pageResponse = await notion.retrievePage({ page_id: resolvedId });
                     if (!(0, client_1.isFullPage)(pageResponse)) {
                         throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.API_ERROR, 'Received partial page response instead of full page', [], { attemptedId: id });
                     }
@@ -55,7 +58,7 @@ class BatchRetrieve extends core_1.Command {
                     break;
                 }
                 case 'block': {
-                    const blockResponse = await notion.retrieveBlock(id);
+                    const blockResponse = await notion.retrieveBlock(resolvedId);
                     if (!(0, client_1.isFullBlock)(blockResponse)) {
                         throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.API_ERROR, 'Received partial block response instead of full block', [], { attemptedId: id });
                     }
@@ -63,7 +66,7 @@ class BatchRetrieve extends core_1.Command {
                     break;
                 }
                 case 'database':
-                    data = await notion.retrieveDataSource(id);
+                    data = await notion.retrieveDataSource(resolvedId);
                     break;
                 default:
                     throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.VALIDATION_ERROR, `Invalid resource type: ${type}`, [], { userInput: type, resourceType: type });
@@ -237,6 +240,10 @@ BatchRetrieve.examples = [
     {
         description: 'Retrieve with raw output',
         command: '$ notion-cli batch retrieve --ids ID1,ID2,ID3 -r',
+    },
+    {
+        description: 'Retrieve using Notion URLs (auto-resolved)',
+        command: '$ notion-cli batch retrieve --ids "https://notion.so/Page-abc123,https://notion.so/Other-def456"',
     },
 ];
 BatchRetrieve.args = {
