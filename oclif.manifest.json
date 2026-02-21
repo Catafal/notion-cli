@@ -1015,6 +1015,10 @@
           "command": "$ notion-cli stats --live"
         },
         {
+          "description": "Show database relation graph",
+          "command": "$ notion-cli stats --relations"
+        },
+        {
           "description": "JSON output for automation",
           "command": "$ notion-cli stats --json"
         }
@@ -1072,6 +1076,12 @@
         "live": {
           "description": "Fetch page counts per database (requires API calls)",
           "name": "live",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "relations": {
+          "description": "Show database relation graph (from cache, no API calls)",
+          "name": "relations",
           "allowNo": false,
           "type": "boolean"
         }
