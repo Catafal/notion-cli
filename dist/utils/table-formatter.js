@@ -98,11 +98,14 @@ function formatTable(data, columns, options = {}) {
     }
     // Output as table
     const headers = selectedColumns.map(col => columns[col].header || col);
+    // Respect NO_COLOR standard (https://no-color.org) — disables ANSI codes for
+    // CI/CD logs, screen readers, piped output, and AI agent consumption
+    const useColor = !process.env.NO_COLOR;
     const table = new Table({
         head: options['no-header'] ? [] : headers,
         style: {
-            head: ['cyan'],
-            border: ['gray']
+            head: useColor ? ['cyan'] : [],
+            border: useColor ? ['gray'] : [],
         },
         wordWrap: !options['no-truncate'],
         colWidths: selectedColumns.map(col => {

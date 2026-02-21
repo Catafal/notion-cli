@@ -1,6 +1,9 @@
 import { Command } from '@oclif/core';
 export default class Search extends Command {
     static description: string;
+    static args: {
+        query: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
+    };
     static examples: {
         description: string;
         command: string;

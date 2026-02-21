@@ -1,4 +1,4 @@
-import { Command, Flags } from '@oclif/core'
+import { Args, Command, Flags } from '@oclif/core'
 import * as notion from '../notion'
 import {
   SearchParameters,
@@ -27,13 +27,24 @@ import { tableFlags, formatTable } from '../utils/table-formatter'
 export default class Search extends Command {
   static description = 'Search by title'
 
+  static args = {
+    query: Args.string({
+      required: false,
+      description: 'Search query (or use -q flag)',
+    }),
+  }
+
   static examples = [
     {
-      description: 'Search with full data (recommended for AI assistants)',
-      command: `$ notion-cli search -q 'My Page' -r`,
+      description: 'Search by title (positional argument)',
+      command: `$ notion-cli search 'My Page'`,
     },
     {
-      description: 'Search by title',
+      description: 'Search with full data (recommended for AI assistants)',
+      command: `$ notion-cli search 'My Page' -r`,
+    },
+    {
+      description: 'Search by title (flag syntax)',
       command: `$ notion-cli search -q 'My Page'`,
     },
     {
@@ -161,7 +172,10 @@ export default class Search extends Command {
   }
 
   public async run(): Promise<void> {
-    const { flags } = await this.parse(Search)
+    const { args, flags } = await this.parse(Search)
+
+    // Positional arg as default, -q flag overrides if both provided
+    const query = flags.query ?? args.query
 
     try {
       // Validate date filters
@@ -199,8 +213,8 @@ export default class Search extends Command {
       }
 
       const params: SearchParameters = {}
-      if (flags.query) {
-        params.query = flags.query
+      if (query) {
+        params.query = query
       }
       if (flags.sort_direction) {
         let direction: 'ascending' | 'descending'
@@ -396,7 +410,7 @@ export default class Search extends Command {
         ? error
         : wrapNotionError(error, {
             endpoint: 'search',
-            userInput: flags.query || flags.filter
+            userInput: query || flags.filter
           })
 
       if (flags.json) {

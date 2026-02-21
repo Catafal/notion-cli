@@ -510,6 +510,23 @@ notion-cli sync
 notion-cli db query <ID> --verbose --json
 ```
 
+**8. Reduce Output Size for Large Queries**
+```bash
+# Combine flags for up to 80% smaller responses:
+# --minimal     strips metadata fields (~40% reduction)
+# --compact-json  single-line JSON (~30% reduction)
+# --page-size N   limit results (default varies by command)
+# --select        pick specific properties (db query only, 60-80% reduction)
+notion-cli db query <ID> --minimal --compact-json --page-size 10
+notion-cli db query <ID> --select "Name,Status" --minimal --compact-json
+```
+
+**9. Disable Colors for Clean Parsing**
+```bash
+# Set NO_COLOR to remove ANSI escape codes from table output
+NO_COLOR=1 notion-cli search "My Page"
+```
+
 ### Performance Optimization
 
 **1. Leverage Caching**
