@@ -2787,6 +2787,193 @@
         "info.js"
       ]
     },
+    "daily": {
+      "aliases": [
+        "d"
+      ],
+      "args": {
+        "content": {
+          "description": "Text to add to today's entry (appended if entry already exists)",
+          "name": "content",
+          "required": false
+        }
+      },
+      "description": "Create or open today's daily journal entry",
+      "examples": [
+        {
+          "description": "Create today's entry",
+          "command": "$ notion-cli daily"
+        },
+        {
+          "description": "Create entry with body content",
+          "command": "$ notion-cli daily \"Had a productive standup\""
+        },
+        {
+          "description": "First-time setup (see `daily setup --help`)",
+          "command": "$ notion-cli daily setup DB_ID"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "daily",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "daily",
+        "index.js"
+      ]
+    },
+    "daily:setup": {
+      "aliases": [],
+      "args": {
+        "target": {
+          "description": "Existing database ID or URL (manual mode)",
+          "name": "target",
+          "required": false
+        }
+      },
+      "description": "Configure the daily journal command",
+      "examples": [
+        {
+          "description": "Point to an existing database (manual)",
+          "command": "$ notion-cli daily setup DB_ID_OR_URL"
+        },
+        {
+          "description": "Auto-create a daily journal database",
+          "command": "$ notion-cli daily setup --auto PAGE_ID_OR_URL"
+        }
+      ],
+      "flags": {
+        "auto": {
+          "description": "Auto-create database under this parent page (pass page ID or URL)",
+          "name": "auto",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "daily:setup",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "daily",
+        "setup.js"
+      ]
+    },
     "config:set-token": {
       "aliases": [
         "config:token"
