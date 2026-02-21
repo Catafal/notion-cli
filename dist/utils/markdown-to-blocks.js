@@ -12,14 +12,17 @@ exports.markdownToBlocks = markdownToBlocks;
  * - Paragraphs
  * - Bulleted lists
  * - Numbered lists
+ * - Checkboxes (to_do blocks)
  * - Code blocks
+ * - Tables (with header detection)
  * - Quotes
- * - Bold, italic, and inline code formatting
+ * - Bold, italic, strikethrough, and inline code formatting
  *
  * @param markdown - The markdown string to convert
  * @returns Array of Notion block objects
  */
 function markdownToBlocks(markdown) {
+    var _a;
     const blocks = [];
     const lines = markdown.split('\n');
     let i = 0;
@@ -70,6 +73,40 @@ function markdownToBlocks(markdown) {
             i++; // Skip closing ```
             continue;
         }
+        // Tables: collect consecutive | rows, detect header via separator (|---|)
+        if (trimmedLine.match(/^\|.+\|$/)) {
+            const tableLines = [trimmedLine];
+            let j = i + 1;
+            while (j < lines.length && lines[j].trim().match(/^\|.+\|$/)) {
+                tableLines.push(lines[j].trim());
+                j++;
+            }
+            // Separator row like |---|---| means the first row is a header
+            const hasHeader = tableLines.length > 1 && /^\|[\s\-:|]+\|$/.test(tableLines[1]);
+            // Filter out separator rows — they're structural, not data
+            const dataRows = tableLines.filter(l => !/^\|[\s\-:|]+\|$/.test(l));
+            // Split each row into cells: "| A | B |" → ["A", "B"]
+            const parsedRows = dataRows.map(row => row.split('|').slice(1, -1).map(cell => cell.trim()));
+            const columnCount = ((_a = parsedRows[0]) === null || _a === void 0 ? void 0 : _a.length) || 1;
+            blocks.push({
+                object: 'block',
+                type: 'table',
+                table: {
+                    table_width: columnCount,
+                    has_column_header: hasHeader,
+                    has_row_header: false,
+                    children: parsedRows.map(cells => ({
+                        object: 'block',
+                        type: 'table_row',
+                        table_row: {
+                            cells: cells.map(cell => parseRichText(cell)),
+                        },
+                    })),
+                },
+            });
+            i = j;
+            continue;
+        }
         // Block quotes
         if (trimmedLine.startsWith('>')) {
             const quoteText = trimmedLine.slice(1).trim();
@@ -78,6 +115,23 @@ function markdownToBlocks(markdown) {
                 type: 'quote',
                 quote: {
                     rich_text: parseRichText(quoteText),
+                },
+            });
+            i++;
+            continue;
+        }
+        // Checkboxes: - [ ] or - [x] / - [X] → Notion to_do block
+        // Must be checked before bullet lists since "- [ ]" also matches "^[-*]\s+"
+        const checkboxMatch = trimmedLine.match(/^-\s+\[([ xX])\]\s+(.*)$/);
+        if (checkboxMatch) {
+            const checked = checkboxMatch[1].toLowerCase() === 'x';
+            const text = checkboxMatch[2];
+            blocks.push({
+                object: 'block',
+                type: 'to_do',
+                to_do: {
+                    rich_text: parseRichText(text),
+                    checked,
                 },
             });
             i++;
@@ -133,7 +187,7 @@ function markdownToBlocks(markdown) {
 }
 /**
  * Parse markdown text into Notion rich text format
- * Supports: **bold**, *italic*, `code`, and [links](url)
+ * Supports: **bold**, *italic*, ~~strikethrough~~, `code`, and [links](url)
  */
 function parseRichText(text) {
     if (!text) {
@@ -163,6 +217,26 @@ function parseRichText(text) {
                 annotations: { bold: true },
             });
             i += 2; // Skip closing **
+            continue;
+        }
+        // Strikethrough: ~~text~~ (same two-char delimiter pattern as bold)
+        if (text[i] === '~' && text[i + 1] === '~') {
+            if (currentText) {
+                richText.push({ type: 'text', text: { content: currentText } });
+                currentText = '';
+            }
+            i += 2;
+            let stText = '';
+            while (i < text.length && !(text[i] === '~' && text[i + 1] === '~')) {
+                stText += text[i];
+                i++;
+            }
+            richText.push({
+                type: 'text',
+                text: { content: stText },
+                annotations: { strikethrough: true },
+            });
+            i += 2; // Skip closing ~~
             continue;
         }
         // Italic: *text* or _text_

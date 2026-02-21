@@ -6,6 +6,7 @@ const helper_1 = require("../helper");
 const base_flags_1 = require("../base-flags");
 const errors_1 = require("../errors");
 const table_formatter_1 = require("../utils/table-formatter");
+const fuzzy_1 = require("../utils/fuzzy");
 class List extends core_1.Command {
     async run() {
         const { flags } = await this.parse(List);
@@ -21,7 +22,33 @@ class List extends core_1.Command {
             const cacheAgeMs = Date.now() - lastSyncTime.getTime();
             const cacheAgeHours = cacheAgeMs / (1000 * 60 * 60);
             const isStale = cacheAgeHours > 24;
-            const databases = cache.databases;
+            let databases = cache.databases;
+            // Apply fuzzy name filter if --filter is provided.
+            // Checks substring on full title, then Levenshtein on individual words
+            // so "daly" matches "Daily Psychology Lecture" via the word "daily".
+            if (flags.filter) {
+                const query = flags.filter.toLowerCase().trim();
+                const threshold = Math.max(2, Math.floor(query.length / 4));
+                databases = databases
+                    .map(db => {
+                    // Substring match on full title (cheapest check)
+                    if (db.titleNormalized.includes(query)) {
+                        return { db, dist: 0 };
+                    }
+                    // Fuzzy match on individual words in the title
+                    const words = db.titleNormalized.split(/[\s\-_]+/);
+                    let bestWordDist = Infinity;
+                    for (const word of words) {
+                        const dist = (0, fuzzy_1.levenshtein)(query, word);
+                        if (dist < bestWordDist)
+                            bestWordDist = dist;
+                    }
+                    return { db, dist: bestWordDist };
+                })
+                    .filter(({ dist }) => dist <= threshold)
+                    .sort((a, b) => a.dist - b.dist)
+                    .map(({ db }) => db);
+            }
             // Build comprehensive metadata
             const metadata = {
                 cache_info: {
@@ -164,6 +191,10 @@ List.examples = [
         command: 'notion-cli list',
     },
     {
+        description: 'Filter databases by name (fuzzy match)',
+        command: 'notion-cli list --filter "tasks"',
+    },
+    {
         description: 'List databases in markdown format',
         command: 'notion-cli list --markdown',
     },
@@ -180,5 +211,9 @@ List.flags = {
     ...table_formatter_1.tableFlags,
     ...base_flags_1.AutomationFlags,
     ...base_flags_1.OutputFormatFlags,
+    filter: core_1.Flags.string({
+        char: 'f',
+        description: 'Filter databases by name (supports fuzzy/typo-tolerant matching)',
+    }),
 };
 exports.default = List;

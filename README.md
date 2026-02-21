@@ -12,9 +12,6 @@
   <a href="https://github.com/Catafal/notion-cli/actions/workflows/ci.yml">
     <img src="https://github.com/Catafal/notion-cli/actions/workflows/ci.yml/badge.svg" alt="CI/CD Pipeline">
   </a>
-  <a href="https://codecov.io/gh/Catafal/notion-cli">
-    <img src="https://codecov.io/gh/Catafal/notion-cli/branch/main/graph/badge.svg" alt="Code Coverage">
-  </a>
   <a href="https://www.npmjs.com/package/@catafal/notion-cli">
     <img src="https://img.shields.io/npm/v/@catafal/notion-cli.svg" alt="npm version">
   </a>
@@ -88,7 +85,10 @@ This guides you through:
 
 **Manual setup** (if you prefer):
 ```bash
-export NOTION_TOKEN="secret_your_token_here"
+# Both token formats are supported:
+export NOTION_TOKEN="secret_your_token_here"   # Internal integration token
+export NOTION_TOKEN="ntn_your_token_here"      # OAuth token (newer format)
+
 notion-cli whoami       # Test connection
 notion-cli sync         # Cache workspace
 ```
@@ -313,6 +313,7 @@ notion-cli user retrieve bot          # Get bot info
 ```bash
 notion-cli stats                      # Workspace overview from cache (instant)
 notion-cli stats --live               # Also fetch page counts per DB (slower)
+notion-cli stats --relations          # Show database relation graph
 notion-cli stats --json               # JSON output for automation
 notion-cli dashboard                  # Alias
 ```
@@ -353,7 +354,9 @@ notion-cli db query <ID> --minimal       # Strip metadata (~40% smaller)
 
 ### Authentication
 ```bash
-NOTION_TOKEN=secret_your_token_here
+NOTION_TOKEN=secret_your_token_here    # Internal integration token
+# or
+NOTION_TOKEN=ntn_your_token_here       # OAuth token (newer format)
 ```
 
 ### Retry & Circuit Breaker
@@ -424,7 +427,7 @@ notion-cli doctor   # Shows 7 checks with pass/fail and recommendations
 
 | Problem | Solution |
 |---------|----------|
-| Token not configured | `notion-cli init` or `export NOTION_TOKEN="secret_..."` |
+| Token not configured | `notion-cli init` or `export NOTION_TOKEN="secret_..."` (or `"ntn_..."`) |
 | Database not found | `notion-cli sync` to refresh cache, or check ID type |
 | 429 rate limiting | Automatic retry handles this; increase `NOTION_RETRY_MAX_ATTEMPTS` if needed |
 | Slow queries | Use `--filter` to reduce data, `notion-cli sync` for caching |
@@ -493,6 +496,8 @@ Full documentation lives in the `/docs` folder:
 - **[Envelope System](./docs/user-guides/envelope-index.md)** — Standardized response format
 - **[Fuzzy Search](./docs/user-guides/fuzzy-search.md)** — Typo-tolerant name resolution and filtering
 - **[Append Command](./docs/append.md)** — Add content to existing pages by name
+- **[Stats Dashboard](./docs/stats.md)** — Workspace statistics and relation graph
+- **[Markdown to Notion](./docs/user-guides/markdown-to-notion.md)** — Supported markdown features and block mapping
 - **[Smart ID Resolution](./docs/architecture/smart-id-resolution.md)** — Auto ID conversion
 
 See [docs/README.md](./docs/README.md) for the complete index.

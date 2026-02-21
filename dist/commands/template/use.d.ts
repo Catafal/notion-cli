@@ -1,13 +1,15 @@
-import { Command } from '@oclif/core';
 /**
- * Zero-friction page creation for quick thoughts and notes.
+ * Template Use Command
  *
- * Uses the default bookmark (or --to flag) to know which database to target.
- * Title is the first line; remaining lines become page body as markdown blocks.
+ * Creates a page from a saved template. The template's simple properties
+ * are expanded against the target database schema at runtime, making
+ * templates portable across different databases.
  *
- * Supports stdin piping: echo "notes" | notion-cli quick --title "From pipe"
+ * Target database can be specified via --to flag or defaults to the
+ * default bookmark (same resolution as `quick` command).
  */
-export default class Quick extends Command {
+import { Command } from '@oclif/core';
+export default class TemplateUse extends Command {
     static description: string;
     static aliases: string[];
     static examples: {
@@ -15,7 +17,7 @@ export default class Quick extends Command {
         command: string;
     }[];
     static args: {
-        content: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
+        name: import("@oclif/core/lib/interfaces").Arg<string, Record<string, unknown>>;
     };
     static flags: {
         json: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
@@ -27,9 +29,6 @@ export default class Quick extends Command {
         minimal: import("@oclif/core/lib/interfaces").BooleanFlag<boolean>;
         to: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
         title: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
-        template: import("@oclif/core/lib/interfaces").OptionFlag<string, import("@oclif/core/lib/interfaces").CustomOptions>;
     };
     run(): Promise<void>;
-    /** Read all data from stdin (for piped input). */
-    private readStdin;
 }

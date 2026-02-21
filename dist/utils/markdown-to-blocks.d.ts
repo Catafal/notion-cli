@@ -9,9 +9,11 @@
  * - Paragraphs
  * - Bulleted lists
  * - Numbered lists
+ * - Checkboxes (to_do blocks)
  * - Code blocks
+ * - Tables (with header detection)
  * - Quotes
- * - Bold, italic, and inline code formatting
+ * - Bold, italic, strikethrough, and inline code formatting
  *
  * @param markdown - The markdown string to convert
  * @returns Array of Notion block objects
