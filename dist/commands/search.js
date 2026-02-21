@@ -10,7 +10,10 @@ const dayjs = require("dayjs");
 const table_formatter_1 = require("../utils/table-formatter");
 class Search extends core_1.Command {
     async run() {
-        const { flags } = await this.parse(Search);
+        var _a;
+        const { args, flags } = await this.parse(Search);
+        // Positional arg as default, -q flag overrides if both provided
+        const query = (_a = flags.query) !== null && _a !== void 0 ? _a : args.query;
         try {
             // Validate date filters
             if (flags['created-after'] && !dayjs(flags['created-after']).isValid()) {
@@ -26,8 +29,8 @@ class Search extends core_1.Command {
                 throw new errors_1.NotionCLIError(errors_1.NotionCLIErrorCode.VALIDATION_ERROR, `Invalid date format for --edited-before: ${flags['edited-before']}. Use ISO 8601 format (YYYY-MM-DD).`, [], { userInput: flags['edited-before'] });
             }
             const params = {};
-            if (flags.query) {
-                params.query = flags.query;
+            if (query) {
+                params.query = query;
             }
             if (flags.sort_direction) {
                 let direction;
@@ -206,7 +209,7 @@ class Search extends core_1.Command {
                 ? error
                 : (0, errors_1.wrapNotionError)(error, {
                     endpoint: 'search',
-                    userInput: flags.query || flags.filter
+                    userInput: query || flags.filter
                 });
             if (flags.json) {
                 this.log(JSON.stringify(cliError.toJSON(), null, 2));
@@ -219,13 +222,23 @@ class Search extends core_1.Command {
     }
 }
 Search.description = 'Search by title';
+Search.args = {
+    query: core_1.Args.string({
+        required: false,
+        description: 'Search query (or use -q flag)',
+    }),
+};
 Search.examples = [
     {
-        description: 'Search with full data (recommended for AI assistants)',
-        command: `$ notion-cli search -q 'My Page' -r`,
+        description: 'Search by title (positional argument)',
+        command: `$ notion-cli search 'My Page'`,
     },
     {
-        description: 'Search by title',
+        description: 'Search with full data (recommended for AI assistants)',
+        command: `$ notion-cli search 'My Page' -r`,
+    },
+    {
+        description: 'Search by title (flag syntax)',
         command: `$ notion-cli search -q 'My Page'`,
     },
     {
