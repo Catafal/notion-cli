@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **README cleanup** — trimmed from 1300 to ~460 lines; removed stale release notes, condensed verbose sections, fixed all 9 broken doc links, added missing `page export` to command reference, removed duplicate sections.
+
 ### Added
 - **`page export` command** — export a Notion page to markdown or JSON (`notion-cli page export PAGE_ID -o notes.md`). Alias: `page:e`. Reverse of `page create -f`.
 - **`batch delete` command** — delete multiple blocks in parallel (`notion-cli batch delete --ids ID1,ID2,ID3`). Alias: `batch:d`. Accepts URLs, names, and raw IDs.
