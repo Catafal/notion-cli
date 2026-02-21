@@ -86,8 +86,7 @@ export default class PageCreate extends Command {
     }),
     title_property: Flags.string({
       char: 't',
-      description: 'Name of the title property (defaults to "Name" if not specified)',
-      default: 'Name',
+      description: 'Title property name (auto-detected: "title" for sub-pages, "Name" for databases)',
     }),
     properties: Flags.string({
       description: 'Page properties as JSON string',
@@ -125,6 +124,10 @@ export default class PageCreate extends Command {
           data_source_id: parentDataSourceId,
         }
       }
+
+      // Auto-detect title property: sub-pages use "title", database pages use "Name"
+      // User can override with -t flag
+      const titleProperty = flags.title_property ?? (flags.parent_page_id ? 'title' : 'Name')
 
       // Build properties object
       let properties: any = {}
@@ -189,14 +192,14 @@ export default class PageCreate extends Command {
         // If no properties were provided via flag, use extracted title
         if (!flags.properties) {
           properties = {
-            [flags.title_property]: {
+            [titleProperty]: {
               title: [{ text: { content: pageTitle } }],
             },
           }
         } else {
           // Merge with existing properties, but ensure title is set
-          if (!properties[flags.title_property]) {
-            properties[flags.title_property] = {
+          if (!properties[titleProperty]) {
+            properties[titleProperty] = {
               title: [{ text: { content: pageTitle } }],
             }
           }

@@ -13,6 +13,7 @@ const errors_1 = require("../../errors");
 const property_expander_1 = require("../../utils/property-expander");
 class PageCreate extends core_1.Command {
     async run() {
+        var _a;
         const { flags } = await this.parse(PageCreate);
         try {
             let pageProps;
@@ -31,6 +32,9 @@ class PageCreate extends core_1.Command {
                     data_source_id: parentDataSourceId,
                 };
             }
+            // Auto-detect title property: sub-pages use "title", database pages use "Name"
+            // User can override with -t flag
+            const titleProperty = (_a = flags.title_property) !== null && _a !== void 0 ? _a : (flags.parent_page_id ? 'title' : 'Name');
             // Build properties object
             let properties = {};
             // Handle properties flag
@@ -84,15 +88,15 @@ class PageCreate extends core_1.Command {
                 // If no properties were provided via flag, use extracted title
                 if (!flags.properties) {
                     properties = {
-                        [flags.title_property]: {
+                        [titleProperty]: {
                             title: [{ text: { content: pageTitle } }],
                         },
                     };
                 }
                 else {
                     // Merge with existing properties, but ensure title is set
-                    if (!properties[flags.title_property]) {
-                        properties[flags.title_property] = {
+                    if (!properties[titleProperty]) {
+                        properties[titleProperty] = {
                             title: [{ text: { content: pageTitle } }],
                         };
                     }
@@ -224,8 +228,7 @@ PageCreate.flags = {
     }),
     title_property: core_1.Flags.string({
         char: 't',
-        description: 'Name of the title property (defaults to "Name" if not specified)',
-        default: 'Name',
+        description: 'Title property name (auto-detected: "title" for sub-pages, "Name" for databases)',
     }),
     properties: core_1.Flags.string({
         description: 'Page properties as JSON string',
