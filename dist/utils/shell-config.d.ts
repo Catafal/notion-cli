@@ -1,11 +1,14 @@
 /**
- * Shell Configuration Utility
+ * Shell Configuration & Token Persistence
  *
- * Detects the user's shell and persists environment variables (e.g., NOTION_TOKEN)
- * to the appropriate rc file (.zshrc, .bashrc, etc.).
+ * Handles token storage across three layers:
+ * 1. Shell rc files (.zshrc, .bashrc) — for interactive terminal sessions
+ * 2. ~/.zshenv — for non-interactive zsh subprocesses
+ * 3. ~/.notion-cli/config.json — for environments with no shell at all
+ *    (AI agent runtimes like OpenClaw, cron jobs, CI pipelines)
  *
- * Used by both `config set-token` and `init` commands to avoid duplicating
- * shell detection and rc file writing logic.
+ * Token resolution order (in notion.ts):
+ *   process.env.NOTION_TOKEN > ~/.notion-cli/config.json
  */
 /**
  * Detect the current shell from the SHELL environment variable.
@@ -17,12 +20,18 @@ export declare function detectShell(): string;
  */
 export declare function getRcFilePath(shell: string): string;
 /**
- * Persist a Notion token to the user's shell rc file.
+ * Read the Notion token from ~/.notion-cli/config.json.
+ * Synchronous because it runs at module load time (before Notion client init).
+ * Returns null if file doesn't exist, is malformed, or has no token.
+ */
+export declare function readTokenFromConfig(): string | null;
+/**
+ * Persist a Notion token to all storage layers:
+ * 1. Shell rc file (.zshrc / .bashrc / etc.) — interactive sessions
+ * 2. ~/.zshenv (zsh only) — non-interactive subprocesses
+ * 3. ~/.notion-cli/config.json — shell-free environments (AI agents, cron)
  *
- * Reads the rc file, checks if NOTION_TOKEN already exists (replaces it if so),
- * otherwise appends a new export line. Creates the file if it doesn't exist.
- *
- * Returns the shell name and rc file path so callers can inform the user.
+ * Returns the shell name and primary rc file path so callers can inform the user.
  */
 export declare function persistToken(token: string): Promise<{
     rcFile: string;

@@ -20,6 +20,17 @@ import { cacheManager } from './cache'
 import { fetchWithRetry as enhancedFetchWithRetry, RetryConfig, batchWithRetry } from './retry'
 import { deduplicationManager } from './deduplication'
 import { httpsAgent } from './http-agent'
+import { readTokenFromConfig } from './utils/shell-config'
+
+// Resolve token: env var takes priority, fall back to ~/.notion-cli/config.json.
+// This ensures the CLI works in non-interactive environments (AI agents, cron, etc.)
+// where shell profile files (~/.zshrc, ~/.zshenv) are not sourced.
+if (!process.env.NOTION_TOKEN) {
+  const configToken = readTokenFromConfig()
+  if (configToken) {
+    process.env.NOTION_TOKEN = configToken
+  }
+}
 
 /**
  * Custom fetch function that uses our configured HTTPS agent and compression

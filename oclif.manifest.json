@@ -2670,6 +2670,431 @@
         "info.js"
       ]
     },
+    "config:set-token": {
+      "aliases": [
+        "config:token"
+      ],
+      "args": {
+        "token": {
+          "description": "Notion integration token (starts with secret_ or ntn_)",
+          "name": "token",
+          "required": false
+        }
+      },
+      "description": "Set NOTION_TOKEN in your shell configuration file",
+      "examples": [
+        {
+          "description": "Set Notion token interactively",
+          "command": "notion-cli config set-token"
+        },
+        {
+          "description": "Set Notion token directly",
+          "command": "notion-cli config set-token ntn_abc123..."
+        },
+        {
+          "description": "Set token with JSON output",
+          "command": "notion-cli config set-token ntn_abc123... --json"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "config:set-token",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "config",
+        "set-token.js"
+      ]
+    },
+    "bookmark:list": {
+      "aliases": [
+        "bm:ls"
+      ],
+      "args": {},
+      "description": "List all saved bookmarks",
+      "examples": [
+        {
+          "description": "List bookmarks",
+          "command": "$ notion-cli bookmark list"
+        }
+      ],
+      "flags": {
+        "columns": {
+          "description": "Only show provided columns (comma-separated)",
+          "exclusive": [
+            "extended"
+          ],
+          "name": "columns",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "sort": {
+          "description": "Property to sort by (prepend with - for descending)",
+          "name": "sort",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "filter": {
+          "description": "Filter property by substring match",
+          "name": "filter",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "csv": {
+          "description": "Output in CSV format",
+          "exclusive": [
+            "no-truncate"
+          ],
+          "name": "csv",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "extended": {
+          "char": "x",
+          "description": "Show extra columns",
+          "name": "extended",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-truncate": {
+          "description": "Do not truncate output to fit screen",
+          "exclusive": [
+            "csv"
+          ],
+          "name": "no-truncate",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-header": {
+          "description": "Hide table header from output",
+          "name": "no-header",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "bookmark:list",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "bookmark",
+        "list.js"
+      ]
+    },
+    "bookmark:remove": {
+      "aliases": [
+        "bm:rm"
+      ],
+      "args": {
+        "name": {
+          "description": "Bookmark name to remove",
+          "name": "name",
+          "required": true
+        }
+      },
+      "description": "Remove a saved bookmark",
+      "examples": [
+        {
+          "description": "Remove a bookmark",
+          "command": "$ notion-cli bookmark remove inbox"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "bookmark:remove",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "bookmark",
+        "remove.js"
+      ]
+    },
+    "bookmark:set": {
+      "aliases": [
+        "bm:set"
+      ],
+      "args": {
+        "name": {
+          "description": "Bookmark name (e.g. \"inbox\", \"tasks\")",
+          "name": "name",
+          "required": true
+        },
+        "target": {
+          "description": "Notion ID, URL, or database name",
+          "name": "target",
+          "required": true
+        }
+      },
+      "description": "Save a named shortcut to a Notion page or database",
+      "examples": [
+        {
+          "description": "Bookmark a database as \"inbox\" and set it as default",
+          "command": "$ notion-cli bookmark set inbox DB_ID_OR_URL --default"
+        },
+        {
+          "description": "Bookmark a page",
+          "command": "$ notion-cli bookmark set notes PAGE_URL --type page"
+        }
+      ],
+      "flags": {
+        "type": {
+          "char": "t",
+          "description": "Resource type",
+          "name": "type",
+          "default": "database",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": [
+            "database",
+            "page"
+          ],
+          "type": "option"
+        },
+        "default": {
+          "description": "Also set as the default bookmark (used by `quick` command)",
+          "name": "default",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "bookmark:set",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "bookmark",
+        "set.js"
+      ]
+    },
     "db:create": {
       "aliases": [
         "db:c"
@@ -3646,431 +4071,6 @@
         "commands",
         "db",
         "update.js"
-      ]
-    },
-    "bookmark:list": {
-      "aliases": [
-        "bm:ls"
-      ],
-      "args": {},
-      "description": "List all saved bookmarks",
-      "examples": [
-        {
-          "description": "List bookmarks",
-          "command": "$ notion-cli bookmark list"
-        }
-      ],
-      "flags": {
-        "columns": {
-          "description": "Only show provided columns (comma-separated)",
-          "exclusive": [
-            "extended"
-          ],
-          "name": "columns",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "sort": {
-          "description": "Property to sort by (prepend with - for descending)",
-          "name": "sort",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "filter": {
-          "description": "Filter property by substring match",
-          "name": "filter",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "csv": {
-          "description": "Output in CSV format",
-          "exclusive": [
-            "no-truncate"
-          ],
-          "name": "csv",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "extended": {
-          "char": "x",
-          "description": "Show extra columns",
-          "name": "extended",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-truncate": {
-          "description": "Do not truncate output to fit screen",
-          "exclusive": [
-            "csv"
-          ],
-          "name": "no-truncate",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-header": {
-          "description": "Hide table header from output",
-          "name": "no-header",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "bookmark:list",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "bookmark",
-        "list.js"
-      ]
-    },
-    "bookmark:remove": {
-      "aliases": [
-        "bm:rm"
-      ],
-      "args": {
-        "name": {
-          "description": "Bookmark name to remove",
-          "name": "name",
-          "required": true
-        }
-      },
-      "description": "Remove a saved bookmark",
-      "examples": [
-        {
-          "description": "Remove a bookmark",
-          "command": "$ notion-cli bookmark remove inbox"
-        }
-      ],
-      "flags": {
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "bookmark:remove",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "bookmark",
-        "remove.js"
-      ]
-    },
-    "bookmark:set": {
-      "aliases": [
-        "bm:set"
-      ],
-      "args": {
-        "name": {
-          "description": "Bookmark name (e.g. \"inbox\", \"tasks\")",
-          "name": "name",
-          "required": true
-        },
-        "target": {
-          "description": "Notion ID, URL, or database name",
-          "name": "target",
-          "required": true
-        }
-      },
-      "description": "Save a named shortcut to a Notion page or database",
-      "examples": [
-        {
-          "description": "Bookmark a database as \"inbox\" and set it as default",
-          "command": "$ notion-cli bookmark set inbox DB_ID_OR_URL --default"
-        },
-        {
-          "description": "Bookmark a page",
-          "command": "$ notion-cli bookmark set notes PAGE_URL --type page"
-        }
-      ],
-      "flags": {
-        "type": {
-          "char": "t",
-          "description": "Resource type",
-          "name": "type",
-          "default": "database",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "options": [
-            "database",
-            "page"
-          ],
-          "type": "option"
-        },
-        "default": {
-          "description": "Also set as the default bookmark (used by `quick` command)",
-          "name": "default",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "bookmark:set",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "bookmark",
-        "set.js"
-      ]
-    },
-    "config:set-token": {
-      "aliases": [
-        "config:token"
-      ],
-      "args": {
-        "token": {
-          "description": "Notion integration token (starts with secret_ or ntn_)",
-          "name": "token",
-          "required": false
-        }
-      },
-      "description": "Set NOTION_TOKEN in your shell configuration file",
-      "examples": [
-        {
-          "description": "Set Notion token interactively",
-          "command": "notion-cli config set-token"
-        },
-        {
-          "description": "Set Notion token directly",
-          "command": "notion-cli config set-token ntn_abc123..."
-        },
-        {
-          "description": "Set token with JSON output",
-          "command": "notion-cli config set-token ntn_abc123... --json"
-        }
-      ],
-      "flags": {
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "config:set-token",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "config",
-        "set-token.js"
       ]
     },
     "daily": {
@@ -6467,5 +6467,5 @@
       ]
     }
   },
-  "version": "5.9.0"
+  "version": "5.9.1"
 }

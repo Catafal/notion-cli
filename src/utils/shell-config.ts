@@ -1,16 +1,24 @@
 /**
- * Shell Configuration Utility
+ * Shell Configuration & Token Persistence
  *
- * Detects the user's shell and persists environment variables (e.g., NOTION_TOKEN)
- * to the appropriate rc file (.zshrc, .bashrc, etc.).
+ * Handles token storage across three layers:
+ * 1. Shell rc files (.zshrc, .bashrc) — for interactive terminal sessions
+ * 2. ~/.zshenv — for non-interactive zsh subprocesses
+ * 3. ~/.notion-cli/config.json — for environments with no shell at all
+ *    (AI agent runtimes like OpenClaw, cron jobs, CI pipelines)
  *
- * Used by both `config set-token` and `init` commands to avoid duplicating
- * shell detection and rc file writing logic.
+ * Token resolution order (in notion.ts):
+ *   process.env.NOTION_TOKEN > ~/.notion-cli/config.json
  */
 
 import * as fs from 'fs/promises'
+import * as fsSync from 'fs'
 import * as path from 'path'
 import * as os from 'os'
+
+// Config file path: ~/.notion-cli/config.json (same dir used for caches)
+const CONFIG_DIR = path.join(os.homedir(), '.notion-cli')
+const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json')
 
 /**
  * Detect the current shell from the SHELL environment variable.
@@ -47,40 +55,75 @@ export function getRcFilePath(shell: string): string {
 }
 
 /**
- * Persist a Notion token to the user's shell rc file.
+ * Read the Notion token from ~/.notion-cli/config.json.
+ * Synchronous because it runs at module load time (before Notion client init).
+ * Returns null if file doesn't exist, is malformed, or has no token.
+ */
+export function readTokenFromConfig(): string | null {
+  try {
+    const raw = fsSync.readFileSync(CONFIG_FILE, 'utf-8')
+    const config = JSON.parse(raw)
+    return typeof config.token === 'string' ? config.token : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Upsert a NOTION_TOKEN export line in a single shell file.
+ * Replaces existing line if found, otherwise appends a new one.
+ */
+async function upsertTokenInFile(filePath: string, token: string): Promise<void> {
+  let content = ''
+  try {
+    content = await fs.readFile(filePath, 'utf-8')
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'code' in error && error.code !== 'ENOENT') {
+      throw error
+    }
+  }
+
+  const tokenLineRegex = /^export\s+NOTION_TOKEN=.*/gm
+  const newTokenLine = `export NOTION_TOKEN="${token}"`
+
+  let updated: string
+  if (tokenLineRegex.test(content)) {
+    updated = content.replace(tokenLineRegex, newTokenLine)
+  } else {
+    updated = content.trim() + '\n\n# Notion CLI Token\n' + newTokenLine + '\n'
+  }
+
+  await fs.writeFile(filePath, updated, 'utf-8')
+}
+
+/**
+ * Persist a Notion token to all storage layers:
+ * 1. Shell rc file (.zshrc / .bashrc / etc.) — interactive sessions
+ * 2. ~/.zshenv (zsh only) — non-interactive subprocesses
+ * 3. ~/.notion-cli/config.json — shell-free environments (AI agents, cron)
  *
- * Reads the rc file, checks if NOTION_TOKEN already exists (replaces it if so),
- * otherwise appends a new export line. Creates the file if it doesn't exist.
- *
- * Returns the shell name and rc file path so callers can inform the user.
+ * Returns the shell name and primary rc file path so callers can inform the user.
  */
 export async function persistToken(token: string): Promise<{ rcFile: string; shell: string }> {
   const shell = detectShell()
   const rcFile = getRcFilePath(shell)
 
-  // Read existing rc file (create if missing)
-  let rcContent = ''
+  // 1. Write to shell rc file (interactive sessions)
+  await upsertTokenInFile(rcFile, token)
+
+  // 2. For zsh: also write to ~/.zshenv (non-interactive subprocesses)
+  if (shell === 'zsh') {
+    await upsertTokenInFile(path.join(os.homedir(), '.zshenv'), token)
+  }
+
+  // 3. Write to ~/.notion-cli/config.json (shell-free environments)
+  await fs.mkdir(CONFIG_DIR, { recursive: true })
+  let config: Record<string, unknown> = {}
   try {
-    rcContent = await fs.readFile(rcFile, 'utf-8')
-  } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'code' in error && error.code !== 'ENOENT') {
-      throw error
-    }
-    // File doesn't exist — will be created on write
-  }
-
-  // Upsert the NOTION_TOKEN export line
-  const tokenLineRegex = /^export\s+NOTION_TOKEN=.*/gm
-  const newTokenLine = `export NOTION_TOKEN="${token}"`
-
-  let updatedContent: string
-  if (tokenLineRegex.test(rcContent)) {
-    updatedContent = rcContent.replace(tokenLineRegex, newTokenLine)
-  } else {
-    updatedContent = rcContent.trim() + '\n\n# Notion CLI Token\n' + newTokenLine + '\n'
-  }
-
-  await fs.writeFile(rcFile, updatedContent, 'utf-8')
+    config = JSON.parse(await fs.readFile(CONFIG_FILE, 'utf-8'))
+  } catch { /* file doesn't exist yet — start fresh */ }
+  config.token = token
+  await fs.writeFile(CONFIG_FILE, JSON.stringify(config, null, 2) + '\n', 'utf-8')
 
   return { rcFile, shell }
 }

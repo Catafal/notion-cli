@@ -6,6 +6,16 @@ const cache_1 = require("./cache");
 const retry_1 = require("./retry");
 const deduplication_1 = require("./deduplication");
 const http_agent_1 = require("./http-agent");
+const shell_config_1 = require("./utils/shell-config");
+// Resolve token: env var takes priority, fall back to ~/.notion-cli/config.json.
+// This ensures the CLI works in non-interactive environments (AI agents, cron, etc.)
+// where shell profile files (~/.zshrc, ~/.zshenv) are not sourced.
+if (!process.env.NOTION_TOKEN) {
+    const configToken = (0, shell_config_1.readTokenFromConfig)();
+    if (configToken) {
+        process.env.NOTION_TOKEN = configToken;
+    }
+}
 /**
  * Custom fetch function that uses our configured HTTPS agent and compression
  */
