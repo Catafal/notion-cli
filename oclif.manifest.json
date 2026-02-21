@@ -1,5 +1,106 @@
 {
   "commands": {
+    "append": {
+      "aliases": [
+        "a"
+      ],
+      "args": {
+        "target": {
+          "description": "Page name, bookmark, URL, or ID",
+          "name": "target",
+          "required": true
+        },
+        "content": {
+          "description": "Markdown content to append",
+          "name": "content",
+          "required": false
+        }
+      },
+      "description": "Append content to an existing page by name, URL, or ID",
+      "examples": [
+        {
+          "description": "Append text to a page by name",
+          "command": "$ notion-cli append \"Daily Log\" \"New note to add\""
+        },
+        {
+          "description": "Append markdown content",
+          "command": "$ notion-cli append \"Knowledge Hub\" \"## Section\\n\\nSome content\""
+        },
+        {
+          "description": "Pipe content from stdin",
+          "command": "$ echo \"Piped content\" | notion-cli append \"Daily Log\""
+        },
+        {
+          "description": "Use page URL or ID directly",
+          "command": "$ notion-cli append PAGE_ID \"Quick fix note\" --json"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "append",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "append.js"
+      ]
+    },
     "browse": {
       "aliases": [
         "nav"
@@ -2383,6 +2484,90 @@
         "update.js"
       ]
     },
+    "cache:info": {
+      "aliases": [
+        "cache:stats",
+        "cache:status"
+      ],
+      "args": {},
+      "description": "Show cache statistics and configuration",
+      "examples": [
+        {
+          "description": "Show cache info in JSON format",
+          "command": "notion-cli cache:info --json"
+        },
+        {
+          "description": "Show cache statistics",
+          "command": "notion-cli cache:info"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "cache:info",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "cache",
+        "info.js"
+      ]
+    },
     "bookmark:list": {
       "aliases": [
         "bm:ls"
@@ -2713,183 +2898,6 @@
         "commands",
         "bookmark",
         "set.js"
-      ]
-    },
-    "cache:info": {
-      "aliases": [
-        "cache:stats",
-        "cache:status"
-      ],
-      "args": {},
-      "description": "Show cache statistics and configuration",
-      "examples": [
-        {
-          "description": "Show cache info in JSON format",
-          "command": "notion-cli cache:info --json"
-        },
-        {
-          "description": "Show cache statistics",
-          "command": "notion-cli cache:info"
-        }
-      ],
-      "flags": {
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "cache:info",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "cache",
-        "info.js"
-      ]
-    },
-    "config:set-token": {
-      "aliases": [
-        "config:token"
-      ],
-      "args": {
-        "token": {
-          "description": "Notion integration token (starts with secret_ or ntn_)",
-          "name": "token",
-          "required": false
-        }
-      },
-      "description": "Set NOTION_TOKEN in your shell configuration file",
-      "examples": [
-        {
-          "description": "Set Notion token interactively",
-          "command": "notion-cli config set-token"
-        },
-        {
-          "description": "Set Notion token directly",
-          "command": "notion-cli config set-token ntn_abc123..."
-        },
-        {
-          "description": "Set token with JSON output",
-          "command": "notion-cli config set-token ntn_abc123... --json"
-        }
-      ],
-      "flags": {
-        "json": {
-          "char": "j",
-          "description": "Output as JSON (recommended for automation)",
-          "name": "json",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "page-size": {
-          "description": "Items per page (1-100, default: 100 for automation)",
-          "name": "page-size",
-          "default": 100,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "retry": {
-          "description": "Auto-retry on rate limit (respects Retry-After header)",
-          "name": "retry",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "timeout": {
-          "description": "Request timeout in milliseconds",
-          "name": "timeout",
-          "default": 30000,
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
-        "no-cache": {
-          "description": "Bypass cache and force fresh API calls",
-          "name": "no-cache",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "verbose": {
-          "char": "v",
-          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
-          "env": "NOTION_CLI_VERBOSE",
-          "name": "verbose",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "minimal": {
-          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
-          "name": "minimal",
-          "allowNo": false,
-          "type": "boolean"
-        }
-      },
-      "hasDynamicHelp": false,
-      "hiddenAliases": [],
-      "id": "config:set-token",
-      "pluginAlias": "@catafal/notion-cli",
-      "pluginName": "@catafal/notion-cli",
-      "pluginType": "core",
-      "strict": true,
-      "enableJsonFlag": false,
-      "isESM": false,
-      "relativePath": [
-        "dist",
-        "commands",
-        "config",
-        "set-token.js"
       ]
     },
     "db:create": {
@@ -3868,6 +3876,99 @@
         "commands",
         "db",
         "update.js"
+      ]
+    },
+    "config:set-token": {
+      "aliases": [
+        "config:token"
+      ],
+      "args": {
+        "token": {
+          "description": "Notion integration token (starts with secret_ or ntn_)",
+          "name": "token",
+          "required": false
+        }
+      },
+      "description": "Set NOTION_TOKEN in your shell configuration file",
+      "examples": [
+        {
+          "description": "Set Notion token interactively",
+          "command": "notion-cli config set-token"
+        },
+        {
+          "description": "Set Notion token directly",
+          "command": "notion-cli config set-token ntn_abc123..."
+        },
+        {
+          "description": "Set token with JSON output",
+          "command": "notion-cli config set-token ntn_abc123... --json"
+        }
+      ],
+      "flags": {
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "config:set-token",
+      "pluginAlias": "@catafal/notion-cli",
+      "pluginName": "@catafal/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "config",
+        "set-token.js"
       ]
     },
     "daily": {

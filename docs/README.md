@@ -21,6 +21,7 @@ Essential guides for using the CLI effectively:
 - **[Daily Journal Setup](user-guides/daily-journal-setup.md)** - Zero-friction daily entries from the command line
 - **[Templates Guide](user-guides/templates-guide.md)** - Reusable page presets for consistent page creation
 - **[Fuzzy Search](user-guides/fuzzy-search.md)** - Typo-tolerant name resolution and database filtering
+- **[Append Command](append.md)** - Add content to existing pages by name
 
 ## Architecture
 

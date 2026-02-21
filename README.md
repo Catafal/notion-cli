@@ -281,6 +281,17 @@ notion-cli quick "My Meeting" --template meeting --to tasks    # Quick capture w
 
 [📖 Templates Guide](./docs/user-guides/templates-guide.md)
 
+### Append
+
+```bash
+notion-cli append "Daily Log" "Had a productive standup"       # Append by page name
+notion-cli append "Meeting Notes" "## Action Items\n\n- Fix bug" # Markdown content
+cat notes.md | notion-cli append "Knowledge Hub"                # Pipe from file
+notion-cli a "Daily Log" "Quick note"                           # Short alias
+```
+
+[📖 Append Reference](./docs/append.md)
+
 ### Search
 
 ```bash
@@ -470,6 +481,7 @@ Full documentation lives in the `/docs` folder:
 - **[Error Handling](./docs/user-guides/error-handling-examples.md)** — Understanding errors
 - **[Envelope System](./docs/user-guides/envelope-index.md)** — Standardized response format
 - **[Fuzzy Search](./docs/user-guides/fuzzy-search.md)** — Typo-tolerant name resolution and filtering
+- **[Append Command](./docs/append.md)** — Add content to existing pages by name
 - **[Smart ID Resolution](./docs/architecture/smart-id-resolution.md)** — Auto ID conversion
 
 See [docs/README.md](./docs/README.md) for the complete index.
