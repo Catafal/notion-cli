@@ -7,6 +7,7 @@
  *
  *   notion-cli stats              # fast dashboard from cache
  *   notion-cli stats --live       # also fetch page counts per DB
+ *   notion-cli stats --relations  # show database relation graph
  *   notion-cli stats --json       # JSON output for automation
  */
 
@@ -31,6 +32,10 @@ export default class Stats extends Command {
       command: '$ notion-cli stats --live',
     },
     {
+      description: 'Show database relation graph',
+      command: '$ notion-cli stats --relations',
+    },
+    {
       description: 'JSON output for automation',
       command: '$ notion-cli stats --json',
     },
@@ -40,6 +45,10 @@ export default class Stats extends Command {
     ...AutomationFlags,
     live: Flags.boolean({
       description: 'Fetch page counts per database (requires API calls)',
+      default: false,
+    }),
+    relations: Flags.boolean({
+      description: 'Show database relation graph (from cache, no API calls)',
       default: false,
     }),
   }
@@ -89,6 +98,34 @@ export default class Stats extends Command {
       // Sort databases by property count (most complex first)
       dbDetails.sort((a, b) => b.propertyCount - a.propertyCount)
 
+      // 3b. Extract database relation edges (from cache, no API calls).
+      //     Each relation property points to a target database via database_id or data_source_id.
+      //     We resolve the target name by looking it up in the cache.
+      const idToTitle = new Map(cache.databases.flatMap(db => [
+        [db.id, db.title],
+        // Also index by database_id (relation properties may use either ID format)
+        ...(db.url ? [[db.url, db.title] as [string, string]] : []),
+      ]))
+      const relationEdges: Array<{ source: string; sourceId: string; property: string; target: string; targetId: string }> = []
+
+      for (const db of cache.databases) {
+        if (!db.properties) continue
+        for (const prop of Object.values(db.properties)) {
+          const p = prop as any
+          if (p.type !== 'relation' || !p.relation) continue
+          // Resolve target name — try data_source_id first, then database_id
+          const targetId = p.relation.data_source_id || p.relation.database_id || ''
+          const target = idToTitle.get(targetId) || `Unknown (${targetId.slice(0, 8)})`
+          relationEdges.push({
+            source: db.title,
+            sourceId: db.id.slice(0, 8),
+            property: p.name || Object.keys(db.properties).find(k => db.properties![k] === prop) || '?',
+            target,
+            targetId: targetId.slice(0, 8),
+          })
+        }
+      }
+
       // 4. Optional: fetch page counts per database (expensive, behind --live flag)
       let totalPages: number | undefined
       if (flags.live) {
@@ -133,6 +170,7 @@ export default class Stats extends Command {
             ...(userCount !== null && { users: { count: userCount } }),
             property_types: propertyTypeCounts,
             ...(totalPages !== undefined && { pages: { total: totalPages } }),
+            ...(flags.relations && { relations: relationEdges }),
             cache: {
               last_sync: cache.lastSync,
               age_ms: cacheAgeMs,
@@ -180,6 +218,38 @@ export default class Stats extends Command {
       this.log('─'.repeat(30))
       for (const [type, count] of sortedTypes) {
         this.log(`${type.padEnd(20)}  ${String(count).padStart(4)}`)
+      }
+
+      // Relation graph — shows which databases connect to which
+      if (flags.relations) {
+        this.log('\nRelation Graph')
+        this.log('─'.repeat(55))
+
+        // Group edges by source database
+        const bySource = new Map<string, typeof relationEdges>()
+        for (const edge of relationEdges) {
+          const key = edge.source
+          if (!bySource.has(key)) bySource.set(key, [])
+          bySource.get(key)!.push(edge)
+        }
+
+        // Databases with relations
+        for (const [source, edges] of bySource) {
+          const srcId = edges[0].sourceId
+          this.log(`${source}  ${srcId}`)
+          for (const edge of edges) {
+            this.log(`  → ${edge.target}  (via "${edge.property}")`)
+          }
+        }
+
+        // Databases without any relations
+        const sourcesWithRelations = new Set(bySource.keys())
+        const isolated = cache.databases
+          .filter(db => !sourcesWithRelations.has(db.title))
+          .map(db => db.title)
+        if (isolated.length > 0) {
+          this.log(`\nIsolated (no relations): ${isolated.join(', ')}`)
+        }
       }
 
       // Footer

@@ -8,12 +8,13 @@ Data comes from the workspace cache by default, making it instant. Use `--live` 
 ```
 USAGE
   $ notion-cli stats [-j] [--page-size <value>] [--retry] [--timeout <value>]
-    [--no-cache] [-v] [--minimal] [--live]
+    [--no-cache] [-v] [--minimal] [--live] [--relations]
 
 FLAGS
   -j, --json       Output as JSON (recommended for automation)
   -v, --verbose    Enable verbose logging to stderr
       --live       Fetch page counts per database (requires API calls)
+      --relations  Show database relation graph (from cache, no API calls)
       --minimal    Strip unnecessary metadata
       --no-cache   Bypass cache and force fresh API calls
 
@@ -34,6 +35,11 @@ DESCRIPTION
   6. Adds a "Pages" column and "Total Pages" to the summary
   7. Re-sorts databases by page count (most pages first)
 
+  With --relations (from cache, no API calls):
+  8. Extracts relation properties from cached database schemas
+  9. Resolves target database names via ID lookup
+  10. Displays a graph of database connections grouped by source
+
 EXAMPLES
   Show workspace statistics
 
@@ -42,6 +48,10 @@ EXAMPLES
   Include page counts per database (slower)
 
     $ notion-cli stats --live
+
+  Show database relation graph
+
+    $ notion-cli stats --relations
 
   JSON output for automation
 
@@ -68,10 +78,13 @@ notion-cli stats
          ├─ 3. Aggregate            → property type counts from cached schemas
          │                          → per-database property counts
          │
-         ├─ 4. --live only:
+         ├─ 4. --relations only:
+         │     Extract relations    → relation edges from cached properties (no API)
+         │
+         ├─ 5. --live only:
          │     fetchAllPagesInDS()  → page count per database (N API calls)
          │
-         └─ 5. Output               → human-readable dashboard or JSON
+         └─ 6. Output               → human-readable dashboard or JSON
 ```
 
 **Data sources by tier:**
@@ -83,6 +96,7 @@ notion-cli stats
 | Property schemas | Workspace cache | 0 | Instant |
 | Property type breakdown | Workspace cache | 0 | Instant |
 | Cache age | Workspace cache | 0 | Instant |
+| Relation graph | Workspace cache | 0 | Instant |
 | Workspace name | `botUser()` | 1 (cached) | Fast |
 | User count | `listUser()` | 1 (cached) | Fast |
 | Page counts per DB | `fetchAllPagesInDS()` | N (1 per DB) | Slow |
@@ -152,6 +166,28 @@ Cache: synced 2h ago
 
 When `--live` is active, databases are sorted by page count (most pages first) instead of property count.
 
+### With `--relations` flag
+
+```
+Relation Graph
+───────────────────────────────────────────────────────
+Projects                              f3a4b5c6
+  → Sprint Tasks                      (via "Tasks")
+  → Areas                             (via "Area")
+
+Sprint Tasks                          a1b2c3d4
+  → Projects                          (via "Project")
+
+Areas                                 b7c8d9e0
+  → Projects                          (via "Projects")
+
+Isolated (no relations): Daily Log, Books, Meals
+```
+
+The relation graph shows how databases connect through relation properties. Each edge shows the source database, target database, and the relation property name. Databases with no outgoing relations are listed as "Isolated".
+
+All data comes from the workspace cache — no API calls needed. In JSON mode (`--json --relations`), a `relations` array is added to the output with `source`, `sourceId`, `property`, `target`, and `targetId` fields for each edge.
+
 ### JSON (`--json`)
 
 ```json
@@ -212,7 +248,7 @@ When `--live` is used, each database item includes a `pages` field, and a top-le
 
 ## Dashboard Sections
 
-The human-readable output has four sections:
+The human-readable output has up to five sections:
 
 ### 1. Summary Line
 
@@ -236,7 +272,15 @@ Counts every property type across all database schemas. Sorted by frequency (mos
 
 Common Notion property types: `title`, `rich_text`, `select`, `multi_select`, `date`, `number`, `checkbox`, `status`, `relation`, `formula`, `rollup`, `people`, `url`, `files`, `created_time`, `last_edited_time`, `created_by`.
 
-### 4. Footer
+### 4. Relation Graph (with `--relations`)
+
+Shows how databases connect through relation properties. Edges are grouped by source database, with each target and the connecting property name displayed below. Databases with no outgoing relations are listed as "Isolated".
+
+- All data comes from the workspace cache — zero API calls.
+- Target databases not in the cache (integration lacks access) show as "Unknown (shortId)".
+- In JSON mode, a `relations` array is added with `source`, `sourceId`, `property`, `target`, and `targetId` fields.
+
+### 5. Footer
 
 Shows when the workspace cache was last synced, in human-friendly format ("just now", "2h ago", "3d ago"). If `--live` is not active, shows a tip suggesting the flag.
 
