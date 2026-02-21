@@ -42,15 +42,28 @@ class PageCreate extends core_1.Command {
                 try {
                     const parsedProps = JSON.parse(flags.properties);
                     if (flags['simple-properties']) {
-                        // User provided simple format - expand to Notion format
-                        // Need to get database schema first
-                        if (!flags.parent_data_source_id) {
-                            throw new Error('The --simple-properties flag requires --parent_data_source_id (-d) to be set. ' +
-                                'Simple properties need the database schema for validation.');
+                        if (flags.parent_page_id) {
+                            // Sub-pages only have a title property — expand it directly without schema
+                            const titleValue = parsedProps[titleProperty] || parsedProps['title'] || parsedProps['Title'];
+                            if (titleValue && typeof titleValue === 'string') {
+                                properties[titleProperty] = {
+                                    title: [{ text: { content: titleValue } }]
+                                };
+                            }
+                            else {
+                                throw new Error('Sub-page creation with -S requires a title property.\n' +
+                                    `Example: --properties '{"${titleProperty}": "My Page"}'`);
+                            }
                         }
-                        const parentDataSourceId = await (0, notion_resolver_1.resolveNotionId)(flags.parent_data_source_id, 'database');
-                        const dbSchema = await notion.retrieveDataSource(parentDataSourceId);
-                        properties = await (0, property_expander_1.expandSimpleProperties)(parsedProps, dbSchema.properties);
+                        else if (flags.parent_data_source_id) {
+                            // Database pages — use schema-based expansion
+                            const parentDataSourceId = await (0, notion_resolver_1.resolveNotionId)(flags.parent_data_source_id, 'database');
+                            const dbSchema = await notion.retrieveDataSource(parentDataSourceId);
+                            properties = await (0, property_expander_1.expandSimpleProperties)(parsedProps, dbSchema.properties);
+                        }
+                        else {
+                            throw new Error('The --simple-properties flag requires either -p (sub-page) or -d (database) to be set.');
+                        }
                     }
                     else {
                         // Use raw Notion format

@@ -138,19 +138,29 @@ export default class PageCreate extends Command {
           const parsedProps = JSON.parse(flags.properties)
 
           if (flags['simple-properties']) {
-            // User provided simple format - expand to Notion format
-            // Need to get database schema first
-            if (!flags.parent_data_source_id) {
+            if (flags.parent_page_id) {
+              // Sub-pages only have a title property — expand it directly without schema
+              const titleValue = parsedProps[titleProperty] || parsedProps['title'] || parsedProps['Title']
+              if (titleValue && typeof titleValue === 'string') {
+                properties[titleProperty] = {
+                  title: [{ text: { content: titleValue } }]
+                }
+              } else {
+                throw new Error(
+                  'Sub-page creation with -S requires a title property.\n' +
+                  `Example: --properties '{"${titleProperty}": "My Page"}'`
+                )
+              }
+            } else if (flags.parent_data_source_id) {
+              // Database pages — use schema-based expansion
+              const parentDataSourceId = await resolveNotionId(flags.parent_data_source_id, 'database')
+              const dbSchema = await notion.retrieveDataSource(parentDataSourceId)
+              properties = await expandSimpleProperties(parsedProps, dbSchema.properties)
+            } else {
               throw new Error(
-                'The --simple-properties flag requires --parent_data_source_id (-d) to be set. ' +
-                'Simple properties need the database schema for validation.'
+                'The --simple-properties flag requires either -p (sub-page) or -d (database) to be set.'
               )
             }
-
-            const parentDataSourceId = await resolveNotionId(flags.parent_data_source_id, 'database')
-            const dbSchema = await notion.retrieveDataSource(parentDataSourceId)
-
-            properties = await expandSimpleProperties(parsedProps, dbSchema.properties)
           } else {
             // Use raw Notion format
             properties = parsedProps

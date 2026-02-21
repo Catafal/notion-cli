@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **README cleanup** — trimmed from 1300 to ~460 lines; removed stale release notes, condensed verbose sections, fixed all 9 broken doc links, added missing `page export` to command reference, removed duplicate sections.
 
 ### Added
+- **`page delete` command** — convenience alias for archiving a page (`notion-cli page delete PAGE_ID`). Alias: `page:d`. Equivalent to `page update PAGE_ID -a`.
+- **`-S` flag works with sub-pages** — `page create -p PARENT -S --properties '{"title": "My Page"}'` now works. Previously `-S` only worked with database pages.
+
+### Fixed
+- **11 pre-existing test failures** — fixed mock URL format (dashed vs dashless UUIDs), invalid test IDs, and missing source string assertions across 5 test files.
 - **`page export` command** — export a Notion page to markdown or JSON (`notion-cli page export PAGE_ID -o notes.md`). Alias: `page:e`. Reverse of `page create -f`.
 - **`batch delete` command** — delete multiple blocks in parallel (`notion-cli batch delete --ids ID1,ID2,ID3`). Alias: `batch:d`. Accepts URLs, names, and raw IDs.
 - **`browse` command** — interactively navigate Notion page trees with arrow keys (`notion-cli browse PAGE_ID`). Alias: `nav`.

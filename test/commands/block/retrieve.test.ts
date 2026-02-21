@@ -4,6 +4,7 @@ import * as sinon from 'sinon'
 
 // Use a valid UUID format for block ID
 const BLOCK_ID = '12345678-1234-1234-1234-123456789012'
+const BLOCK_ID_NO_DASHES = BLOCK_ID.replace(/-/g, '')
 
 const response = {
   object: 'block',
@@ -38,7 +39,7 @@ describe('block:retrieve', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .get(`/v1/blocks/${BLOCK_ID}`)
+          .get(`/v1/blocks/${BLOCK_ID_NO_DASHES}`)
           .reply(200, response)
       })
       .stdout({ print: process.env.TEST_DEBUG ? true : false })
@@ -53,7 +54,7 @@ describe('block:retrieve', () => {
     test
       .do(() => {
         nock('https://api.notion.com')
-          .get(`/v1/blocks/${BLOCK_ID}`)
+          .get(`/v1/blocks/${BLOCK_ID_NO_DASHES}`)
           .reply(200, response)
       })
       .stdout({ print: process.env.TEST_DEBUG ? true : false })
