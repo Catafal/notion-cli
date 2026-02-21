@@ -17,6 +17,7 @@ Essential guides for using the CLI effectively:
 - **[Error Handling](user-guides/error-handling-examples.md)** - Understanding and handling errors
 - **[Batch Operations](user-guides/batch-operations.md)** - Retrieve or delete multiple resources at once
 - **[Interactive Browsing](user-guides/interactive-browsing.md)** - Navigate Notion page trees with arrow keys
+- **[Page Export](export.md)** - Export Notion pages to markdown or JSON files
 
 ## Architecture
 

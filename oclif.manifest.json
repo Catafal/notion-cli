@@ -2418,9 +2418,8 @@
         },
         "title_property": {
           "char": "t",
-          "description": "Name of the title property (defaults to \"Name\" if not specified)",
+          "description": "Title property name (auto-detected: \"title\" for sub-pages, \"Name\" for databases)",
           "name": "title_property",
-          "default": "Name",
           "hasDynamicHelp": false,
           "multiple": false,
           "type": "option"
@@ -2565,6 +2564,115 @@
         "commands",
         "page",
         "create.js"
+      ]
+    },
+    "page:export": {
+      "aliases": [
+        "page:e"
+      ],
+      "args": {
+        "page_id": {
+          "description": "Page ID or full Notion URL",
+          "name": "page_id",
+          "required": true
+        }
+      },
+      "description": "Export a Notion page to markdown or JSON",
+      "examples": [
+        {
+          "description": "Export page as markdown to stdout",
+          "command": "$ notion-cli page export PAGE_ID"
+        },
+        {
+          "description": "Export page as markdown to a file",
+          "command": "$ notion-cli page export PAGE_ID -o notes.md"
+        },
+        {
+          "description": "Export page as JSON to a file",
+          "command": "$ notion-cli page export PAGE_ID --json -o page.json"
+        },
+        {
+          "description": "Export using a Notion URL",
+          "command": "$ notion-cli page export \"https://notion.so/My-Page-abc123\" -o notes.md"
+        },
+        {
+          "description": "Pipe markdown to another command",
+          "command": "$ notion-cli page export PAGE_ID | head -20"
+        }
+      ],
+      "flags": {
+        "output": {
+          "char": "o",
+          "description": "File path to write (omit for stdout)",
+          "name": "output",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "json": {
+          "char": "j",
+          "description": "Output as JSON (recommended for automation)",
+          "name": "json",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "page-size": {
+          "description": "Items per page (1-100, default: 100 for automation)",
+          "name": "page-size",
+          "default": 100,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "retry": {
+          "description": "Auto-retry on rate limit (respects Retry-After header)",
+          "name": "retry",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "Request timeout in milliseconds",
+          "name": "timeout",
+          "default": 30000,
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "no-cache": {
+          "description": "Bypass cache and force fresh API calls",
+          "name": "no-cache",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "verbose": {
+          "char": "v",
+          "description": "Enable verbose logging to stderr (retry events, cache stats) - never pollutes stdout",
+          "env": "NOTION_CLI_VERBOSE",
+          "name": "verbose",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "minimal": {
+          "description": "Strip unnecessary metadata (created_by, last_edited_by, object fields, request_id, etc.) - reduces response size by ~40%",
+          "name": "minimal",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "page:export",
+      "pluginAlias": "@coastal-programs/notion-cli",
+      "pluginName": "@coastal-programs/notion-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "dist",
+        "commands",
+        "page",
+        "export.js"
       ]
     },
     "page:retrieve": {

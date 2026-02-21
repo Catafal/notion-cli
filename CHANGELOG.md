@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **`page export` command** — export a Notion page to markdown or JSON (`notion-cli page export PAGE_ID -o notes.md`). Alias: `page:e`. Reverse of `page create -f`.
 - **`batch delete` command** — delete multiple blocks in parallel (`notion-cli batch delete --ids ID1,ID2,ID3`). Alias: `batch:d`. Accepts URLs, names, and raw IDs.
 - **`browse` command** — interactively navigate Notion page trees with arrow keys (`notion-cli browse PAGE_ID`). Alias: `nav`.
 - **Auto-persist token during `init`** — `notion-cli init ntn_your_token` saves the token to your shell config file (~/.zshrc, ~/.bashrc, etc.) automatically. No manual `export` or editing rc files.
