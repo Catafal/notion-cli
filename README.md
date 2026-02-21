@@ -308,6 +308,17 @@ notion-cli user retrieve <USER_ID>    # Get user
 notion-cli user retrieve bot          # Get bot info
 ```
 
+### Stats Dashboard
+
+```bash
+notion-cli stats                      # Workspace overview from cache (instant)
+notion-cli stats --live               # Also fetch page counts per DB (slower)
+notion-cli stats --json               # JSON output for automation
+notion-cli dashboard                  # Alias
+```
+
+[📖 Stats Reference](./docs/stats.md)
+
 ### Workspace & Cache
 
 ```bash
